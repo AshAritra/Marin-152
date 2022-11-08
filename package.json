@@ -33,9 +33,6 @@
     "@shineiichijo/nhentai-pdf": "^1.0.5",
     "@bochilteam/scraper": "^2.0.0",
     "awesome-phonenumber": "^2.70.0",
-    "dotenv": "^16.0.3",
-    "bcryptjs": "^2.4.3",
-    "passport-local": "^1.0.0",
     "axios": "^0.24.0",
     "chalk": "^4.1.2",
     "figlet": "^1.5.0",
@@ -107,7 +104,6 @@
     "mal-scraper": "^2.11.4",
     "parse-ms": "^2.1.0",
     "quick.db": "^9.0.6",
-    "passport": "0.6.0",
     "supervisor": "^0.12.0"
   },
   "directories": {
