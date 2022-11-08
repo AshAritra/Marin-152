@@ -9,7 +9,7 @@
   },
   "type": "commonjs",
   "scripts": {
-    "start": "npm i pm2 && pm2 index.js"
+    "start": "node index.js"
    
   },
   "keywords": [
