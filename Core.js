@@ -4219,7 +4219,7 @@ const { MessageType, MessageOptions, Mimetype } = require("@adiwajshing/baileys"
 await Miku.sendMessage(
     m.chat, 
     {    
-        video: fs.readFileSync("./Assets/dreambanner.mp4"), 
+        video: fs.readFileSync("./Assets/mistbanner.mp4"), 
         caption: "!",
         gifPlayback: true
     }
