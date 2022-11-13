@@ -4159,7 +4159,7 @@ const { MessageType, MessageOptions, Mimetype } = require("@adiwajshing/baileys"
 await Miku.sendMessage(
     m.chat, 
     { 
-        video: fs.readFileSync("./Assets/dreambanner.mp4"), 
+        video: fs.readFileSync("./Assets/mistbanner.mp4"), 
         caption: "Have fun *Senpai* !",
         gifPlayback: true
     }
@@ -4182,7 +4182,7 @@ const { MessageType, MessageOptions, Mimetype } = require("@adiwajshing/baileys"
 await Miku.sendMessage(
     m.chat, 
     { 
-        video: fs.readFileSync("./Assets/dreambanner.mp4"), 
+        video: fs.readFileSync("./Assets/mistbanner.mp4"), 
         caption: "Its currently not available *Senpai* !",
         gifPlayback: true
     }
@@ -4197,7 +4197,7 @@ const { MessageType, MessageOptions, Mimetype } = require("@adiwajshing/baileys"
 await Miku.sendMessage(
     m.chat, 
     {    
-        video: fs.readFileSync("./Assets/dreambanner.mp4"), 
+        video: fs.readFileSync("./Assets/mistbanner.mp4"), 
         caption: "!",
         gifPlayback: true
     }
@@ -4224,13 +4224,13 @@ await Miku.sendMessage(
         gifPlayback: true
     }
 )
-  reply( ` *━━〈 🎆 Dreams United Server 🎆 〉━━*      
-『  *Java*  』⪼ free-fr-1.cortexnodes.com:26107  
-『  *Bedrock*  』⪼ free-fr-1.cortexnodes.com 
-『』*port*⪼ 26107 
+  reply( ` *━━〈✨ ༺Mist Dragon Server༻ ✨ 〉━━*      
+『  *Java*  』⪼ game1.falixnodes.net:11007  
+『  *Bedrock*  』⪼ game1.falixnodes.net 
+『』*port*⪼ 11007 
 『  *Version*  』⪼ 1.19.2 also 1.19.30 & 1.19.40
 『  *No Beta version Allowed*  』
-✨*support*✨⪼ crossplay , lagfree , multi-version , 27/7
+✨*support*✨⪼ crossplay , lagfree , multi-version !
 ` )
 }
 break
@@ -4832,7 +4832,7 @@ play, ytmp3, ytmp4, yts, lyrics, google, gimage, pinterest, image, movie, wallpa
 
 sticker, toimg, tovideo, togif , steal, stickermeme, emojimix, tourl, tomp3, toaudio
 
- *━━━〈  📌 Dreams United 📌  〉━━━*
+ *━━━〈  📌 Mist Dragon 📌  〉━━━*
 
  ipport , verify , dc , access 
 
