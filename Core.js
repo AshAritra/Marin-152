@@ -1806,7 +1806,7 @@ await Miku.sendMessage(m.chat, { delete: key })
     if (isBan) return reply(mess.banned)	 			
  if (isBanChat) return reply(mess.bangc)
  let anu = await store.chats.all().filter(v => v.id.endsWith('@g.us')).map(v => v.id)
- let teks = ` 「  Miku's group user list  」\n\nTotal ${anu.length} users are using bot in Groups.`
+ let teks = ` 「  CC's group user list  」\n\nTotal ${anu.length} users are using bot in Groups.`
  for (let i of anu) {
   let metadata = await Miku.groupMetadata(i)
   if (metadata.owner === "undefined") {
@@ -3296,7 +3296,7 @@ case 'music': case 'play': case 'song': case 'ytplay': {
  ]
  let buttonMessage = {
  image: { url: anu.thumbnail },
- caption: `「  _Miku Youtube Player 2.0_  」
+ caption: `「  _CC Youtube Player 2.0_  」
 
 *Title :* ${anu.title}
 
@@ -3363,7 +3363,7 @@ case 'music': case 'play': case 'song': case 'ytplay': {
  ]
  let buttonMessage = {
  image: { url: anu.thumbnail },
- caption: `「  _Miku Youtube Downloader 2.0_  」
+ caption: `「  _CC Youtube Downloader 2.0_  」
 
 *Title :* ${anu.title}
 
@@ -4165,10 +4165,8 @@ await Miku.sendMessage(
     }
 )
   reply( ` *━━〈 ✔️ Verify ✔️ 〉━━*      
- ★ To get verify just type in server chat -  (∩ᄑ_ᄑ)⊃━☆ﾟ*･｡*･:≡( ε:)
-     『 verifyme-c2 』
-	Done !!
-     ｀、ヽ｀ヽ｀、ヽ(ノ＞＜)ノ ｀、ヽ｀☂ヽ｀、ヽ
+ ★ Sorry Its Unavailable -  (∩ᄑ_ᄑ)⊃━☆ﾟ*･｡*･:≡( ε:)
+    ｀、ヽ｀ヽ｀、ヽ(ノ＞＜)ノ ｀、ヽ｀☂ヽ｀、ヽ
 ` )
 }
 break	
@@ -4189,7 +4187,7 @@ await Miku.sendMessage(
 )}
 break 
 
-
+//////////////////////////////////////////////
 case 'dc':  case 'Dc':{
     if (isBan) return reply(mess.banned)	 			
     if (isBanChat) return reply(mess.bangc)
@@ -4208,7 +4206,7 @@ await Miku.sendMessage(
 }
 break
 		
-		
+/////////////////////////////////////		
 
 
 //////////////////////////////////////////ipport section/////////////////////////////////////////
@@ -4332,6 +4330,43 @@ if(users == "none"){
 } else {
 const rcpp =`@${users.split("@"[0])}`
  musers= `@${m.sender.split("@")[0]} hugged @${users.split("@")[0]} `
+
+console.log(musers)
+}
+        const response = await axios.get(pat.url,  { responseType: 'arraybuffer' })
+        const buffer = Buffer.from(response.data, "utf-8")
+		var fetchedgif = await GIFBufferToVideoBuffer(buffer)
+		Miku.sendMessage(m.chat,{video: fetchedgif, gifPlayback:true,mentions:ment,caption:musers},{quoted:m})
+    } catch (error) {
+        console.log(error);
+    }
+}
+break
+
+case 'fight':{
+
+    if (isBan) return reply(mess.banned)	 			
+    if (isBanChat) return reply(mess.bangc)
+    if (!m.isGroup) return replay(mess.grouponly)	
+	var pat = await fetchJson(`https://api.waifu.pics/sfw/${command}`)
+	try {
+		let messsender = m.sender
+let musers=``
+try {
+users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
+
+ ment=[messsender,users]
+} catch {
+	users == "none"
+	 ment=[messsender,m.sender]
+}
+if(users == "none"){
+     musers =`@${m.sender.split("@")[0]} fighting themself!`
+     console.log(musers)
+
+} else {
+const rcpp =`@${users.split("@"[0])}`
+ musers= `@${m.sender.split("@")[0]} fighting @${users.split("@")[0]} `
 
 console.log(musers)
 }
