@@ -4348,7 +4348,7 @@ case 'fight':{
     if (isBan) return reply(mess.banned)	 			
     if (isBanChat) return reply(mess.bangc)
     if (!m.isGroup) return replay(mess.grouponly)	
-	var pat = await fetchJson(`https://api.waifu.pics/sfw/${command}`)
+	var pat = await fetchJson(`https://api.satou-chan.xyz/api/endpoint/angry`)
 	try {
 		let messsender = m.sender
 let musers=``
@@ -4505,7 +4505,7 @@ break
 
 
 
-
+/*
 case 'cry': case 'kill': case 'hug': case 'pat': case 'lick': case 'kiss': case 'bite': case 'yeet':
 case 'bully': case 'bonk': case 'wink': case 'poke': case 'nom': case 'slap': case 'smile':
 case 'wave': case 'blush': case 'smug': case 'glomp': case 'happy': case 'dance':
@@ -4513,7 +4513,8 @@ case 'cringe': case 'cuddle': case 'highfive': case 'handhold': case 'kick':
 
     if (isBan) return reply(mess.banned)	 			
     if (isBanChat) return reply(mess.bangc)
-    if (!m.isGroup) return replay(mess.grouponly)						
+    if (!m.isGroup) return replay(mess.grouponly)
+		       // https://graphql.anilist.co/api/v2/img/******
 resggh = await axios.get(`https://nekos.life/api/v2/img/${command}`)         
 let resffj = await getBuffer(resggh.data.url)
 let resmain = await GIFBufferToVideoBuffer(resffj)   
@@ -4522,7 +4523,7 @@ let resmain = await GIFBufferToVideoBuffer(resffj)
                                   })
 break
 
-
+*/
 
 
 
@@ -4769,7 +4770,7 @@ reply(`
 break
 
 
-case "quotes":
+case "quotes":{
     if (isBan) return reply(mess.banned)	 			
     if (isBanChat) return reply(mess.bangc)
     if (!m.isGroup) return replay(mess.grouponly)
@@ -4779,15 +4780,17 @@ teks += `\n*Quotes:*\n`
 teks += `${res.quotes}\n`
 
 replay(teks)
+}
 break
 
-case "darkjoke":
+case "darkjoke":{
     if (isBan) return reply(mess.banned)	 			
     if (isBanChat) return reply(mess.bangc)
     if (!m.isGroup) return replay(mess.grouponly)
 var res = await Darkjokes()
 teks = "\nDarkjokes"
 Miku.sendMessage(m.chat, { image : { url : res }, caption: teks }, { quoted : m })
+}
 break
 
 case 'leavegc': case 'leavegroup': case 'bye': {
@@ -4836,7 +4839,7 @@ case 'help': case 'h': case 'menu': case 'allmenu': case 'listmenu':{
  const helpmenu = `Konichiwa *${pushname}* Senpai,
 
 │───────────────────────│
-┠⬡│▸ I am *A17*, a Bot Developed by *Kai*.
+┠⬡│▸ I am *CC*, a Bot Developed by *UnderTaker*.
 │───────────────────────│
 │╭────────────────···▸
 ┠─────═[ *TODAY* ]═────
@@ -4854,7 +4857,7 @@ case 'help': case 'h': case 'menu': case 'allmenu': case 'listmenu':{
 ⬡│▸ *Owner name :* ${global.OwnerName} 
 ⬡│▸ *Bot speed :* ${latensie.toFixed(4)} ms 
 ⬡│▸ *Bot runtime :* ${runtime(process.uptime())} 
-⬡│▸ *Platform :* Unbuntu Linux 
+⬡│▸ *Platform :* Anime 
 ┬│▸
 │╰────────────────···▸
 ┠⬡│▸ Here's the list of my Commands.
@@ -4915,7 +4918,7 @@ case 'help': case 'h': case 'menu': case 'allmenu': case 'listmenu':{
 ┠━━〈 ༺ *Mist Dragoon Server* ༻ 〉━━
 │╭───────────────···▸
 ┴│▸
-⬡│▸ ipport, access, verify, version
+⬡│▸ ipport, access, verify, version, dc
 ┬│▸
 ╰────────────────···▸
 ┠━━〈 🛠️ *Convert* 🛠️ 〉━━
@@ -5012,7 +5015,7 @@ case 'help': case 'h': case 'menu': case 'allmenu': case 'listmenu':{
 ⬡│▸
 ⬡│▸
 ⬡│▸ 『  *${global.BotName}*  』
-⬡│▸    Developed By: *Kai*
+⬡│▸    Developed By: *UnderTaker*
 ⬡│▸
 ⬡│▸ 🌹 To use any of these commands type 
 ⬡│▸ " *${prefix}<Command name>* ".
@@ -5088,14 +5091,12 @@ break
 		
 		
 		
-		
-
 case 'C2':{
     if (isBan) return reply(mess.banned)	 			
     if (isBanChat) return reply(mess.bangc)
 
-const txt = `Do you love C2? Then we are the same.`
-const mikuarray= [
+ const txt = `Do you love C2? Then we are the same.`
+ const mikuarray= [
             "https://c.tenor.com/SOeIW-QVZvoAAAPo/scared-the-quintessential-quintuplets.mp4",
             "https://c.tenor.com/FDe7lTs0xvMAAAPo/miku-nakano-nakano-miku.mp4",
             "https://c.tenor.com/IWKYIP6AMIgAAAPo/miku-nakano-the-quintessential-quintuplets.mp4",
@@ -5135,7 +5136,7 @@ const mikuarray= [
         
             Miku.sendMessage(from,{video:{url:mikuselection},gifPlayback:true,caption:txt},{quoted:m})
 }
-break
+break;
 
 case 'add':{     			
     if (!m.isGroup) return replay(mess.grouponly)
