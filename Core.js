@@ -4191,7 +4191,7 @@ await Miku.sendMessage(
            ⪼  https://download-new.apkmody.fun/apps/power-vpn/download/mod 『PowerVPN』 『21.87 mb』
            ⪼  https://apkdone.com/turbo-vpn-mod-apk/download 『TurboVPN』 『20.58 mb』
     	   ⪼  https://getmodsapk.com/download/secure-vpn-free-mod-apk/Secure+VPN+4_0_3+MOD+APK  『SecureVPN』 『5 mb』
- 		  
+ 		｀、ヽ｀ヽ｀、ヽ(ノ＞＜)ノ ｀、ヽ｀☂ヽ｀、ヽ｀、ヽ｀ヽ｀、ヽ(ノ＞＜)ノ ｀、ヽ｀☂ヽ｀、ヽ  
          *Here is how you will get server access .* 
 	 ⚔ First go to this website and sign-up **Listne if you dont wanna do it then skip it! 
 	 ☞ https://client.falixnodes.net/auth/register?ref=1528342
@@ -4201,7 +4201,7 @@ await Miku.sendMessage(
      *That't it , before you go listne everytime you visit the website you must turn on the vpn to the specified location .*			   
 	
 `)
-)}
+}
 break 
 
 //////////////////////////////////////////////
