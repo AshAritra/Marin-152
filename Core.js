@@ -4191,10 +4191,9 @@ await Miku.sendMessage(
            ⪼  https://download-new.apkmody.fun/apps/power-vpn/download/mod 『PowerVPN』 『21.87 mb』
            ⪼  https://apkdone.com/turbo-vpn-mod-apk/download 『TurboVPN』 『20.58 mb』
     	   ⪼  https://getmodsapk.com/download/secure-vpn-free-mod-apk/Secure+VPN+4_0_3+MOD+APK  『SecureVPN』 『5 mb』
- 		    *(━┳━｡ Д ｡━┳━) (━┳━｡ Д ｡━┳━) (━┳━｡ Д ｡━┳━)*
-	 
-	 *(¬‿¬)*  Here is how you will get server access . 
-	 ⚔ First go to this website and sign-up **Listne if you dont wanna do it then skip it! *｡:ﾟ(｡ﹷ ‸ ﹷ ✿)*
+ 		  
+         *Here is how you will get server access .* 
+	 ⚔ First go to this website and sign-up **Listne if you dont wanna do it then skip it! 
 	 ☞ https://client.falixnodes.net/auth/register?ref=1528342
 	 ⚔ Now go to this website and fill it up-
 	           ༺   Email: 『 asharitra20@gmail.com 』
