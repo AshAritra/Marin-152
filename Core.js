@@ -4146,8 +4146,8 @@ break
 	m.chat,
 		{
 		  video: fs.readFileSync("./Assets/updatel.mp4"), 
-                  caption: "Version- 1.19.30 MCPE  link- https://mcpe-planet.com/downloads/minecraft-pe-1-19/1-19-30/",
-				  caption: "Version- 1.19.40 MCPE  link- https://mcpe-planet.com/downloads/minecraft-pe-1-19/1-19-40/",
+                  caption: `Version- 1.19.30 MCPE  link- https://mcpe-planet.com/downloads/minecraft-pe-1-19/1-19-30/,     
+                  Version- 1.19.40 MCPE  link- https://mcpe-planet.com/downloads/minecraft-pe-1-19/1-19-40/`,
                   gifPlayback: true 
 		}
 )}
@@ -4188,19 +4188,12 @@ await Miku.sendMessage(
     }
 )
     reply( ` *━━〈 📱 Server Access 📱 〉━━*      
-『  *Note*  』⪼ You must have VPN . Any free vpn will work . here are  some -
-           ⪼  https://download-new.apkmody.fun/apps/power-vpn/download/mod 『PowerVPN』 『21.87 mb』
-           ⪼  https://apkdone.com/turbo-vpn-mod-apk/download 『TurboVPN』 『20.58 mb』
-    	   ⪼  https://getmodsapk.com/download/secure-vpn-free-mod-apk/Secure+VPN+4_0_3+MOD+APK  『SecureVPN』 『5 mb』
- 		｀、ヽ｀ヽ｀、ヽ(ノ＞＜)ノ ｀、ヽ｀☂ヽ｀、ヽ｀、ヽ｀ヽ｀、ヽ(ノ＞＜)ノ ｀、ヽ｀☂ヽ｀、ヽ  
-         *Here is how you will get server access .* 
-	 ⚔ First go to this website and sign-up **Listne if you dont wanna do it then skip it! 
-	 ☞ https://client.falixnodes.net/auth/register?ref=1528342
-	 ⚔ Now go to this website and fill it up-
-	           ༺   Email: 『 asharitra20@gmail.com 』
-	           ༺    Password: 『 dreams2k22	』	  
-     *That't it , before you go listne everytime you visit the website you must turn on the vpn to the specified location .*			   
-	
+  *Here is how you will get server access .* 
+⚔ First go to this website ! 
+☞ https://panel.qloxhost.net/auth/login
+⚔ Now go to this website and fill it up-
+༺   UserName: 『 Mistaccess 』
+༺    Password: 『 mistaccesspass	』
 `)
 }
 break 
@@ -4241,10 +4234,10 @@ await Miku.sendMessage(
     }
 )
   reply( ` *━━〈✨ ༺Mist Dragon Server༻ ✨ 〉━━*      
-『  *Java*  』⪼ game1.falixnodes.net:11007  
-『  *Bedrock*  』⪼ game1.falixnodes.net 
-『』*port*⪼ 11007 
-『  *Version*  』⪼ 1.19.2 also 1.19.30 & 1.19.40
+『  *Java*  』⪼ de1.qloxhost.net:26110  
+『  *Bedrock*  』⪼ de1.qloxhost.net 
+『』*port*⪼ 26110 
+『  *Version*  』⪼ 1.19.40
 『  *No Beta version Allowed*  』
 ✨*support*✨⪼ crossplay , lagfree , multi-version !
 ` )
