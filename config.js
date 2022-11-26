@@ -27,9 +27,9 @@ global.prefa = ['-']
 global.location = "West Bengal, India"
 global.reactmoji = "❤️"
 global.themeemoji = "💖"
-global.vidmenu = { url: 'https://media.tenor.com/cMyXbmwR7vAAAAAd/cc-code-geass.gif' }
+global.vidmenu = { url: 'https://media.tenor.com/nV_hpJT8ppwAAAAC/marin.gif' }
 global.websitex = "https://mistdrag4682.blogspot.com/"
-global.lolhuman = "~~~"
+global.lolhuman = "KaysaS"
 
 
 global.BotLogo = fs.readFileSync("./Assets/pic1.jpg")
