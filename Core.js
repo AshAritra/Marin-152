@@ -2441,7 +2441,25 @@ if (isBanChat) return reply(mess.bangc)
      break
 
 */
-
+		
+				
+		
+		
+case'admin': {
+    if (isBan) return reply(mess.banned)	 			
+ if (isBanChat) return reply(mess.bangc)
+ if (!m.isGroup) return replay(mess.grouponly)
+ if (!text) return replay(`*Please quote or write a meaningful message to tag admins to*`)
+ let teks = `*「 Tag Admins 」*
+  
+ *Message : ${text}*\n\n`
+ for (let mem of groupAdmins) {
+ teks += `🤴 @${mem.split('@')[0]}\n`
+ }
+ Miku.sendMessage(m.chat, { text: teks, mentions: groupAdmins}, { quoted: m })
+ }
+ break		
+		
 case 'purge':{mess
     if (isBan) return reply(mess.banned)	 			
      if (isBanChat) return reply(mess.bangc)
@@ -4872,7 +4890,7 @@ case 'help': case 'h': case 'menu': case 'allmenu': case 'listmenu':{
 ┠─━━〈 ⚙️ *Core* ⚙️ 〉━━
 │╭────────────────···▸
 ┴│▸ 
-⬡│▸ speak, A17, stalk
+⬡│▸ admin, speak, Marin, stalk
 ⬡│▸ profile, delete
 ⬡│▸ deleteall, listgc, listpc
 ⬡│▸ welcome, support
