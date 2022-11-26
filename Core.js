@@ -1483,7 +1483,7 @@ case 'support': case 'supportgc':
 
 case 'repo': case 'botrepo':
     
-    reply(`*My Source Code:* https://gitlab.com/AshAritra/C2botCC `)
+    reply(`*My Source Code:* https://github.com/AshAritra/`)
     break
 
 case 'nsfwmenu':
@@ -3708,7 +3708,7 @@ case 'charactercheck':
           "send abusive words in any grup, excepting this grup, and send screenshot proof here"
      ]
                    const Marindareww = dare[Math.floor(Math.random() * dare.length)]
-                   buffer = await getBuffer(`https://wallpapercave.com/wp/wp10524609.jpg`)
+                   buffer = await getBuffer(`https://i.pinimg.com/originals/1d/0a/dd/1d0add52aafacab19b92a08b51d5f36c.jpg`)
                    Marin.sendMessage(from, { image: buffer, caption: '*You have chosen Dare*\n\n'+ Marindareww }, {quoted:m})
                    break
                        
@@ -3808,7 +3808,7 @@ case 'truth':
                  "do you play pubg, if you then send ur id number"
              ]
                            const Marintruthww = truth[Math.floor(Math.random() * truth.length)]
-                           buffer = await getBuffer(`https://wallpapercave.com/wp/wp10524609.jpg`)
+                           buffer = await getBuffer(`https://i.pinimg.com/originals/1d/0a/dd/1d0add52aafacab19b92a08b51d5f36c.jpg`)
                            Marin.sendMessage(from, { image: buffer, caption: '*You have chosen Truth*\n'+ Marintruthww }, {quoted:m})
                            break
 
