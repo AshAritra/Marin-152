@@ -1449,17 +1449,17 @@ case 'me': case 'profile': case 'p':
      
 
      var flob = await getBuffer(picak+'User Profile')
-     var bio= await Marin.fetchStatus(m.sender)
+     var bio= await Miku.fetchStatus(m.sender)
      var bioo = bio.status
      const adn= isAdmins? "True":"False"
      
      try {
         
-        pfp=await Marin.profilePictureUrl(m.sender, 'image')
+        pfp=await Miku.profilePictureUrl(m.sender, 'image')
     
           } catch (e) {
      
-      pfp ='https://wallpapercave.com/wp/wp8764182.jpg'
+      pfp ='https://wallpapercave.com/wp/wp10524580.jpg'
     }
 
      const profilexx = `*「  Profile Info  」*\n\n*User Name* : ${pushname}\n*Bio* : ${bioo}\n*Group Admin Status* : ${adn}\n*Level* : ${levelMenu}\n*Exp* : ${xpMenu} out of ${reqXp}\n*Role* : ${role}`
@@ -1476,9 +1476,10 @@ let buttonspro = [
                 buttons: buttonspro,
                 headerType: 4
             }
-        Marin.sendMessage(m.chat,buttonMessage,{quoted:m})
+        Miku.sendMessage(m.chat,buttonMessage,{quoted:m})
         	
             break
+
 
 
 case 'banchat': case 'bangroup':{
@@ -4921,7 +4922,7 @@ case 'help': case 'h': case 'menu': case 'allmenu': case 'listmenu':{
 ┠─━━〈 ⚙️ *Core* ⚙️ 〉━━
 │╭────────────────···▸
 ┴│▸ 
-⬡│▸ speak, A17, stalk
+⬡│▸ admin, speak, Marin, stalk
 ⬡│▸ profile, delete
 ⬡│▸ deleteall, listgc, listpc
 ⬡│▸ welcome, support
