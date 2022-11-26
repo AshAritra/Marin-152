@@ -3297,7 +3297,7 @@ case 'music': case 'play': case 'song': case 'ytplay': {
  ]
  let buttonMessage = {
  image: { url: anu.thumbnail },
- caption: `「  _CC Youtube Player 2.0_  」
+ caption: `「  _MarinYoutube Player 2.0_  」
 
 *Title :* ${anu.title}
 
@@ -3364,7 +3364,7 @@ case 'music': case 'play': case 'song': case 'ytplay': {
  ]
  let buttonMessage = {
  image: { url: anu.thumbnail },
- caption: `「  _CC Youtube Downloader 2.0_  」
+ caption: `「  _MarinYoutube Downloader 2.0_  」
 
 *Title :* ${anu.title}
 
