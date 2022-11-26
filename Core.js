@@ -4142,15 +4142,10 @@ break
 		if (isBan) return reply(mess.banned)
 		if (isBanChat) return reply(mess.bangc)
 	const { MeggageType, MessageOption, Mimetype} = require("@adiwajshing/baileys")
-	await Miku.sendMessage(
-	m.chat,
-		{
-		  video: fs.readFileSync("./Assets/updatel.mp4"), 
-                  caption: `Version- 1.19.30 MCPE  link- https://mcpe-planet.com/downloads/minecraft-pe-1-19/1-19-30/,     
-                  Version- 1.19.40 MCPE  link- https://mcpe-planet.com/downloads/minecraft-pe-1-19/1-19-40/`,
-                  gifPlayback: true 
-		}
-)}
+	await Miku.sendMessage
+		reply( `Version- 1.19.30 MCPE  link- https://mcpe-planet.com/downloads/minecraft-pe-1-19/1-19-30/
+		  Version- 1.19.40 MCPE  link- https://mcpe-planet.com/downloads/minecraft-pe-1-19/1-19-40/`)
+	}
 break
 		
 //////////////////////////////////////////veify/////////////////////////////////////////
