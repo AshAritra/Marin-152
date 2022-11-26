@@ -5,6 +5,7 @@ const pino = require('pino')
 const fs = require('fs')
 const chalk = require('chalk')
 const FileType = require('file-type')
+const { Boom } = require("@hapi/boom")
 const path = require('path')
 const CFonts = require('cfonts');
 const { exec, spawn, execSync } = require("child_process")
@@ -17,9 +18,8 @@ const { color } = require('./lib/color')
 
 const store = makeInMemoryStore({ logger: pino().child({ level: 'silent', stream: 'store' }) })
 
-
 async function startMiku() {
-console.log(color(figlet.textSync('CC Bot UT', {
+console.log(color(figlet.textSync('UwU', {
 		font: 'Pagga',
 		horizontalLayout: 'default',
 		vertivalLayout: 'default',
@@ -27,14 +27,14 @@ console.log(color(figlet.textSync('CC Bot UT', {
 		whitespaceBreak: true
         }), 'yellow'))
 
-console.log(color('\nHello, I am UnderTaker, the main developer of this bot.\n\nThanks for using: C2 Bot','aqua'))
-console.log(color('\nYou can follow me on Insta: Itsaestheticallyari','aqua'))
+console.log(color('\nHello, I am UnderTaker, the main developer of this bot.\n\nThanks for using: Marin-Bot','aqua'))
+console.log(color('\nYou can follow me on GitHub: AshAritra','aqua'))
 
     let { version, isLatest } = await fetchLatestBaileysVersion()
     const Miku = MikuConnect({
         logger: pino({ level: 'silent' }),
         printQRInTerminal: true,
-        browser: ['C2 by: UnderTaker','Safari','1.0.0'],
+        browser: ['Marin by: UnderTaker','Safari','1.0.0'],
         auth: state,
         version
     })
@@ -92,24 +92,24 @@ Miku.ev.on('groups.update', async pea => {
         try {
         ppgc = await Miku.profilePictureUrl(pea[0].id, 'image')
         } catch {
-        ppgc = 'https://i.pinimg.com/564x/fb/3d/48/fb3d485654c53a2e62a6ef662a317281.jpg'
+        ppgc = 'https://wallpapercave.com/wp/wp10524580.jpg'
         }
         let wm_fatih = { url : ppgc }
         if (pea[0].announce == true) {
-        //Miku.send5ButImg(pea[0].id, `Grop has been *Closed!* Only *Admins* can send Messages!`, `C2 Bot`, wm_fatih, [])
+        //Miku.send5ButImg(pea[0].id, `Grop has been *Closed!* Only *Admins* can send Messages!`, `Miku Bot`, wm_fatih, [])
 
         Miku.sendMessage(m.chat, { image: wm_fatih, caption: 'Grop has been *Closed!* Only *Admins* can send Messages!'})
         } else if(pea[0].announce == false) {
-       // Miku.send5ButImg(pea[0].id, `Grop has been *Opened!* Now *Everyone* can send Messages!`, `C2 Bot`, wm_fatih, [])
+       // Miku.send5ButImg(pea[0].id, `Grop has been *Opened!* Now *Everyone* can send Messages!`, `Miku Bot`, wm_fatih, [])
        Miku.sendMessage(m.chat, { image: wm_fatih, caption: 'Grop has been *Opened!* Now *Everyone* can send Messages!'})
         } else if (pea[0].restrict == true) {
-        //Miku.send5ButImg(pea[0].id, `Group Info modification has been *Restricted*, Now only *Admins* can edit Group Info !`, `C2 Bot`, wm_fatih, [])
+        //Miku.send5ButImg(pea[0].id, `Group Info modification has been *Restricted*, Now only *Admins* can edit Group Info !`, `Miku Bot`, wm_fatih, [])
         Miku.sendMessage(m.chat, { image: wm_fatih, caption: 'Group Info modification has been *Restricted*, Now only *Admins* can edit Group Info !'})
         } else if (pea[0].restrict == false) {
-        //Miku.send5ButImg(pea[0].id, `Group Info modification has been *Un-Restricted*, Now only *Everyone* can edit Group Info !`, `C2 Bot`, wm_fatih, [])
+        //Miku.send5ButImg(pea[0].id, `Group Info modification has been *Un-Restricted*, Now only *Everyone* can edit Group Info !`, `Miku Bot`, wm_fatih, [])
         Miku.sendMessage(m.chat, { image: wm_fatih, caption: 'Group Info modification has been *Un-Restricted*, Now only *Everyone* can edit Group Info !'})
         } else {
-        //Miku.send5ButImg(pea[0].id, `Group Subject has been uhanged To:\n\n*${pea[0].subject}*`, `C2 Bot`, wm_fatih, [])
+        //Miku.send5ButImg(pea[0].id, `Group Subject has been uhanged To:\n\n*${pea[0].subject}*`, `Miku Bot`, wm_fatih, [])
         mikutextddfq =`Group Subject has been updated To:\n\n*${pea[0].subject}*`
         Miku.sendMessage(pea[0].id, { image: wm_fatih, caption: mikutextddfq})
       }
@@ -134,13 +134,13 @@ Miku.ev.on('group-participants.update', async (anu) => {
                 try {
                     ppuser = await Miku.profilePictureUrl(num, 'image')
                 } catch {
-                    ppuser = 'https://wallpapercave.com/wp/wp8764137.png'
+                    ppuser = 'https://wallpapercave.com/wp/wp10753770.jpg'
                 }
 
                 try {
                     ppgroup = await Miku.profilePictureUrl(anu.id, 'image')
                 } catch {
-                    ppgroup = 'https://wallpapercave.com/wp/wp8764137.png'
+                    ppgroup = 'https://telegra.ph/file/4cc2712eee93c105f6739.jpg'
                 }
 
                 let targetname = await Miku.getName(num)
@@ -152,7 +152,7 @@ Miku.ev.on('group-participants.update', async (anu) => {
                 mikutext = `
 Hello @${WAuserName.split("@")[0]},
 
-I am *CC or C2*, Welcome to ${metadata.subject}.
+I am *Miku Nakano*, Welcome to ${metadata.subject}.
 
 *Group Description:*
 ${metadata.desc}
@@ -253,13 +253,16 @@ I hope you will come back soon, but we are not going to miss you though!
     }
 	
     Miku.public = true
+	
+    Miku.ev.on('creds.update', saveState)
 
     Miku.serializeM = (m) => smsg(Miku, m, store)
+	
 
     Miku.ev.on('connection.update', async (update) => {
         const { connection, lastDisconnect } = update	    
         if (connection === 'close') {
-        let reason = lastDisconnect.error ? lastDisconnect?.error?.output.statusCode : 0;
+        let reason = new Boom(lastDisconnect?.error)?.output.statusCode
             if (reason === DisconnectReason.badSession) { console.log(`Bad Session File, Please Delete Session and Scan Again`); process.exit(); }
             else if (reason === DisconnectReason.connectionClosed) { console.log("Connection closed, reconnecting...."); startMiku(); }
             else if (reason === DisconnectReason.connectionLost) { console.log("Connection Lost from Server, reconnecting..."); startMiku(); }
@@ -272,9 +275,9 @@ I hope you will come back soon, but we are not going to miss you though!
         //console.log('Connected...', update)
     })
 
-    Miku.ev.on('creds.update', saveState)
-
-
+    	
+	
+	
    
     /** Send Button 5 Images
      *
