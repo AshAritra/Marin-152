@@ -1,8 +1,8 @@
 {
-  "name": "C2",
+  "name": "Marin",
   "description": "",
   "repository": "",
-  "logo": "https://i.redd.it/z9duxu012w341.png",
+  "logo": "https://images3.alphacoders.com/120/1204640.png",
   "keywords": ["nodejs", "bot", "whatsapp bot", "whatsapp automation", "multi device"],
   "buildpacks": [
     {
