@@ -11,8 +11,8 @@ global.antitags = true
 global.Owner = ['917044585369']
 global.OwnerNumber = ['917044585369']
 global.ownertag = ['917044585369']
-global.BotName = "C2"
-global.packname = "C2 bot"
+global.BotName = "Marin"
+global.packname = "Marin Kitigawa"
 global.author = "By: UnderTaker"
 global.OwnerName = "UnderTaker"
 global.BotSourceCode = "https://github.com/AshAritra/C2botCC"
@@ -99,7 +99,7 @@ global.APIs = {
 	zenz: 'https://zenzapis.xyz',
 }
 global.APIKeys = {
-	'https://zenzapis.xyz': '5d1197db351b',
+	'https://zenzapis.xyz': 'a52605e4317b',
 }
 
 
