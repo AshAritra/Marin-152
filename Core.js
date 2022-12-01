@@ -18,7 +18,7 @@ const { JSDOM } = require('jsdom')
 const speed = require('performance-now')
 const hx = require("hxz-api")
 const hxz = require('./lib/hxz-api')
-const { GoGoAnime } = require('gogoanime-api')
+const { GoGoAnime } = require('gogoanime-api');)
 const bdr = require('rumus-bdr')
 const yogipw = require("tod-api")
 const { color, bgcolor } = require('./lib/color')
@@ -4197,8 +4197,28 @@ case 'ggsearch': {
     if (isBan) return reply(mess.banned)	 			
  if (isBanChat) return reply(mess.bangc)
  if (!args.join(" ")) return replay(`Example : ${prefix}ggsearch Naruto`)
- const gogoAnime = new GoGoAnime();
-
+ gogoAnime = await axios.get(`https://gogoanime.consumet.org/search?keyw=${command}`)
+  .then(async(res) => {
+ teks = '```「 GoGoAnime Search Engine 」```'
+ for (let i of res) {
+ teks += `\n\n${i.name}\n`
+ teks += `${i.link}`
+ }
+ let buttons = [
+ {buttonId: `-menu`, buttonText: {displayText: '✨Menu✨'}, type: 1}
+ ]
+ let buttonMessage = {
+ image: {url:res[0].icon},
+ jpegThumbnail: Thumb,
+ caption: teks,
+ footer: `${global.BotName}`,
+ buttons: buttons,
+ headerType: 4
+ }
+ Marin.sendMessage(m.chat, buttonMessage, { quoted: m })
+ })
+ 
+ 
  }
  break
 
