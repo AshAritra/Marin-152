@@ -4186,17 +4186,16 @@ reply(mess.waiting)
                 })
 break
 /////////////////////////////////API to download anime/////////
-case 'animedown':
-if (isBan) return reply(mess.banned)
-	if (isBanChat) return reply(mess.bangc)
-	reply(mess.waiting)
-if (!q) return reply(`Please enter a Movie search term...\nExample: ${prefix}animedown Naruto`)
-const animeapi = require('asuna-anime-api')
-const download = await animeapi.download('${q}', 387, {website: 'GOGOANIME'})
-.then(data => {console.log(data)
-    let krl = `*Search Term:* ${q}\n\n`
-   Marin.sendMessage(from, { image: { url: data[0].thumb}, caption: krl }, { quoted: fdocs })
-});
+case 'animedown': case 'animedownloader':{
+  if (isBan) return reply(mess.banned)
+const { ANIME } = require("@consumet/extensions")
+// Create a new instance of the Gogoanime provider
+const gogoanime = new ANIME.Gogoanime();
+// Search for an anime. In this case, "One Piece"
+const results = gogoanime.search("+text+").then(data => {
+  // print results
+  console.log(data); 
+}
 break
 
 ////////////////////////////////Version//////////////////////////////////////////////
