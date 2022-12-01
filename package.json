@@ -33,7 +33,7 @@
   "awesome-phonenumber": "^2.70.0",
   "axios": "^0.24.0",
   "cfonts": "^2.9.0",
-  "gogoanime-api": "^0.0.5",
+  "asuna-anime-api": "^1.1.1",
   "chalk": "^4.1.2",
   "cheerio": "^1.0.0-rc.10",
   "child_process": "^1.0.2",
