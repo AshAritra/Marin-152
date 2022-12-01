@@ -4198,9 +4198,7 @@ const results = gogoanime.search(text).then(data => {
   console.log(data)
   reply(`
 *Title :* ${data.title}
-*URL :* ${result.url}
-*Url :* ${result.url}
-)
+*URL :* ${data.url}`)
   })
   }
 break
