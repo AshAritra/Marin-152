@@ -4198,6 +4198,7 @@ const results = gogoanime.search(text).then(data => {
   console.log(data)
   let txt = `   _Anime Search Engine_ \n\n*ID:* *${res.data.id}*\n*Title:* *${res.data.title}*\n*URL:* *${res.data.url}*\n*IMG:* *${res.data.image}*\n*Voice Format:* *${res.data.subOrDub ? 'dub' : 'sub'}*\n*Release Date:* *${res.data.releaseDate}*\n`
     Marin.sendMessage(from, { image : { url : res.data.images.jpg.image}, caption : txt}, {quoted :m })
+  })
   }
 break
 
