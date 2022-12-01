@@ -4197,11 +4197,11 @@ const results = gogoanime.search(text).then(data => {
   // print results
   console.log(data)
   let teks = `「 *GoGo Search Engine* 」\n\n*Search term:* ${text}\n\n\n`
- for (let g of data) {
- teks += `*Title* : ${g.title}\n\n`
- teks += `*URL* : ${g.url}\n\n`
- teks += `*Release Date* : ${g.releaseDate}\n\n\n        -----------------------------------------------------------------------------\n\n`
- } 
+
+ teks += `*Title* : ${data.title}\n\n`
+ teks += `*URL* : ${data.url}\n\n`
+ teks += `*Release Date* : ${data.releaseDate}\n\n\n        -----------------------------------------------------------------------------\n\n`
+ 
  reply(teks)
   })
   }
