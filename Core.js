@@ -4200,7 +4200,7 @@ case 'ggsearch': {
  await fetchJson(`https://gogoanime.consumet.org/search?keyw=${command}`)
     fetch("https://gogoanime.consumet.org/search?keyw=naruto")
   .then((response) => response.json())
-  .then((animelist) => console.log(animelist)) => {
+  .then((animelist) => {
     let txt = `   _GoGoAnime Search Engine_ \n\n*Search Term:* *${res.data.animeId}*\n*Title:* *${res.data.animeTitle}*\n*Anime URL:* *${res.data.animeUrl}*\n*IMG:* *${res.data.animeImg}*\n*Released:* *${res.data.status}*\n`
      Marin.sendMessage(from, { image : { url : res.data.images.jpg.animeImg}, caption : txt}, {quoted :m })
  })
