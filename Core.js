@@ -4199,8 +4199,10 @@ case 'ggsearch': {
  if (!args.join(" ")) return replay(`Example : ${prefix}ggsearch Naruto`)
  await fetchJson(`https://gogoanime.consumet.org/search?keyw=${command}`)
     .then((res) => {
-    let txt = `   _GoGoAnime Search Engine_ \n\n*Search Term:* *${res.data.animeId}*\n*Anime URL:* *${res.data.animeUrl}*\n*IMG:* *${res.data.animeImg}*\n*Released:* *${res.data.status}*\n`
+    let txt = `   _GoGoAnime Search Engine_ \n\n*Search Term:* *${res.data.animeId}*\n*Title:* *${res.data.animeTitle}*\n*Anime URL:* *${res.data.animeUrl}*\n*IMG:* *${res.data.animeImg}*\n*Released:* *${res.data.status}*\n`
+     Marin.sendMessage(from, { image : { url : res.data.images.jpg.animeImg}, caption : txt}, {quoted :m })
  })
+ 
 
  }
  break
