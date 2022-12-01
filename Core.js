@@ -4197,8 +4197,7 @@ case 'ggsearch': {
     if (isBan) return reply(mess.banned)	 			
  if (isBanChat) return reply(mess.bangc)
  if (!args.join(" ")) return replay(`Example : ${prefix}ggsearch Naruto`)
- await fetchJson(`https://gogoanime.consumet.org/search?keyw=${command}`)
-    fetch("https://gogoanime.consumet.org/search?keyw=naruto")
+    fetch("https://gogoanime.consumet.org/search?keyw=${command}")
   .then((response) => response.json())
   .then((animelist) => {
     let txt = `   _GoGoAnime Search Engine_ \n\n*Search Term:* *${res.data.animeId}*\n*Title:* *${res.data.animeTitle}*\n*Anime URL:* *${res.data.animeUrl}*\n*IMG:* *${res.data.animeImg}*\n*Released:* *${res.data.status}*\n`
