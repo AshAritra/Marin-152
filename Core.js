@@ -4192,7 +4192,8 @@ const { ANIME } = require("@consumet/extensions")
 // Create a new instance of the Gogoanime provider
 const gogoanime = new ANIME.Gogoanime();
 // Search for an anime. In this case, "One Piece"
-const results = gogoanime.search("+text+").then(data => {
+let text = args.join(" ")
+const results = gogoanime.search(text).then(data => {
   // print results
   console.log(data);})
   }
