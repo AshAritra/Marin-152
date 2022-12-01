@@ -4193,11 +4193,11 @@ const { ANIME } = require("@consumet/extensions")
 const gogoanime = new ANIME.Gogoanime();
 // Search for an anime. In this case, "One Piece"
 let text = args.join(" ")
-const results = gogoanime.search(text).then(res => {
+const results = gogoanime.search(text).then(data => {
   // print results
-  console.log(res)
+  console.log(data)
   let sections = []   
-  for (let i of res) {
+  for (let i of data) {
   const list = {title: `${i.title}`,
   rows: [
 	    {
