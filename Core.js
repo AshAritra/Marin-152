@@ -18,7 +18,7 @@ const { JSDOM } = require('jsdom')
 const speed = require('performance-now')
 const hx = require("hxz-api")
 const hxz = require('./lib/hxz-api')
-const gogoanime = require("./lib/api")
+const { GoGoAnime } = require('gogoanime-api');)
 const bdr = require('rumus-bdr')
 const yogipw = require("tod-api")
 const { color, bgcolor } = require('./lib/color')
@@ -4187,13 +4187,17 @@ reply(mess.waiting)
                 })
 break
 
+
+
+
+
+
 ////////////////////////gogoanime////////////////////
 case 'ggsearch': {
     if (isBan) return reply(mess.banned)	 			
  if (isBanChat) return reply(mess.bangc)
  if (!args.join(" ")) return replay(`Example : ${prefix}ggsearch Naruto`)
- fetch("https://gogoanime.consumet.org/search?keyw='+text+'")
- yogipw.happymod(args.join(" ")).then(async(res) => {
+ fetch("https://gogoanime.consumet.org/search?keyw='+text+'").then(async(res) => {
  teks = '```「 GoGoAnime Search Engine 」```'
  for (let i of res) {
  teks += `\n\n${i.name}\n`
