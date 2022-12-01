@@ -4193,15 +4193,35 @@ const { ANIME } = require("@consumet/extensions")
 const gogoanime = new ANIME.Gogoanime();
 // Search for an anime. In this case, "One Piece"
 let text = args.join(" ")
-const results = gogoanime.search(text).then(data => {
+const results = gogoanime.search(text).then(res => {
   // print results
-  console.log(data)
-  reply(`
-*Title :* ${data.title}
-*URL :* ${data.url}`)
+  console.log(res)
+  let sections = []   
+  for (let i of res.data) {
+  const list = {title: `${i.title}`,
+  rows: [
+	    {
+	     title: `${i.title}\n\n`
+	    }, 
+	    ]
+     }
+     sections.push(list)   
+     }
+  const sendm =  Marin.sendMessage(
+      from, 
+      {
+       text: "Anime Search",
+       footer: BotName,
+       title: OwnerName,
+       buttonText: "Search Results",
+       sections
+      }, { quoted : m }
+    ) 
   })
   }
 break
+
+
 
 ////////////////////////////////Version//////////////////////////////////////////////
 	case 'version': case 'Version': case 'var':{ 
