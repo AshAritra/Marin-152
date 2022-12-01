@@ -4197,7 +4197,7 @@ const results = gogoanime.search(text).then(res => {
   // print results
   console.log(res)
   let sections = []   
-  for (let i of res.data) {
+  for (let i of res) {
   const list = {title: `${i.title}`,
   rows: [
 	    {
