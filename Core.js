@@ -4194,7 +4194,7 @@ const gogoanime = new ANIME.Gogoanime();
 // Search for an anime. In this case, "One Piece"
 const results = gogoanime.search("+text+").then(data => {
   // print results
-  console.log(data);}
+  console.log(data);})
   }
 break
 
