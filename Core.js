@@ -4196,27 +4196,13 @@ let text = args.join(" ")
 const results = gogoanime.search(text).then(data => {
   // print results
   console.log(data)
-  let sections = []   
-  for (let i of data) {
-  const list = {title: `${i.title}`,
-  rows: [
-	    {
-	     title: `${i.title}\n\n`
-	    }, 
-	    ]
-     }
-     sections.push(list)   
-     }
-  const sendm =  Marin.sendMessage(
-      from, 
-      {
-       text: "Anime Search",
-       footer: BotName,
-       title: OwnerName,
-       buttonText: "Search Results",
-       sections
-      }, { quoted : m }
-    ) 
+  let teks = `「 *GoGo Search Engine* 」\n\n*Search term:* ${text}\n\n\n`
+ for (let g of data) {
+ teks += `*Title* : ${g.title}\n\n`
+ teks += `*URL* : ${g.url}\n\n`
+ teks += `*Release Date* : ${g.releaseDate}\n\n\n        -----------------------------------------------------------------------------\n\n`
+ } 
+ reply(teks)
   })
   }
 break
