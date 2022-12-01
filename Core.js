@@ -4198,21 +4198,7 @@ case 'ggsearch': {
  if (isBanChat) return reply(mess.bangc)
  if (!args.join(" ")) return replay(`Example : ${prefix}ggsearch Naruto`)
  const gogoAnime = new GoGoAnime();
- let buttons = [
- {buttonId: `-menu`, buttonText: {displayText: '✨Menu✨'}, type: 1}
- ]
- let buttonMessage = {
- image: {url:res[0].icon},
- jpegThumbnail: Thumb,
- caption: teks,
- footer: `${global.BotName}`,
- buttons: buttons,
- headerType: 4
- }
- Marin.sendMessage(m.chat, buttonMessage, { quoted: m })
- })
- 
- 
+
  }
  break
 
