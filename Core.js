@@ -4191,7 +4191,7 @@ break
 
 
 
-
+/*
 ////////////////////////gogoanime////////////////////
 case 'ggsearch': {
     if (isBan) return reply(mess.banned)	 			
@@ -4238,7 +4238,7 @@ Marin.sendMessage(m.chat,{image:{url:result.images.jpg.large_image_url},caption:
 
  
  break
-
+*/
 ////////////////////////////////Version//////////////////////////////////////////////
 	case 'version': case 'Version': case 'var':{ 
 		if (isBan) return reply(mess.banned)
