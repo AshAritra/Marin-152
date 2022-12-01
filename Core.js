@@ -4197,14 +4197,46 @@ case 'ggsearch': {
     if (isBan) return reply(mess.banned)	 			
  if (isBanChat) return reply(mess.bangc)
  if (!args.join(" ")) return replay(`Example : ${prefix}ggsearch Naruto`)
-    fetch("https://gogoanime.consumet.org/search?keyw=${command}")
-  .then((response) => response.json())
-  .then((animelist) => {
-    let txt = `   _GoGoAnime Search Engine_ \n\n*Search Term:* *${res.data.animeId}*\n*Title:* *${res.data.animeTitle}*\n*Anime URL:* *${res.data.animeUrl}*\n*IMG:* *${res.data.animeImg}*\n*Released:* *${res.data.status}*\n`
-     Marin.sendMessage(from, { image : { url : res.data.images.jpg.animeImg}, caption : txt}, {quoted :m })
- })
+  const gogoAnime = new GoGoAnime();
+  let anime = await client.searchAnime(q)
+    let result = anime.data[0];
+    console.log(result)
+   let details = `*Title:* ${result.title}\n`;
+    details += `*Format:* ${result.type}\n`;
+    details += `*Status:* ${result.status.toUpperCase().replace(/\_/g, " ")}\n`;
+    details += `*Total episodes:* ${result.episodes}\n`;
+    details += `*Duration:* ${result.duration}\n`;
+    details += `*Genres:*\n`;
+    for (let i = 0; i < result.genres.length; i++) {
+      details += `\t\t\t\t\t\t\t\t${result.genres[i].name}\n`;
+    }
+    details += `*Based on:* ${result.source.toUpperCase()}\n`;
+    details += `*Studios:*\n`;
+    for (let i = 0; i < result.studios.length; i++) {
+      details += `\t\t\t\t\t\t\t\t${result.studios[i].name}\n`;
+    }
+    details += `*Producers:*\n`;
+    for (let i = 0; i < result.producers.length; i++) {
+      details += `\t\t\t\t\t\t\t\t\t\t${result.producers[i].name}\n`;
+    }
+    details += `*Premiered on:* ${result.aired.from}\n`;
+    details += `*Ended on:* ${result.aired.to}\n`;
+    details += `*Popularity:* ${result.popularity}\n`;
+    details += `*Favorites:* ${result.favorites}\n`;
+    details += `*Rating:* ${result.rating}\n`;
+    details += `*Rank:* ${result.rank}\n\n`;
+    if (result.trailer.url !== null)
+      details += `*Trailer:* ${result.trailer.url}\n\n`;
+    details += `*URL:* ${result.url}\n\n`;
+    if (result.background !== null)
+      details += `*Background:* ${result.background}\n\n`;
+    details += `*Description:* ${result.synopsis.replace(
+      /\[Written by MAL Rewrite]/g,
+      ""
+    )}`
+Marin.sendMessage(m.chat,{image:{url:result.images.jpg.large_image_url},caption:details},{quoted:m})
 
- }
+ 
  break
 
 ////////////////////////////////Version//////////////////////////////////////////////
