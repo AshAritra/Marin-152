@@ -4197,46 +4197,13 @@ case 'ggsearch': {
     if (isBan) return reply(mess.banned)	 			
  if (isBanChat) return reply(mess.bangc)
  if (!args.join(" ")) return replay(`Example : ${prefix}ggsearch Naruto`)
- gogoAnime = await axios.get(`https://gogoanime.consumet.org/search?keyw=${command}`)
-  .then(async(res) => {
- teks = '```「 GoGoAnime Search Engine 」```'
- for (let i of res) {
- teks += `\n\n${i.name}\n`
- teks += `${i.link}`
+ await fetchJson(`https://gogoanime.consumet.org/search?keyw=${command}`)
+    .then((res) => {
+    let txt = `   _GoGoAnime Search Engine_ \n\n*Title:* *${res.data.title}*\n*English:* *${res.data.title_english}*\n*Japanese:* *${res.data.title_japanese}*\n*Anime Type:* *${res.data.type}*\n*Adaptation:* *${res.data.source}*\n*Total Episode:* *${res.data.episodes}*\n*Status:* *${res.data.status}*\n*Ongoing:* *${res.data.airing ? 'Yes' : 'No'}*\n*Aired:* *${res.data.aired.string}*\n*Duration:* *${res.data.duration}*\n*Rating:* *${res.data.rating}*\n*Score:* *${res.data.score}*\n*Rank:* *${res.data.rank}*\n*Main Producer:* *${res.data.producers.name}*\n*Studio:* *${res.data.studios[0].name}* `
  }
- let buttons = [
- {buttonId: `-menu`, buttonText: {displayText: '✨Menu✨'}, type: 1}
- ]
- let buttonMessage = {
- image: {url:res[0].icon},
- jpegThumbnail: Thumb,
- caption: teks,
- footer: `${global.BotName}`,
- buttons: buttons,
- headerType: 4
- }
- Marin.sendMessage(m.chat, buttonMessage, { quoted: m })
- })
- 
- 
+
  }
  break
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ////////////////////////////////Version//////////////////////////////////////////////
 	case 'version': case 'Version': case 'var':{ 
