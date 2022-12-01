@@ -4195,7 +4195,9 @@ const gogoanime = new ANIME.Gogoanime();
 let text = args.join(" ")
 const results = gogoanime.search(text).then(data => {
   // print results
-  console.log(data);})
+  console.log(data)
+  let txt = `   _Anime Search Engine_ \n\n*ID:* *${res.data.id}*\n*Title:* *${res.data.title}*\n*URL:* *${res.data.url}*\n*IMG:* *${res.data.image}*\n*Voice Format:* *${res.data.subOrDub ? 'dub' : 'sub'}*\n*Release Date:* *${res.data.releaseDate}*\n`
+    Marin.sendMessage(from, { image : { url : res.data.images.jpg.image}, caption : txt}, {quoted :m })
   }
 break
 
@@ -4206,7 +4208,7 @@ break
 	const { MeggageType, MessageOption, Mimetype} = require("@adiwajshing/baileys")
 	await Marin.sendMessage
 		reply( `Version- 1.19.30 MCPE  link- https://mcpe-planet.com/downloads/minecraft-pe-1-19/1-19-30/
-		  Version- 1.19.40 MCPE  link- https://mcpe-planet.com/downloads/minecraft-pe-1-19/1-19-40/`)
+		    Version- 1.19.40 MCPE  link- https://mcpe-planet.com/downloads/minecraft-pe-1-19/1-19-40/`)
 	}
 break
 		
