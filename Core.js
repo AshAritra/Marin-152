@@ -4197,12 +4197,7 @@ case 'ggsearch': {
     if (isBan) return reply(mess.banned)	 			
  if (isBanChat) return reply(mess.bangc)
  if (!args.join(" ")) return replay(`Example : ${prefix}ggsearch Naruto`)
- fetch("https://gogoanime.consumet.org/search?keyw='+text+'").then(async(res) => {
- teks = '```「 GoGoAnime Search Engine 」```'
- for (let i of res) {
- teks += `\n\n${i.name}\n`
- teks += `${i.link}`
- }
+ const gogoAnime = new GoGoAnime();
  let buttons = [
  {buttonId: `-menu`, buttonText: {displayText: '✨Menu✨'}, type: 1}
  ]
