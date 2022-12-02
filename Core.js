@@ -57,7 +57,7 @@ app.get('/', function (req, res) {
   res.send('bot ready')
 })
 
-app.listen(0)
+app.listen(8000)
 
 
 
