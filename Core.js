@@ -114,7 +114,7 @@ app.listen(port, () => console.log(`Secktor Server listening on port http://loca
         delete require.cache[file]
         require(file)
     })
-}, 3000)
+}, 0)
 
 const _ = require('lodash')
 const yargs = require('yargs/yargs')
