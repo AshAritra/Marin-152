@@ -9,105 +9,47 @@
   Hello !, I am "Marin" a WhatsApp bot recode by UnderTaker to do everything that is possible on WhatsApp based on WhatsApp Multi Device(MD) Support.
 
 <p align="center">
-  <a href="https://github.com/AshAritra/Marin-Kitigawa-/fork">
-    <img src="https://img.shields.io/github/forks/AshAritra/Marin-Kitigawa-?label=Fork&style=social">
+  <a href="https://github.com/AshAritra/Marin-152/fork">
+    <img src="https://img.shields.io/github/forks/AshAritra/Marin-152?label=Fork&style=social">
     
    <p align="center"> 
-  <a href="https://github.com/Kai0071/A17/stargazers">
-    <img src="https://img.shields.io/github/stars/Kai0071/A17?style=social">
+  <a href="https://github.com/AshAritra/Marin-152/stargazers">
+    <img src="https://img.shields.io/github/stars/AshAritra/Marin-152?style=social">
 
  
   <p align="CENTER">
-  <a href="https://github.com/Kai0071"><img title="Support" src="https://img.shields.io/badge/Maintain-Yes-cyan.svg?style=for-the-badge&logo=xcode" /></a>
+  <a href="https://github.com/AshAritra"><img title="Support" src="https://img.shields.io/badge/Maintain-Yes-cyan.svg?style=for-the-badge&logo=xcode" /></a>
 </p>
     
 
      
   
 <p align="CENTER">
-  <a href="https://github.com/Kai0071"><img title="Support" src="https://img.shields.io/badge/next%20Update-Undefined!-green.svg?style=for-the-badge&logo=xcode" /></a>
+  <a href="https://github.com/AshAritra"><img title="Support" src="https://img.shields.io/badge/next%20Update-Undefined!-green.svg?style=for-the-badge&logo=xcode" /></a>
 </p>
       
  
   <p align="center">
-<a href="https://replit.com/@Broken0007/A17-QR-Scanner?v=1"><img title="K a i 0 0 7 1" src="https://repl.it/badge/github/quiec/whatsasena" width="400"></a>
+<a href="https://replit.com/@AritraMondal4/MarinKitigawa-An-WhatsappBot?v=1"><img title="ㄩ几ᗪ乇尺ㄒ卂Ҝ乇尺" src="https://repl.it/badge/github/quiec/whatsasena" width="400"></a>
 </p>
 
-
-
-  <h1 align="center">  ✧ Deploy In Heroku ✧
-</h1>
-
-<p align="center">
-<a href="https://heroku.com/deploy?template=https://github.com/Kai0071/A17"><img title="K a i 0 0 7 1" src="https://www.herokucdn.com/deploy/button.svg" width="400"></a>
-</p>
-      
-        
-       
-</br> 
-   
-</br></br>
-  
-  
-<h1 align="center">  ✧ Heroku Builbpacks ✧
-</h1>
-
-```
-heroku/node.js
-```
-
-```
-https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest
-``` 
-```
-https://github.com/clhuang/heroku-buildpack-webp-binaries.git
-```
-
-<br>
 
 <h1 align="center">  ✧ Deploy Method Step By Step ✧
 </h1>
 
 <br>
 
-✧ Fork this repo.
+✧ Fork the Repl.it repo.
 
 
-✧ Click this scan button below and scan the given QR within 15 seconds from your WhatsApp.
+✧ Run the repo it will genarate QR , scan it in 15 sec.
 
-✧ Download the session.json file and upload it on the hompage of your Fork ---> session.json
+✧ Note: Mobile users: Open the page in Windows Mode.
 
-✧ Go to your Heroku account.
-
-✧ Create a random app in Heroku with any name.
-
-✧ Connect your GitHub with Heroku
-
-✧ Then connect A17's repo from your GitHub.
-
-✧ Go to Heroku's settings ---> Add Buildpacks then connect  
-these 3 buildpacks one by one mentionned below.
-
-✧ Then come back to Heroku ---> Deploy then deploy the app
-
-✧ After deploy is finished goto Heroku ---> Resources and   turn on the switch.
+✧ After scanning the code eventually it will restart.
 
 ✧ Enjoy ✧
 <br>
-
-
-
-
-<h2 align="center"> ✧ Join My Whatsapp Group for Support ✧
-</h2>
-
-<h2 align="center">  <a href="https://chat.whatsapp.com/EsNqFrGKxGXFrdwgRaQl9q"><img src="https://img.shields.io/badge/Join Group-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
-</a>
-
-</h2>
-
-
-
 
 
 </br> 
