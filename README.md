@@ -9,8 +9,8 @@
   Hello !, I am "Marin" a WhatsApp bot recode by UnderTaker to do everything that is possible on WhatsApp based on WhatsApp Multi Device(MD) Support.
 
 <p align="center">
-  <a href="https://github.com/AshAritra/A17/fork">
-    <img src="https://img.shields.io/github/forks/Kai0071/A17?label=Fork&style=social">
+  <a href="https://github.com/AshAritra/Marin-Kitigawa-/fork">
+    <img src="https://img.shields.io/github/forks/AshAritra/Marin-Kitigawa-?label=Fork&style=social">
     
    <p align="center"> 
   <a href="https://github.com/Kai0071/A17/stargazers">
