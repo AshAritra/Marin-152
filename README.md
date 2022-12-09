@@ -3,7 +3,7 @@
     <img src="https://media.tenor.com/AXSPYmKY1h4AAAPo/marin-darling.mp4" width="610">
      
 </p>
-<h1 align="center"> Marin Kitigawa (Beta))
+<h1 align="center"> Marin Kitigawa (Beta)
 </h1>
 <p align="center"> 
   Hello !, I am "Marin" a WhatsApp bot recode by UnderTaker to do everything that is possible on WhatsApp based on WhatsApp Multi Device(MD) Support.
