@@ -128,10 +128,12 @@ let tebaklirik = db.game.lirik = []
 let tebaktebakan = db.game.tebakan = []
 let vote = db.others.vote = []
 
+////database///
 let pendaftar = JSON.parse(fs.readFileSync('./storage/user/user.json'))
 let balance = JSON.parse(fs.readFileSync('./database/balance.json'))
 let ssewa = JSON.parse(fs.readFileSync('./database/sewa.json'))
 let ban = JSON.parse(fs.readFileSync('./database/ban.json'))
+const bad = JSON.parse(fs.readFileSync('./database/bad.json'))
 let autosticker = JSON.parse(fs.readFileSync('./database/autosticker.json'))
 const _autostick = JSON.parse(fs.readFileSync('./database/autostickpc.json'))
 let _leveling = JSON.parse(fs.readFileSync('./database/leveling.json'))
@@ -242,9 +244,10 @@ const reply = (teks) => {
 
 function randomNomor(angka){
             return Math.floor(Math.random() * angka) + 1
-            }
-            
-		
+            }           
+if (bad.includes(messagesD)) {
+				reply('Toxic!_Chat_Detected') ////toxic detector///
+				}		
 if (m.message) {
 addBalance(m.sender, randomNomor(574), balance)
 console.log(chalk.black(chalk.bgWhite('[ MESSAGE ]')), chalk.black(chalk.bgGreen(new Date)), chalk.black(chalk.bgBlue(budy || m.mtype)) + '\n' + chalk.magenta('=> From'), chalk.green(pushname), chalk.yellow(m.sender) + '\n' + chalk.blueBright('=> In'), chalk.green(m.isGroup ? pushname : 'Private Chat', m.chat))
@@ -494,12 +497,19 @@ if (command) {
 await Marin.sendPresenceUpdate('composing', m.chat)
 Marin.sendReadReceipt(from, m.sender, [m.key.id])}
 }
+
+//antispam or auto react
+if (m.message && msgFilter.isFiltered(from)) {
+console.log(`${global.themeemoji}[SPAM]`, color(moment(m.messageTimestamp * 1000).format('DD/MM/YYYY HH:mm:ss'), 'yellow'), color(`${command} [${args.length}]`), 'from', color(m.pushName))
+return Marin.sendMessage(from, { react: { text: `${global.themeemoji}`, key: m.key }})
+}
+
 /*
-  if (global.autoReadGc) {
+ if (global.autoReadGc) {
   if (m.isGroup) { Marin.sendReadReceipt(m.chat, m.sender, [m.key.id]) }
 }
-*/
 
+*/
   if (global.autoReadAll) { if (m.chat) { Marin.sendReadReceipt(m.chat, m.sender, [m.key.id]) }
   }
 
@@ -681,9 +691,9 @@ rkyt.push(m.sender.split("@")[0])
 
 global.hit = {}
 if (isCmd) {
-data = await fetchJson('https://api.countapi.xyz/hit/CheemsBot/visits')
+data = await fetchJson('https://api.countapi.xyz/hit/Marin-152/visits')
 jumlahcmd = `${data.value}`
-dataa = await fetchJson(`https://api.countapi.xyz/hit/CheemsBot${moment.tz('Asia/Kolkata').format('DDMMYYYY')}/visits`)
+dataa = await fetchJson(`https://api.countapi.xyz/hit/Marin-152${moment.tz('Asia/Kolkata').format('DDMMYYYY')}/visits`)
 jumlahharian = `${dataa.value}`
 }
  
@@ -1524,7 +1534,8 @@ case 'help': case 'h': case 'menu': case 'allmenu': case 'listmenu':{
 ⬡│▸ *Owner name :* ${global.OwnerName} 
 ⬡│▸ *Bot speed :* ${latensie.toFixed(4)} ms 
 ⬡│▸ *Bot runtime :* ${runtime(process.uptime())} 
-⬡│▸ *Platform :* Repl.it 
+⬡│▸ *Platform :* Repl.it
+⬡│▸ *Total User:* ${Object.keys(global.db.data.users).length} 
 ┬│▸
 │╰────────────────···▸
 ┠⬡│▸ Here's the list of my Commands.
@@ -1627,7 +1638,8 @@ case 'help': case 'h': case 'menu': case 'allmenu': case 'listmenu':{
 ⬡│▸ twitter, twittermp3,
 ⬡│▸ tiktok, tiktokaudio
 ⬡│▸ tiktoknowm, mediafire  
-┬│▸
+⬡│▸ zippyshare
+┬│▸ 
 ╰────────────────···▸
 ┠━━〈 🎐 *Fun* 🎐 〉━━
 │╭───────────────···▸
@@ -1639,6 +1651,7 @@ case 'help': case 'h': case 'menu': case 'allmenu': case 'listmenu':{
 ⬡│▸ uglycheck, charactercheck
 ⬡│▸ lesbiancheck, hornycheck,
 ⬡│▸ prettycheck, lovelycheck,
+⬡│▸ meme , animeme , mcmeme
 ┬│▸
 ╰────────────────···▸
 ┠━━〈 🈴 *Weeb* 🈴 〉━━
@@ -1651,7 +1664,8 @@ case 'help': case 'h': case 'menu': case 'allmenu': case 'listmenu':{
 ⬡│▸ animenom, waifu3, neko2,
 ⬡│▸ feed, meow, tickle, migumin
 ⬡│▸ awoo, animewallpaper2
-⬡│▸ anime, manga
+⬡│▸ anime, manga 
+⬡│▸ animeme , gogo
 ┬│▸
 ╰────────────────···▸
 ┠━━〈 ♨️ *Informative* ♨️ 〉━━
@@ -1666,12 +1680,14 @@ case 'help': case 'h': case 'menu': case 'allmenu': case 'listmenu':{
 ┴│▸
 ⬡│▸ qr, say, translate, 
 ⬡│▸ fliptext, toletter
+⬡│▸ glitchtxt , phubtxt
 ┬│▸
 ╰────────────────···▸
 ┠━━〈 🎗 *Others* 🎗 〉━━
 │╭───────────────···▸
 ┴│▸
 ⬡│▸ stickermeme, quotes, darkjoke
+⬡│▸ mcstat
 ┬│▸
 ╰────────────────···▸
 ┠━━〈 ⚠️ *NSFW* ⚠️ 〉━━
@@ -3273,7 +3289,7 @@ await Marin.sendMessage(
 }
 break	
 */		
-/*		
+		
 //////////////////////////////////////////Access section/////////////////////////////////////////
 case 'access':  case 'Access':{
     if (isBan) return reply(mess.banned)	 			
@@ -3297,7 +3313,7 @@ await Marin.sendMessage(
 `)
 }
 break 
-*/
+
 
 case 'dc':  case 'Dc':{
     if (isBan) return reply(mess.banned)	 			
@@ -3334,12 +3350,12 @@ await Marin.sendMessage(
     }
 )
   reply( ` *━━〈✨ ༺Mist Dragon Server༻ ✨ 〉━━*      
-『  *Java*  』⪼ 001.hyd.in.optik.host:27729  
-『  *Bedrock*  』⪼ 001.hyd.in.optik.host 
-『』*port*⪼ 27729 
-『  *Version*  』⪼ 1.19.40
+『  *Java*  』⪼ de1.qloxhost.net:26235  
+『  *Bedrock*  』⪼ de1.qloxhost.net 
+『』*port*⪼ 26235 
+『  *Version*  』⪼ 1.19.40, 1.19.50
 『  *No Beta version Allowed*  』
-✨*support*✨⪼ crossplay , lagfree , multi-version, 24/7 !
+✨*support*✨⪼ crossplay , lagfree , multi-version,  !
 ` )
 }
 break
@@ -3470,7 +3486,7 @@ case 'sgif': case 'sticker': case 's': {
  }
  }
  break
-
+ 
 case 'swm': case 'take': case 'stickerwm': case 'steal':{
     if (isBan) return reply(mess.banned)
     if (isBanChat) return reply(mess.bangc)
@@ -3697,7 +3713,44 @@ case 'reaction': case 'react': case 'reactions': case 'r':
         if (isBan) return reply(mess.banned)	 			
         if (isBanChat) return reply(mess.bangc)
             reply(` *━━━〈  📍 Reactions 📍  〉━━━*\n\nbonk, cry, bully, cuddle, hug, kiss, lick, pat, smug, yeet, blush, smile, wave, highfive, handhold, nom, glomp, bite, slap, kill, happy, wink, poke, dance, cringe`)
-        break   
+        break 
+
+case 'fuck':{
+    if (isBan) return reply(mess.banned)	 			
+    if (isBanChat) return reply(mess.bangc)
+    if (!m.isGroup) return replay(mess.grouponly)	
+	var pat = await fetchJson(`https://api.satou-chan.xyz/api/endpoint/pregnant`)
+	try {
+		let messsender = m.sender
+let musers=``
+try {
+users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
+
+ ment=[messsender,users]
+} catch {
+	users == "none"
+	 ment=[messsender,m.sender]
+}
+if(users == "none"){
+     musers =`@${m.sender.split("@")[0]} ${command}ed with themself!`
+     console.log(musers)
+
+} else {
+const rcpp =`@${users.split("@"[0])}`
+ musers= `@${m.sender.split("@")[0]} ${command}ed with @${users.split("@")[0]} `
+
+console.log(musers)
+}
+        const response = await axios.get(pat.url,  { responseType: 'arraybuffer' })
+        const buffer = Buffer.from(response.data, "utf-8")
+		var fetchedgif = await GIFBufferToVideoBuffer(buffer)
+		Marin.sendMessage(m.chat,{video: fetchedgif, gifPlayback:true,mentions:ment,caption:musers},{quoted:m})
+    } catch (error) {
+        console.log(error);
+    }
+}
+break
+		
     
 case 'cry':  case 'handhold':{
     if (isBan) return reply(mess.banned)	 			
@@ -3969,7 +4022,6 @@ break
 
 
 /////////////////////////////////////////////〈 🌌 *Downloader* 🌌 〉///////////////////////////////////////
-
 
  case 'igdl': case 'instagram': case 'instagramreels': case 'igreels': {
     if (isBan) return reply(mess.banned)	 			
@@ -4492,7 +4544,36 @@ case 'pinterest': case 'pin': {
 
 ///////////////////////////////////////////////////〈 🎐 *Fun* 🎐 〉/////////////////////////////////////////////////
 
-	
+
+case 'meme': {
+    if (isBan) return reply(mess.banned)	 			
+    if (isBanChat) return reply(mess.bangc)
+    if (!m.isGroup) return replay(mess.grouponly)
+		const memesg =[
+	"IndianDankMemes",
+	"DankinIndia",
+	"indiameme",
+	"desimemes"
+	]
+	const memered = memesg[Math.floor(Math.random() * memesg.length)]
+data = await fetchJson(`https://meme-api.com/gimme/${memered}`)
+img = `${data.url}`
+const seg = ['Brh thats neat','lol','that quite good','noice meme','*XD*','hahah']
+					const tenu = seg[Math.floor(Math.random() * seg.length)]
+ Marin.sendMessage(m.chat, { image: { url: img },  caption: tenu }, { quoted: m })
+ }
+ break
+ 
+ case 'mcmeme': {
+    if (isBan) return reply(mess.banned)	 			
+    if (isBanChat) return reply(mess.bangc)
+    if (!m.isGroup) return replay(mess.grouponly)
+data = await fetchJson('https://meme-api.com/gimme/MinecraftMemes')
+img = `${data.url}`
+ Marin.sendMessage(m.chat, { image: { url: img }}, { quoted: m })
+ }
+ break
+ 	
 case 'couple': case 'ship': {
     if (isBan) return reply(mess.banned)
     if (isBanChat) return reply(mess.bangc)
@@ -4767,6 +4848,40 @@ case 'truth':
 	
 
 //////////////////////////////////////////////////〈 🈴 *Weeb* 🈴 〉//////////////////////////////////////////////
+
+ case 'animeme': {
+    if (isBan) return reply(mess.banned)	 			
+    if (isBanChat) return reply(mess.bangc)
+    if (!m.isGroup) return replay(mess.grouponly)
+  reply(mess.waiting)
+data = await fetchJson('https://meme-api.com/gimme/animememes')
+img = `${data.url}`
+
+ Marin.sendMessage(m.chat, { image: { url: img },  caption: "Have fun Darling..." }, { quoted: m })
+ }
+ break
+
+case 'gogo': {
+    if (isBan) return reply(mess.banned)	 			
+    if (isBanChat) return reply(mess.bangc)
+    if (!m.isGroup) return replay(mess.grouponly)
+  let text = args.join(" ")
+data = await fetchJson(`https://gogoanime.consumet.org/anime-details/${text}`)
+   let teks = `「 *Marin Search Engine* 」\n\n*Search term:* ${text}\n\n\n`
+for (let i of data.episodesList) {
+ teks += `*Title* : ${data.animeTitle}\n\n`
+ teks += `*Type* : ${data.type}\n\n`
+ teks += `*Status* : ${data.status}\n\n`
+ teks += `*Genres* : ${data.genres}\n\n`
+ teks += `*Other Names* : ${data.otherNames}\n\n`
+ teks += `*Released Date* : ${data.releasedDate}\n\n`
+ teks += `*Episodes ID* : ${i.episodeId}\n\n`
+ teks += `*Episodes Num* : ${i.episodeNum}\n\n`
+ teks += `*Episodes Url* : ${i.episodeUrl}\n\n\n        -----------------------------------------------------------------------------\n\n`
+}
+reply(teks)
+}
+ break
 
 
 case 'anime':
@@ -5224,6 +5339,32 @@ break
 
 ///////////////////////////////////////////////〈 🪁 *Essentials* 🪁 〉///////////////////////////////
 
+case'phubtxt':
+   if (isBan) return reply(mess.ban)	 			
+if (isBanChat) return reply(mess.banChat)
+if(!q) return reply(`Use ${prefix + command} text|text`)
+reply(`wait..`)
+teks1 = q.split("|")[0]
+teks2 = q.split("|")[1]
+maker.textpro("https://textpro.me/pornhub-style-logo-online-generator-free-977.html", [
+    `${teks1}`,`${teks2}`])
+  .then((data) => Marin.sendMessage(m.chat, { image: { url: data }, caption: `Made by ${global.BotName}` }, { quoted: m }))
+  .catch((err) => console.log(err));
+   break
+
+case'glitchtxt':
+   if (isBan) return reply(mess.banned)
+    if (isBanChat) return reply(mess.bangc)
+if(!q) return reply(`Use ${prefix + command} text|text`)
+reply(`Dude wait i am not a robot`)
+teks1 = q.split("|")[0]
+teks2 = q.split("|")[1]
+maker.textpro("https://textpro.me/create-glitch-text-effect-style-tik-tok-983.html", [
+    `${teks1}`,`${teks2}`])
+  .then((data) => Marin.sendMessage(m.chat, { image: { url: data }, caption: `Made by ${global.BotName}` }, { quoted: m }))
+  .catch((err) => console.log(err));
+   break
+
 
  case "tts":  case "texttospeech":  case "say": case "speak":{
     if (isBan) return reply(mess.banned)	 			
@@ -5313,6 +5454,18 @@ if (text) {
 
 ////////////////////////////////////////////〈 🎗 *Others* 🎗 〉//////////////////////////////////////
 
+case 'zippyshare': {
+	if (isBan) return reply(mess.ban)	 			
+if (isBanChat) return reply(mess.banChat)
+if (!text) return reply(`Only Link allowed baka`)
+if (!isUrl(args[0]) && !args[0].includes('zippyshare.com')) return reply(`The link is not a zippyshare link`)
+anu = await fetchJson(`https://violetics.pw/api/downloader/zippyshare?apikey=df7d-425a-3bc8&url=${text}`)
+m.reply(`*${util.format(anu)}*`)
+linkyke = await getBuffer(anu.result.dlink)
+Marin.sendMessage(m.chat, {document: linkyke, mimetype: 'application/zip', fileName: `${anu.result.filename}`}, {quoted:m}).catch ((err) => reply(mess.error))     
+}
+break
+
 case "darkjoke":{
     if (isBan) return reply(mess.banned)	 			
     if (isBanChat) return reply(mess.bangc)
@@ -5322,11 +5475,29 @@ teks = "\nDarkjokes"
 Marin.sendMessage(m.chat, { image : { url : res }, caption: teks }, { quoted : m })
 }
 break
+
+case'mcstat': {
+    if (isBan) return reply(mess.banned)	 			
+    if (isBanChat) return reply(mess.bangc)
+    if (!m.isGroup) return replay(mess.grouponly)
+   let addpp = args.join(" ")
+data = await fetchJson(`https://api.mcsrvstat.us/2/${addpp}`)
+
+let teks = `「 *MC State* 」\n\n*Search term:* ${text}\n\n\n`
+teks += `Online: ${data.online}\n`
+teks += `Ip: ${data.ip}\n`
+teks += `Port: ${data.port}\n`
+teks += `Version: ${data.version}\n`
+teks += `MOTD: ${data.motd.clean}\n`
+teks += `MAX: ${data.players.max}\n`
+teks += `Online: ${data.players.online}\n`
+
+ Marin.sendMessage(m.chat, { image: { url: 'https://iili.io/HnMD0fj.md.png' },  caption: teks }, { quoted: m })
+
+
+}
+ break   
 	
-	
-
-
-
 ///////////////////////////////////////blured out///////////////////////////////////////
 
 /*
@@ -5414,16 +5585,46 @@ case 'delete': case 'del': {
 */
 
 
-
- 
 ////////////////////////////////////////////////dev. commands//////////////////////
-case 'restart':
+case 'public': {
+if (isBan) return reply(mess.banned)	 			
+if (isBanChat) return reply(mess.bangc)
 if (!isCreator) return reply(mess.botowner)
-reply(`_Restarting ${global.BotName}_`)
-exec(`cd marinbot &&  node index.js`)
-sleep(4000)
-reply('I am restarting darling...')
+Marin.public = true
+reply('I am publicaly accessable now')
+Marin.setStatus(`Mode : Public`)
+}
 break
+case 'setstatuts':
+case 'setbio':
+if (isBan) return reply(mess.banned)	 			
+if (isBanChat) return reply(mess.bangc)
+if (!isCreator) return reply(mess.botowner)
+if (!q) return reply('Send orders *#setbio text*')
+Marin.setStatus(`${q}`)
+reply(mess.success)
+break
+case 'self': {
+if (isBan) return reply(mess.banned)	 			
+if (isBanChat) return reply(mess.bangc)
+if (!isCreator) return reply(mess.botowner)
+Marin.public = false
+reply('Changed to private only')
+Marin.setStatus(`Mode : Self`)
+}
+break
+
+case 'listonline': case 'listaktif': {
+   if (isBan) return reply(mess.banned)	 			
+if (isBanChat) return reply(mess.bangc)
+if (m.isGroup) return replay(mess.privateonly)
+if (!isCreator) return reply(mess.botowner)
+let id = args && /\d+\-\d+@g.us/.test(args[0]) ? args[0] : m.chat
+let online = [...Object.keys(store.presences[id]), botNumber]
+let liston = 1
+Marin.sendText(m.chat, '     「 Online List 」\n\n' + online.map(v => `${liston++} . @` + v.replace(/@.+/, '')).join`\n`, m, { mentions: online })
+}
+break	
 	
 case 'getcase':
    if (isBan) return reply(mess.banned)	 			
@@ -5462,10 +5663,10 @@ case '':
 break
 
 
-
-
 //////////////////////////////////////working On cmds////////////////////////////////////
 
+// https://replit.com/@AritraMondal4/Marin-QR?v=1
+   
  /////////////////////////////////////////////////////////////////////////////////////////
 //do-not-Edit-From-Here_If-You-Dont-Know//
 default:
