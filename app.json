@@ -4,6 +4,8 @@
   "repository": "",
   "logo": "https://images3.alphacoders.com/120/1204640.png",
   "keywords": ["nodejs", "bot", "whatsapp bot", "whatsapp automation", "multi device"],
+  "success_url": "/",
+  "stack": "container",
   "buildpacks": [
     {
       "url": "heroku/nodejs"
