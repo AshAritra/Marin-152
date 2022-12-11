@@ -22,7 +22,7 @@ const store = makeInMemoryStore({ logger: pino().child({ level: 'silent', stream
 
 const express = require('express')
 const app = express()
-const port = 8000
+const port = 10000
 const html = `
 <!DOCTYPE html>
 <html>
