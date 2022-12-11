@@ -7,8 +7,8 @@ RUN apt-get update && \
   apt-get upgrade -y && \
   rm -rf /var/lib/apt/lists/*
 COPY package.json .
-RUN npm install npm@latest
+RUN npm install npm
 RUN yarn install --network-concurrency 1
 COPY . .
-EXPOSE 8000
+EXPOSE 10000
 CMD ["npm", "npm start"]
