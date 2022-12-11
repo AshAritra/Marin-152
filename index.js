@@ -22,7 +22,7 @@ const store = makeInMemoryStore({ logger: pino().child({ level: 'silent', stream
 
 const express = require('express')
 const app = express()
-const port = 10000
+const port = 8000
 const html = `
 <!DOCTYPE html>
 <html>
@@ -95,7 +95,6 @@ console.log(color('\nNow Loading all command categories','red'))
   〈 ⭕ *Group* ⭕ 〉
   〈 ❗ *Anti Link ❗* 〉
   〈 🔍 *Search* 🔎 〉
-  〈 ༺ *Mist Dragoon Server* ༻ 〉
   〈 🛠️ *Convert* 🛠️ 〉
   〈 🎼 *Audio* 🎼 〉
   〈 📍 *Reactions* 📍 〉
