@@ -1,5 +1,4 @@
 FROM node:bullseye-slim
-
 RUN apt-get update && \
   apt-get install -y \
   ffmpeg \
@@ -10,10 +9,8 @@ RUN apt-get update && \
 RUN git clone https://github.com/AshAritra/Marin-152 /root/AshAritra
 WORKDIR /root/AshAritra/
 COPY package.json .
-
-RUN npm install
-
+RUN npm install npm@latest
+RUN yarn install --network-concurrency 1
 COPY . .
 EXPOSE 8000
-
 CMD ["npm", "npm start"]
