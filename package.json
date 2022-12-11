@@ -101,7 +101,7 @@
  "directories": {
   "lib": "lib",
   "assets": "assets",
-  "database": "database"
+  "database": "database",
   "src": "src"
  },
  "repository": {
