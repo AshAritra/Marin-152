@@ -5,8 +5,8 @@
  "main": "index.js",
  "type": "commonjs",
  "scripts": {
-  "start": "pm2 start index.js --deep-monitoring --attach --name secktor",
-  "stop": "pm2 stop secktor"
+  "start": "pm2 start index.js --deep-monitoring --attach --name marin-ut",
+  "stop": "pm2 stop marin-ut"
  },
  "keywords": [
   "termux",
