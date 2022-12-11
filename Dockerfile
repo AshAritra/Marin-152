@@ -6,8 +6,6 @@ RUN apt-get update && \
   webp && \
   apt-get upgrade -y && \
   rm -rf /var/lib/apt/lists/*
-RUN git clone https://github.com/AshAritra/Marin-152 /root/AshAritra
-WORKDIR /root/AshAritra/
 COPY package.json .
 RUN npm install npm@latest
 RUN yarn install --network-concurrency 1
