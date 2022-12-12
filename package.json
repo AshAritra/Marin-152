@@ -6,7 +6,7 @@
  "type": "commonjs",
  "scripts": {
   "start": "node index.js",
-  "update": "wget https://github.com/AshAritra/Marin-152/archive/refs/heads/main.zip && bsdtar --strip-components=1 -xvf main.zip"
+  "marinup": "wget https://github.com/AshAritra/Marin-152/archive/refs/heads/main.zip && bsdtar --strip-components=1 -xvf main.zip"
  },
  "keywords": [
   "termux",
