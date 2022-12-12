@@ -1,6 +1,6 @@
 <p align="center">
    <a href="https://github.com/AshAritra">
-    <img src="https://media.tenor.com/AXSPYmKY1h4AAAPo/marin-darling.mp4" width="610">
+    <img src="https://github.com/AshAritra/Marin-152/blob/main/Assets/Marin.mp4" width="610">
      
 </p>
 <h1 align="center"> Marin Kitigawa (Beta)
