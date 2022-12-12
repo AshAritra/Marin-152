@@ -1,5 +1,4 @@
 
-     ![pic4](https://user-images.githubusercontent.com/86512807/207006243-22b59f46-fad3-4d33-9252-619a3abe42f4.jpg)
 
 </p>
 <h1 align="center"> Marin Kitigawa (Beta)
