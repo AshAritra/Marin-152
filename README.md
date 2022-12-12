@@ -1,4 +1,4 @@
-https://raw.githubusercontent.com/AshAritra/Marin-152/main/.github/images/download.mp4
+https://user-images.githubusercontent.com/AshAritra/Marin-152/main/.github/images/download.mp4
 
 </p>
 <h1 align="center"> Marin Kitigawa (Beta)
