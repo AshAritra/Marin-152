@@ -1,6 +1,4 @@
-<p align="center">
-   <a href="https://github.com/AshAritra">
-    <img src="https://github.com/AshAritra/Marin-152/blob/0fa08dc72e02c1c9a061d2bb9f70c6845c784dae/Assets/Marin.mp4" width="610">
+                  https://github.com/AshAritra/Marin-152/blob/0fa08dc72e02c1c9a061d2bb9f70c6845c784dae/Assets/Marin.mp4
      
 </p>
 <h1 align="center"> Marin Kitigawa (Beta)
