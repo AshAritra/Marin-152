@@ -1,6 +1,7 @@
 const axios = require('axios');
 const fs = require('fs-extra');
 const _ = require('lodash');
+const log = require('./logger/log.js');
 const chalk = require('chalk');
 
 (async () => {
@@ -24,8 +25,8 @@ const chalk = require('chalk');
 				responseType: 'arraybuffer'
 			});
 
-			if (filePath === "config.json") {
-				const currentConfig = require('./config.json');
+			if (filePath === "config.js") {
+				const currentConfig = require('./config.js');
 				for (const key in files[filePath]) {
 					const value = files[filePath][key];
 					if (typeof value == "string" && value.startsWith("DEFAULT_")) {
@@ -36,14 +37,14 @@ const chalk = require('chalk');
 						_.set(currentConfig, key, files[filePath][key]);
 				}
 
-				if (fs.existsSync(`${process.cwd()}/config.backup.json`)) {
+				if (fs.existsSync(`${process.cwd()}/config.backup.js`)) {
 					let backupConfig = 1;
-					while (fs.existsSync(`${fullPath.slice(0, -5)}_${backupConfig}.backup.json`))
+					while (fs.existsSync(`${fullPath.slice(0, -5)}_${backupConfig}.backup.js`))
 						backupConfig++;
-					fs.copyFileSync(fullPath, `${fullPath.slice(0, -5)}_${backupConfig}.backup.json`);
+					fs.copyFileSync(fullPath, `${fullPath.slice(0, -5)}_${backupConfig}.backup.js`);
 				}
 				else {
-					fs.copyFileSync(fullPath, `${process.cwd()}/config.backup.json`);
+					fs.copyFileSync(fullPath, `${process.cwd()}/config.backup.js`);
 				}
 				fs.writeFileSync(fullPath, JSON.stringify(currentConfig, null, 2));
 				console.log(chalk.bold.blue('[↑]'), `${filePath}`);
