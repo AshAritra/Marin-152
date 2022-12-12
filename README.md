@@ -24,7 +24,7 @@ https://user-images.githubusercontent.com/86512807/207010196-9025c2c8-fd3a-4435-
      
   
 <p align="CENTER">
-  <a href="https://github.com/AshAritra"><img title="Support" src="https://img.shields.io/badge/next%20Update-Undefined!-green.svg?style=for-the-badge&logo=xcode" /></a>
+  <a href="https://github.com/AshAritra"><img title="Support" src="https://img.shields.io/badge/next%20Update-Every Week!-green.svg?style=for-the-badge&logo=xcode" /></a>
 </p>
       
  
