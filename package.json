@@ -5,8 +5,7 @@
  "main": "index.js",
  "type": "commonjs",
  "scripts": {
-  "start": "node index.js",
-  "marinup": "wget https://github.com/AshAritra/Marin-152/archive/refs/heads/main.zip && bsdtar --strip-components=1 -xvf main.zip"
+  "start": "node index.js"
  },
  "keywords": [
   "termux",
