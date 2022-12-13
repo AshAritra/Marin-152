@@ -33,13 +33,10 @@ https://user-images.githubusercontent.com/86512807/207010196-9025c2c8-fd3a-4435-
 </p>
 
 
-<h1 align="center">  ✧ Deploy Method Step By Step ✧
-</h1>
-
-<br>
+<h1 align="center">  ✧ Deploy Method (1) Step By Step ✧ </h1>
+```Note``` Method 1 is slow , I recommend to use method 2.
 
 ✧ Fork the Repl.it repo.
-
 
 ✧ Run the repo it will genarate QR , scan it in 15 sec.
 
@@ -49,8 +46,16 @@ https://user-images.githubusercontent.com/86512807/207010196-9025c2c8-fd3a-4435-
 
 ✧ Enjoy ✧
 <br>
+<h1 align="center">  ✧ Deploy Method (2) ✧ </h1>
 
-NEW Features-- Auto update system .
+Downlaod this two files -
+   
+
+
+
+
+<br>
+*NEW FEATURE* -- Auto update system .
 
 _________________________________________________
 
