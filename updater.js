@@ -2,6 +2,7 @@ const axios = require('axios');
 const fs = require('fs-extra');
 const _ = require('lodash');
 const chalk = require('chalk');
+const log = require('./logger/log.js');
 
 
 
