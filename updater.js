@@ -11,10 +11,10 @@ const log = require('./logger/log.js');
 	const currentVersion = require('./package.json').version;
 	const versionsNeedToUpdate = versions.slice(versions.findIndex(v => v.version === currentVersion) + 1);
 	if (versionsNeedToUpdate.length === 0)
-		return log.info("SUCCESS", getText("updater", "latestVersion"));
+		return log.info("SUCCESS"("updater", "latestVersion"));
 
 	fs.writeFileSync(`${process.cwd()}/versions.json`, JSON.stringify(versions, null, 2));
-	log.info("UPDATE", getText("updater", "newVersions", chalk.yellow(versionsNeedToUpdate.length)));
+	log.info("UPDATE"("updater", "newVersions", chalk.yellow(versionsNeedToUpdate.length)));
 
 	for (const version of versionsNeedToUpdate) {
 		log.info("UPDATE", `Update version ${version.version}`);
@@ -51,7 +51,7 @@ const log = require('./logger/log.js');
 				fs.writeFileSync(fullPath, JSON.stringify(currentConfig, null, 2));
 				console.log(chalk.bold.blue('[↑]'), `${filePath}`);
 				// warning config.json is changed
-				console.log(chalk.bold.yellow('[!]'), getText("updater", "configChanged"));
+				console.log(chalk.bold.yellow('[!]')("updater", "configChanged"));
 			}
 			else if (fs.existsSync(fullPath)) {
 				fs.writeFileSync(fullPath, Buffer.from(getFile));
@@ -82,5 +82,5 @@ const log = require('./logger/log.js');
 
 	const { data: packageJson } = await axios.get("https://github.com/AshAritra/Marin-152/raw/main/package.json");
 	fs.writeFileSync(`${process.cwd()}/package.json`, JSON.stringify(packageJson, null, 2));
-	log.info("UPDATE", getText("updater", "updateSuccess"));
+	log.info("UPDATE"("updater", "updateSuccess"));
 })();
