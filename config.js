@@ -8,14 +8,14 @@ global.autoReadAll = false
 global.antitags = true
 
 
-global.Owner = ['917044585369']
-global.OwnerNumber = ['917044585369']
-global.ownertag = ['917044585369']
+global.Owner = ['']
+global.OwnerNumber = ['']
+global.ownertag = ['']
 global.BotName = "Marin"
 global.packname = "Marin Kitigawa"
 global.author = "By: UnderTaker"
 global.OwnerName = "UnderTaker"
-global.BotSourceCode = "https://github.com/AshAritra/C2botCC"
+global.BotSourceCode = "https://github.com/AshAritra/Marin-152"
 global.SupportGroupLink = ""
 global.sessionName = "session"
 
