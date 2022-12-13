@@ -1,1 +1,8 @@
-
+[
+  {
+    "version": "1.0.0",
+    "files": {
+         "version.js": "added auto update"
+    }
+  }
+]
