@@ -11,10 +11,10 @@ const log = require('./logger/log.js');
 	const currentVersion = require('./package.json').version;
 	const versionsNeedToUpdate = versions.slice(versions.findIndex(v => v.version === currentVersion) + 1);
 	if (versionsNeedToUpdate.length === 0)
-		return log.info("SUCCESS"("updater", "latestVersion"));
+		return console.log("SUCCESS");
 
 	fs.writeFileSync(`${process.cwd()}/versions.json`, JSON.stringify(versions, null, 2));
-	log.info("UPDATE"("updater", "newVersions", chalk.yellow(versionsNeedToUpdate.length)));
+	console.log("UPDATE", (chalk.yellow(versionsNeedToUpdate.length)));
 
 	for (const version of versionsNeedToUpdate) {
 		log.info("UPDATE", `Update version ${version.version}`);
@@ -82,5 +82,5 @@ const log = require('./logger/log.js');
 
 	const { data: packageJson } = await axios.get("https://github.com/AshAritra/Marin-152/raw/main/package.json");
 	fs.writeFileSync(`${process.cwd()}/package.json`, JSON.stringify(packageJson, null, 2));
-	log.info("UPDATE"("updater", "updateSuccess"));
+	console.log("UPDATE");
 })();
