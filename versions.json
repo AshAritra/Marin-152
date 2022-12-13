@@ -1,8 +1,8 @@
 [
   {
-    "version": "1.0.2",
+    "version": "1.0.3",
     "files": {
-      "package.json": "Auto update"
+      "Core.js": "Removed botable system"
     }
   }
 ]
