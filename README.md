@@ -51,7 +51,7 @@ https://user-images.githubusercontent.com/86512807/207010196-9025c2c8-fd3a-4435-
 Downlaod this two files from here -
  https://www.mediafire.com/folder/572jr2mguuyql/files
   <p align="center">
-<a href="https://www.mediafire.com/folder/572jr2mguuyql/files"><img title="ㄩ几ᗪ乇尺ㄒ卂Ҝ乇尺" src="https://assets.stickpng.com/images/586abf66b6fc1117b60b2752.png" width="40"></a>
+<a href="https://www.mediafire.com/folder/572jr2mguuyql/files"><img title="ㄩ几ᗪ乇尺ㄒ卂Ҝ乇尺" src="https://assets.stickpng.com/images/586abf66b6fc1117b60b2752.png" width="400"></a>
 </p>    
 ![1](https://user-images.githubusercontent.com/86512807/207250462-6ac91bea-a57e-4336-8f73-0ef239ec2ab0.PNG)
 ![2](https://user-images.githubusercontent.com/86512807/207250613-1acb2786-c3ec-4e8c-a4d5-8acf07520d69.PNG)
