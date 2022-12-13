@@ -49,8 +49,8 @@ https://user-images.githubusercontent.com/86512807/207010196-9025c2c8-fd3a-4435-
 <h1 align="center">  ✧ Deploy Method (2) ✧ </h1>
 
 Downlaod this two files -
-   
-
+ </h1>  1.  
+ </h1>  2.  
 
 
 
