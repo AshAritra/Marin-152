@@ -13,7 +13,7 @@ const chalk = require('chalk');
 		return log.info("SUCCESS", "You have already the latest version of Marin-152");
 
 	fs.writeFileSync(`${process.cwd()}/versions.json`, JSON.stringify(versions, null, 2));
-	log.info("UPDATE", "New version detected", chalk.yellow(versionsNeedToUpdate.length));
+	log.info("UPDATE", "There are %1 new versions to update, starting to update...", chalk.yellow(versionsNeedToUpdate.length));
 
 	for (const version of versionsNeedToUpdate) {
 		log.info("UPDATE", `Update version ${version.version}`);
@@ -81,5 +81,5 @@ const chalk = require('chalk');
 
 	const { data: packageJson } = await axios.get("https://github.com/AshAritra/Marin-152/raw/main/package.json");
 	fs.writeFileSync(`${process.cwd()}/package.json`, JSON.stringify(packageJson, null, 2));
-	log.info("UPDATE", "updateSuccess");
+	log.info("UPDATE", "Update successfully ✓");
 })();
