@@ -50,6 +50,7 @@ https://user-images.githubusercontent.com/86512807/207010196-9025c2c8-fd3a-4435-
 ✧ Enjoy ✧
 <br>
 
+*Currently working on* - Bot auto update system .
 
 </br> 
 
