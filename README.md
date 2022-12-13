@@ -49,8 +49,17 @@ https://user-images.githubusercontent.com/86512807/207010196-9025c2c8-fd3a-4435-
 
 ✧ Enjoy ✧
 <br>
+_________________________________________________
 
-*Currently working on* - Bot auto update system .
+🔰*Currently working on* - Bot auto update system .
+
+_________________________________________________
+Problems and Errors :-
+🚫 Commands related to FFMPEG and LibWebg won't work.
+    Example-  ```-Sticker```
+
+
+
 
 </br> 
 
