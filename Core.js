@@ -204,7 +204,6 @@ const AntiLinkAll = m.isGroup ? ntilinkall.includes(from) : false
 const antiWame = m.isGroup ? ntwame.includes(from) : false
 const antiVirtex = m.isGroup ? ntvirtex.includes(from) : false
 const AntiNsfw = m.isGroup ? ntnsfw.includes(from) : false
-const botac = m.isGroup ? botenable.includes(from) : true
 const isLeveling = m.isGroup ? _leveling.includes(from) : false
 autoreadsw = true
 const content = JSON.stringify(m.message)
