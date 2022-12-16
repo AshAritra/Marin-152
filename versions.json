@@ -1,8 +1,8 @@
 [
   {
-    "version": "1.0.3",
+    "version": "1.0.4",
     "files": {
-      "Core.js": "Removed botable system"
+      "index.js": "Updated Auth system"
     }
   }
 ]
