@@ -1,29 +1,66 @@
-require("./config.js")
-const { default: MarinConnect, useSingleFileAuthState, DisconnectReason, fetchLatestBaileysVersion, generateForwardMessageContent, prepareWAMessageMedia, generateWAMessageFromContent, generateMessageID, downloadContentFromMessage, makeInMemoryStore, jidDecode, proto } = require("@adiwajshing/baileys")
-const { state, saveState } = useSingleFileAuthState(`./${sessionName}.json`)
-const cliSpinners = require('cli-spinners')
 const pino = require('pino')
-const fs = require('fs')
-const chalk = require('chalk')
+const cli = require('cli-spinners');
+const Config = require('./config');
+const { Boom } = require("@hapi/boom");
+const fs = require('fs-extra');
 const FileType = require('file-type')
-const { Boom } = require("@hapi/boom")
-const path = require('path')
-const CFonts = require('cfonts');
-const { exec, spawn, execSync } = require("child_process")
-const moment = require('moment-timezone')
+const path = require('path');
+const express = require("express");
+const app = express();
+const mongoose = require('mongoose');
+const { writeFile } = require("fs/promises");
+const { exec, spawn, execSync } = require("child_process");
 const PhoneNumber = require('awesome-phonenumber')
+const { default: MarinConnect, useMultiFileAuthState, DisconnectReason, fetchLatestBaileysVersion, generateForwardMessageContent, prepareWAMessageMedia, generateWAMessageFromContent, generateMessageID, downloadContentFromMessage, makeInMemoryStore, jidDecode, proto, MessageRetryMap } = require("@adiwajshing/baileys")
+const util = require("util");
+const chalk = require("chalk");
+const fetch = require("node-fetch");
+const axios = require("axios");
+const moment = require("moment-timezone");
 const { imageToWebp, videoToWebp, writeExifImg, writeExifVid } = require('./lib/exif')
 const { smsg, isUrl, generateMessageTag, getBuffer, getSizeMedia, fetchJson, await, sleep } = require('./lib/myfunc')
 const figlet = require('figlet')
 const { color } = require('./lib/color')
-const store = makeInMemoryStore({ logger: pino().child({ level: 'silent', stream: 'store' }) })
-const express = require('express')
-const app = express()
-
-
-
-async function startMarin() {
-console.log(color(figlet.textSync('Marin Kitigawa', {
+let cc = `${sessionName}`
+if (`${sessionName}` =="") {
+  console.log(chalk.redBright(`Session ID not set in config!`))
+  process.exit(1)
+}
+async function MakeSession(){
+  if (fs.existsSync(__dirname + '/lib/auth_info_baileys/creds.json')) {
+    if (!fs.existsSync('./lib/auth_info_baileys')){
+    fs.mkdirSync('./lib/auth_info_baileys', { recursive: true });
+    }
+    axios.get('https://pastebin.com/raw/'+cc,{ responseType:"arraybuffer"})
+    .then(response => {
+        fs.writeFile(path.join(__dirname,"./lib/auth_info_baileys",'creds.json'), response.data);
+    })
+  } else {
+	 var c = cc
+   await fs.writeFileSync(__dirname + '/auth_info_baileys/creds.json', c, "utf8")    
+    
+  }
+}
+MakeSession()
+setTimeout(() => {
+ //========================================================================================================================================
+    const store = makeInMemoryStore({
+        logger: pino().child({ level: "silent", stream: "store" }),
+    });
+    const getVersionWaweb = () => {
+        let version
+        try {
+            let a = fetchJson('https://web.whatsapp.com/check-update?version=1&platform=web')
+            version = [a.currentVersion.replace(/[.]/g, ', ')]
+        } catch {
+            version = [2, 2204, 13]
+        }
+        return version
+    }
+    let QR_GENERATE = "invalid";
+    const msgRetryCounterMap = MessageRetryMap || {}
+    async function startMarin() {
+     console.log(color(figlet.textSync('Marin UT', {
 		font: 'Pagga',
 		horizontalLayout: 'default',
 		vertivalLayout: 'default',
@@ -31,37 +68,26 @@ console.log(color(figlet.textSync('Marin Kitigawa', {
 		whitespaceBreak: true
         }), 'yellow'))
 
-console.log(color('\nHello, I am UnderTaker, the main developer of this bot.\n\nThanks for using: Marinn-Bot','aqua'))
+console.log(color('\nHello, I am UnderTaker, the main developer of this bot.\n\nThanks for using: Marin-152','aqua'))
 console.log(color('\nYou can follow me on GitHub: AshAritra','aqua'))
-console.log(color('\nNow Loading all command categories','red'))
-  let cmdcat = (`   
-  〈 ⚙️ *Core* ⚙️ 〉
-  〈 ❤️‍🔥 *Owner* ❤️‍🔥 〉
-  〈 ⭕ *Group* ⭕ 〉
-  〈 ❗ *Anti Link ❗* 〉
-  〈 🔍 *Search* 🔎 〉
-  〈 🛠️ *Convert* 🛠️ 〉
-  〈 🎼 *Audio* 🎼 〉
-  〈 📍 *Reactions* 📍 〉
-  〈 🌌 *Downloader* 🌌 〉
-  〈 🎐 *Fun* 🎐 〉
-  〈 🈴 *Weeb* 🈴 〉
-  〈 ♨️ *Informative* ♨️ 〉
-  〈 🪁 *Essentials* 🪁 〉
-  〈 🎗 *Others* 🎗 〉
-  〈 ⚠️ *NSFW* ⚠️ 〉`)
-console.log(color(cmdcat,'red'))
-  
-    let { version, isLatest } = await fetchLatestBaileysVersion()
-    const Marin = MarinConnect({
-        logger: pino({ level: 'silent' }),
-        printQRInTerminal: true,
-        browser: ['Marinn by: UnderTaker','Safari','1.0.0'],
-        auth: state,
-        version
-    })
-    
-store.bind(Marin.ev)
+        const { state, saveCreds } = await useMultiFileAuthState(__dirname + '/lib/auth_info_baileys/')
+        const Marin = MarinConnect({
+            logger: pino({ level: 'fatal' }),
+            printQRInTerminal: true,
+            browser: ['UnderTaker', 'safari', '1.0.0'],
+            fireInitQueries: false,
+            shouldSyncHistoryMessage: false,
+            downloadHistory: false,
+            syncFullHistory: false,
+            generateHighQualityLinkPreview: true,
+            auth: state,
+            version: getVersionWaweb() || [2, 2242, 6],
+        })
+        store.bind(Marin.ev)
+
+      setInterval(() => {
+    store.writeToFile(__dirname+"/lib/store.json");
+  }, 30 * 1000);
 
     
     Marin.ws.on('CB:call', async (json) => {
@@ -173,9 +199,7 @@ Marin.ev.on('group-participants.update', async (anu) => {
                 let WAuserName = num
                 mikutext = `
 Hello @${WAuserName.split("@")[0]},
-
 I am *Marinn Kitigawa*, Welcome to ${metadata.subject}.
-
 *Group Description:*
 ${metadata.desc}
 `
@@ -192,7 +216,6 @@ Marin.sendMessage(anu.id, buttonMessage)
                 	let WAuserName = num
                     mikutext = `
 Sayonara 👋, @${WAuserName.split("@")[0]},
-
 I hope you will come back soon, but we are not going to miss you though!
 `
 
@@ -275,28 +298,34 @@ I hope you will come back soon, but we are not going to miss you though!
     }
 	
     Marin.public = true
-	
-    Marin.ev.on('creds.update', saveState)
 
     Marin.serializeM = (m) => smsg(Marin, m, store)
 	
 
-    Marin.ev.on('connection.update', async (update) => {
-        const { connection, lastDisconnect } = update	    
-        if (connection === 'close') {
+     Marin.ev.on('connection.update', async(update) => {
+                const { connection, lastDisconnect } = update
+                if (connection === "connecting") {
+                   console.log("ℹ️ Connecting to WhatsApp... Please Wait.");
+                }
+                if (connection === 'open') {
+                    console.log("✅ Login Successful!"); 
+                    for (let i of Owner) {
+                        Marin.sendMessage(i + "@s.whatsapp.net", { text: `_Marin has been started._\n_Version:- 1.0.5_\n\n_Owner:- ${OwnerName}_\n` })
+                    }
+                }
+               if (connection === 'close') {
         let reason = new Boom(lastDisconnect?.error)?.output.statusCode
             if (reason === DisconnectReason.badSession) { console.log(`Bad Session File, Please Delete Session and Scan Again`); process.exit(); }
-            else if (reason === DisconnectReason.connectionClosed) { console.log("Connection closed, reconnecting...."); startMarin(); }
-            else if (reason === DisconnectReason.connectionLost) { console.log("Connection Lost from Server, reconnecting..."); startMarin(); }
+            else if (reason === DisconnectReason.connectionClosed) { console.log("Connection closed, reconnecting...."); startMiku(); }
+            else if (reason === DisconnectReason.connectionLost) { console.log("Connection Lost from Server, reconnecting..."); startMiku(); }
             else if (reason === DisconnectReason.connectionReplaced) { console.log("Connection Replaced, Another New Session Opened, Please Close Current Session First"); process.exit(); }
             else if (reason === DisconnectReason.loggedOut) { console.log(`Device Logged Out, Please Delete Session and Scan Again.`); process.exit(); }
-            else if (reason === DisconnectReason.restartRequired) { console.log("Restart Required, Restarting..."); startMarin(); }
-            else if (reason === DisconnectReason.timedOut) { console.log("Connection TimedOut, Reconnecting..."); startMarin(); }
+            else if (reason === DisconnectReason.restartRequired) { console.log("Restart Required, Restarting..."); startMiku(); }
+            else if (reason === DisconnectReason.timedOut) { console.log("Connection TimedOut, Reconnecting..."); startMiku(); }
             else { console.log(`Unknown DisconnectReason: ${reason}|${connection}`) }
         }
-        //console.log('Connected...', update)
-    })
-
+            })
+           Marin.ev.on('creds.update', saveCreds)
     	
 	
 	
@@ -682,65 +711,25 @@ I hope you will come back soon, but we are not going to miss you though!
 
     return Marin
 }
-const html = `
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Whatsapp Bot</title>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-    <script>
-      setTimeout(() => {
-        confetti({
-          particleCount: 100,
-          spread: 70,
-          origin: { y: 0.6 },
-          disableForReducedMotion: true
-        });
-      }, 500);
-    </script>
-    <style>
-      @import url("https://p.typekit.net/p.css?s=1&k=vnd5zic&ht=tk&f=39475.39476.39477.39478.39479.39480.39481.39482&a=18673890&app=typekit&e=css");
-      @font-face {
-        font-family: "neo-sans";
-        src: url("https://use.typekit.net/af/00ac0a/00000000000000003b9b2033/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff2"), url("https://use.typekit.net/af/00ac0a/00000000000000003b9b2033/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff"), url("https://use.typekit.net/af/00ac0a/00000000000000003b9b2033/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("opentype");
-        font-style: normal;
-        font-weight: 700;
-      }
-      html {
-        font-family: neo-sans;
-        font-weight: 700;
-        font-size: calc(62rem / 16);
-      }
-      body {
-        background: white;
-      }
-      section {
-        border-radius: 1em;
-        padding: 1em;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        margin-right: -50%;
-        transform: translate(-50%, -50%);
-      }
-    </style>
-  </head>
-  <body>
-    <section>
-      Hello from Marin Kitigawa!
-    </section>
-  </body>
-</html>
-`
-app.get("/", (req, res) => res.type('html').send(html));
-app.listen(port, () => console.log(`Secktor Server listening on port ${port}!`));
-startMarin()
+startMarin().catch(err => console.log(err))
+const express = require('express')
+const app = express()
+let port = process.env.PORT || 8000
 
-
-let file = require.resolve(__filename)
-fs.watchFile(file, () => {
-	fs.unwatchFile(file)
-	console.log(chalk.redBright(`${__filename} Updated`))
-	delete require.cache[file]
-	require(file)
+//root//
+app.get('/', (req, res) => {
+  res.sendStatus(200)
 })
+//app listne on port//
+app.listen(port, function () {
+  console.log(`Listening on port ${port}`)
+})
+    //=============================[to get message of New Update of this file.]===================================================
+    let file = require.resolve(__filename)
+    fs.watchFile(file, () => {
+        fs.unwatchFile(file)
+        console.log(`Update ${__filename}`)
+        delete require.cache[file]
+        require(file)
+    })
+}, 3000)
