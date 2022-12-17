@@ -11,4 +11,4 @@ RUN npm install npm
 RUN yarn install --network-concurrency 1
 COPY . .
 EXPOSE 10000
-CMD ["npm", "npm start"]
+CMD ["npm", "start"]
