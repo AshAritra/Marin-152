@@ -44,7 +44,7 @@ Downlaod this two files from here -
 </details>  
  
  <details open>
-    <summary>✧ Deploy Method 2 ✧</summary>
+    <summary>✧ Deploy Method 2 (Recommended)✧</summary>
     <ul>
       
 Deploy on [```MOGENIOUS```](https://undertaker5697.blogspot.com/2022/12/marin-152-mongenius-deployment.html)
@@ -62,7 +62,7 @@ _________________________________________________
 
 _________________________________________________
 Problems and Errors :-
-🚫 Commands related to FFMPEG and LibWebg won't work.
+🚫 Commands related to FFMPEG and LibWebg won't work in replit.
     Example-  ```-Sticker```
 
 
