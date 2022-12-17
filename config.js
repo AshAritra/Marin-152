@@ -1,5 +1,6 @@
 const fs = require("fs")
 const chalk = require("chalk")
+if (fs.existsSync('config.env')) require('dotenv').config({ path: __dirname+'/config.env' })
 
 
 global.available = true
@@ -7,24 +8,24 @@ global.autoReadGc = true
 global.autoReadAll = false
 global.antitags = true
 
+global.autoTyping = process.env.OWNER_NAME || false, 
+global.autoRecord = process.env.OWNER_NAME || false, 
 
-global.Owner = ['']
-global.OwnerNumber = ['']
-global.ownertag = ['']
+global.Owner = process.env.OWNER_NUMBER || ['917044585369']
+global.OwnerNumber = process.env.OWNER_NUMBER || ['917044585369']
+global.ownertag = process.env.OWNER_NUMBER || ['917044585369']
 global.BotName = "Marin"
-global.packname = "Marin Kitigawa"
-global.author = "By: UnderTaker"
-global.OwnerName = "UnderTaker"
-global.BotSourceCode = "https://github.com/AshAritra/Marin-152"
+global.packname = process.env.PACK_INFO.split(";")[1] || 'Marin',
+global.author = process.env.PACK_INFO.split(";")[0] || 'Marin Kitigawa',
+global.OwnerName = process.env.OWNER_NAME || 'UnderTaker',
+global.BotSourceCode = ""
 global.SupportGroupLink = ""
-global.sessionName = "session"
-
-// Prefix //
-// If you want to change the prefix, change it and also change all switch's button id from Core.js  otherwise buttons will not work //
-global.prefa = ['-'] 
+global.sessionName = 'session',
+global.port= process.env.PORT || 8000
+global.prefa = process.env.PREFIX || ['-'] 
 
 
-global.location = "West Bengal, India"
+global.location = process.env.LOCATION || "West Bengal, India",
 global.reactmoji = "❤️"
 global.themeemoji = "💖"
 global.vidmenu = { url: 'https://media.tenor.com/nV_hpJT8ppwAAAAC/marin.gif' }
@@ -71,7 +72,8 @@ global.mess = {
     error: 'An error occurd!',
     banned: 'You are *Banned* fron using commands!',
     bangc: 'This Group is *Banned* from using Commands!',
-    nonsfw: 'Dont be a pervert Baka! This is not a NSFW enabled group!'   
+    nonsfw: 'Dont be a pervert Baka! This is not a NSFW enabled group!'
+    
 }
 
 
