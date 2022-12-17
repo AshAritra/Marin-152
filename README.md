@@ -44,20 +44,16 @@ Downlaod this two files from here -
 </details>  
  
  <details open>
-    <summary>✧ Deploy Method 1 ✧</summary>
-    <ul>   
- ***[Deploy on MOGENIOUS](https://undertaker5697.blogspot.com/2022/12/marin-152-mongenius-deployment.html)***   
+    <summary>✧ Deploy Method 2 ✧</summary>
+    <ul>
+      
+Deploy on [```MOGENIOUS```](https://undertaker5697.blogspot.com/2022/12/marin-152-mongenius-deployment.html)
+ 
+<br>       
      </ul>
 </details>  
+  
    
-    
-    
-    
-    
-    
-    
-    
-    
 *NEW FEATURE* -- Auto update system .
 
 _________________________________________________
