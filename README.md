@@ -27,26 +27,9 @@ https://user-images.githubusercontent.com/86512807/207010196-9025c2c8-fd3a-4435-
   <a href="https://github.com/AshAritra"><img title="Support" src="https://img.shields.io/badge/next%20Update-Every Week!-green.svg?style=for-the-badge&logo=xcode" /></a>
 </p>
       
- 
-  <p align="center">
-<a href="https://replit.com/@AritraMondal4/MarinKitigawa-An-WhatsappBot?v=1"><img title="ㄩ几ᗪ乇尺ㄒ卂Ҝ乇尺" src="https://repl.it/badge/github/quiec/whatsasena" width="400"></a>
-</p>
-
-
-<h1 align="center">  ✧ Deploy Method (1) Step By Step ✧ </h1>
-```Note``` Method 1 is slow , I recommend to use method 2.
-
-✧ Fork the Repl.it repo.
-
-✧ Run the repo it will genarate QR , scan it in 15 sec.
-
-✧ Note: Mobile users: Open the page in Windows Mode.
-
-✧ After scanning the code eventually it will restart.
-
-✧ Enjoy ✧
-<br>
-<h1 align="center">  ✧ Deploy Method (2) ✧ </h1>
+<details open>
+    <summary>✧ Deploy Method 1 ✧</summary>
+    <ul> 
 
 Downlaod this two files from here -
 ```Link``` https://www.mediafire.com/folder/572jr2mguuyql/files
@@ -56,10 +39,25 @@ Downlaod this two files from here -
 ![3](https://user-images.githubusercontent.com/86512807/207261172-7789f6f0-1b66-470d-bd70-e2ed20c13dec.PNG)
 ![4](https://user-images.githubusercontent.com/86512807/207261197-5cce9cb5-2a78-484c-8bb2-c42f9e16e650.PNG)
 
-
 <br>
-  
-  
+    </ul>
+</details>  
+ 
+ <details open>
+    <summary>✧ Deploy Method 1 ✧</summary>
+    <ul>   
+ ***[Deploy on MOGENIOUS](https://undertaker5697.blogspot.com/2022/12/marin-152-mongenius-deployment.html)***   
+     </ul>
+</details>  
+   
+    
+    
+    
+    
+    
+    
+    
+    
 *NEW FEATURE* -- Auto update system .
 
 _________________________________________________
