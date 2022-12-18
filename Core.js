@@ -5401,7 +5401,24 @@ teks += `Online: ${data.players.online}\n`
   }
 }
  break   
-	
+
+ case 'define':{
+    if (isBan) return reply(mess.banned)	 			
+    if (isBanChat) return reply(mess.bangc)
+	  
+        try{
+            let { data } = await axios.get(`http://api.urbandictionary.com/v0/define?term=${text}`)
+            var textt = `
+            Word: ${text}
+            Definition: ${data.list[0].definition.replace(/\[/g, "").replace(/\]/g, "")}
+            Example: ${data.list[0].example.replace(/\[/g, "").replace(/\]/g, "")}`
+            return reply(textt)
+                    } catch {
+                        return reply(`No result for ${text}`)
+                    }
+ }
+ break		
+		
 ///////////////////////////////////////blured out///////////////////////////////////////
 
 /*
@@ -5500,7 +5517,16 @@ reply('I am publicaly accessable now')
 Marin.setStatus(`Mode : Public`)
 }
 break
-
+//restart system//
+case 'restart': {
+if (!isCreator) return reply(`You are not my master`)
+	
+const { exec } = require("child_process")
+            reply('Restarting')
+            exec('pm2 restart all')
+}
+break		
+		
 case 'setstatuts':
 case 'setbio':
 if (isBan) return reply(mess.banned)	 			
@@ -5534,38 +5560,6 @@ let liston = 1
 Marin.sendText(m.chat, '     「 Online List 」\n\n' + online.map(v => `${liston++} . @` + v.replace(/@.+/, '')).join`\n`, m, { mentions: online })
 }
 break	
-
-case 'botable': {
-    if (isBan) return reply(mess.banned)	 			
- if (isBanChat) return reply(mess.bangc)
- if (!m.isGroup) return replay(mess.grouponly)
- if (!isBotAdmins) return replay(mess.botadmin)
- if (!isAdmins && !isCreator) return replay(mess.useradmin)
- if (args[0] === "on") {
- if (botac) return replay('Already activated')
- botenable.push(from)
- replay('Enabled Bot Here!')
- var groupe = await Marin.groupMetadata(from)
- var members = groupe['participants']
- var mems = []
- members.map(async adm => {
- mems.push(adm.id.replace('c.us', 's.whatsapp.net'))
- })
- Marin.sendMessage(from, {text: `\`\`\`「 Notice 」\`\`\`\n\nBot Enabled here!`, contextInfo: { mentionedJid : mems }}, {quoted:m})
- } else if (args[0] === "off") {
-  replay('Already deactivated')
- let off = botenable.indexOf(from)
- botenable.splice(off, 1)
- replay('Disabled Bot here!')
- } else {
-   let buttonsntbot = [
-   { buttonId: `${prefix}botable on`, buttonText: { displayText: 'On' }, type: 1 },
-   { buttonId: `${prefix}botable off`, buttonText: { displayText: 'Off' }, type: 1 }
-   ]
-   await Marin.sendButtonText(m.chat, buttonsntbot, `Please click the button below\n\nOn to enable\nOff to disable`, `${global.BotName}`, m)
-   }
-   }
-   break
 	
 case 'getcase':
    if (isBan) return reply(mess.banned)	 			
@@ -5580,6 +5574,7 @@ return "case"+`'${cases}'`+fs.readFileSync("Core.js").toString().split('case \''
 replay(`${getCase(q)}`)
 break
 
+		
 
 case '':
     if(isCmd){
