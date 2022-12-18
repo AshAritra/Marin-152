@@ -10,22 +10,21 @@ global.antitags = true
 global.autoTyping = false, 
 global.autoRecord = false, 
 
-global.Owner = ['']
-global.OwnerNumber = ['']
-global.ownertag = ['']
-global.BotName = "Marin"
-global.dev = atob("OTE3MDQ0NTg1MzY5")
-global.packname = 'Marin',
-global.author = 'Marin Kitigawa',
-global.OwnerName = process.env.OWNER_NAME || '',
-global.BotSourceCode = "https://github.com/AshAritra/Marin-152"
-global.SupportGroupLink = ""
+global.Owner = [''] //bot owner number plz add 91 , and remove spaces
+global.OwnerNumber = [''] //add ur number
+global.ownertag = [''] // add ur number//
+global.BotName = "Marin" //Default bot name , noting will be changed if u rename it//
+global.dev = atob("OTE3MDQ0NTg1MzY5") //dont channge it//
+global.packname = 'Marin', //Customizeable Pack name //
+global.author = 'Marin Kitigawa',//Customizeable Pack author name //
+global.OwnerName = '', //customize able bot owner name//
+global.BotSourceCode = "https://github.com/AshAritra/Marin-152" //dont change the source code link or the update system will break//
 global.sessionName = 'session',
-global.port= process.env.PORT || 8000
-global.prefa = process.env.PREFIX || ['-'] 
+global.port= 8000
+global.prefa = ['-']  //Prefix// You can change it if u want.//
 
 
-global.location = process.env.LOCATION || "West Bengal, India",
+global.location = "West Bengal, India", //default location
 global.reactmoji = "❤️"
 global.themeemoji = "💖"
 global.vidmenu = { url: 'https://media.tenor.com/nV_hpJT8ppwAAAAC/marin.gif' }
