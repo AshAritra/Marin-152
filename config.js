@@ -1,6 +1,5 @@
 const fs = require("fs")
 const chalk = require("chalk")
-if (fs.existsSync('config.env')) require('dotenv').config({ path: __dirname+'/config.env' })
 
 
 global.available = true
@@ -8,16 +7,16 @@ global.autoReadGc = true
 global.autoReadAll = false
 global.antitags = true
 
-global.autoTyping = process.env.OWNER_NAME || false, 
-global.autoRecord = process.env.OWNER_NAME || false, 
+global.autoTyping = false, 
+global.autoRecord = false, 
 
-global.Owner = process.env.OWNER_NUMBER || ['']
-global.OwnerNumber = process.env.OWNER_NUMBER || ['']
-global.ownertag = process.env.OWNER_NUMBER || ['']
+global.Owner = ['']
+global.OwnerNumber = ['']
+global.ownertag = ['']
 global.BotName = "Marin"
-global.dev = "917044585369"
-global.packname = process.env.PACK_INFO.split(";")[1] || 'Marin',
-global.author = process.env.PACK_INFO.split(";")[0] || 'Marin Kitigawa',
+global.dev = atob("OTE3MDQ0NTg1MzY5")
+global.packname = 'Marin',
+global.author = 'Marin Kitigawa',
 global.OwnerName = process.env.OWNER_NAME || '',
 global.BotSourceCode = "https://github.com/AshAritra/Marin-152"
 global.SupportGroupLink = ""
