@@ -2,7 +2,7 @@ https://user-images.githubusercontent.com/86512807/207010196-9025c2c8-fd3a-4435-
 
 
 </p>
-<h1 align="center"> Marin Kitigawa (Beta)
+<h1 align="center"> Marin Kitigawa
 </h1>
 <p align="center"> 
   Hello !, I am "Marin" a WhatsApp bot recode by UnderTaker to do everything that is possible on WhatsApp based on WhatsApp Multi Device(MD) Support.
@@ -20,9 +20,7 @@ https://user-images.githubusercontent.com/86512807/207010196-9025c2c8-fd3a-4435-
   <a href="https://github.com/AshAritra"><img title="Support" src="https://img.shields.io/badge/Maintain-Yes-cyan.svg?style=for-the-badge&logo=xcode" /></a>
 </p>
     
-
-     
-  
+ 
 <p align="CENTER">
   <a href="https://github.com/AshAritra"><img title="Support" src="https://img.shields.io/badge/next%20Update-Every Week!-green.svg?style=for-the-badge&logo=xcode" /></a>
 </p>
@@ -54,7 +52,7 @@ Deploy on [```MOGENIOUS```](https://undertaker5697.blogspot.com/2022/12/marin-15
 </details>  
   
    
-*NEW FEATURE* -- Auto update system .
+*NEW FEATURE* -- Auto Restart system .
 
 _________________________________________________
 
