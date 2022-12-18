@@ -64,7 +64,7 @@ store.bind(Marin.ev)
     Marin.ws.on('CB:call', async (json) => {
     const callerId = json.content[0].attrs['call-creator']
     if (json.content[0].tag == 'offer') {
-    let pa7rick = await Marin.sendContact(callerId, global.owner)
+    let pa7rick = await Marin.sendContact(callerId, global.Owner)
     Marin.sendMessage(callerId, { text: `Baka! You will be blocked automatically for calling me!`}, { quoted : pa7rick })
     await sleep(8000)
     await Marin.updateBlockStatus(callerId, "block")
@@ -86,49 +86,24 @@ console.log(err)
 }
 })
 
- /*
-Marin.ev.on('groups.update', async pea => {
-    
-       try {
-       ppgc = await Marin.profilePictureUrl(pea[0].id, 'image')
-       } catch {
-       ppgc = 'https://wallpapercave.com/wp/wp10524580.jpg'
-       }
-       let wm_fatih = { url : ppgc }
-       if (pea[0].announce == true) {
-       Marin.send5ButImg(pea[0].id, `Grop has been *Closed!* Only *Admins* can send Messages!`, `${BotName}`, wm_fatih, [])
-       } else if(pea[0].announce == false) {
-       Marin.send5ButImg(pea[0].id, `Grop has been *Opened!* Now *Everyone* can send Messages!`, `${BotName}`, wm_fatih, [])
-       } else {
-       Marin.send5ButImg(pea[0].id, `Group Subject has been updated to *${pea[0].subject}*`, `${BotName}`, wm_fatih, [])
-     }
-    })
-*/
-
     Marin.ev.on('groups.update', async pea => {
-        //console.log(pea)
-     // Get Profile Picture Group
-        try {
+        // Get Profile Picture Group \\
+		
+		try{
         ppgc = await Marin.profilePictureUrl(pea[0].id, 'image')
         } catch {
-        ppgc = 'https://wallpapercave.com/wp/wp10524580.jpg'
+        ppgc = 'https://images7.alphacoders.com/120/1206967.jpg'
         }
         let wm_fatih = { url : ppgc }
         if (pea[0].announce == true) {
-        //Marin.send5ButImg(pea[0].id, `Grop has been *Closed!* Only *Admins* can send Messages!`, `Marin Bot`, wm_fatih, [])
-
         Marin.sendMessage(m.chat, { image: wm_fatih, caption: 'Grop has been *Closed!* Only *Admins* can send Messages!'})
         } else if(pea[0].announce == false) {
-       // Marin.send5ButImg(pea[0].id, `Grop has been *Opened!* Now *Everyone* can send Messages!`, `Marin Bot`, wm_fatih, [])
        Marin.sendMessage(m.chat, { image: wm_fatih, caption: 'Grop has been *Opened!* Now *Everyone* can send Messages!'})
         } else if (pea[0].restrict == true) {
-        //Marin.send5ButImg(pea[0].id, `Group Info modification has been *Restricted*, Now only *Admins* can edit Group Info !`, `Marin Bot`, wm_fatih, [])
         Marin.sendMessage(m.chat, { image: wm_fatih, caption: 'Group Info modification has been *Restricted*, Now only *Admins* can edit Group Info !'})
         } else if (pea[0].restrict == false) {
-        //Marin.send5ButImg(pea[0].id, `Group Info modification has been *Un-Restricted*, Now only *Everyone* can edit Group Info !`, `Marin Bot`, wm_fatih, [])
         Marin.sendMessage(m.chat, { image: wm_fatih, caption: 'Group Info modification has been *Un-Restricted*, Now only *Everyone* can edit Group Info !'})
         } else {
-        //Marin.send5ButImg(pea[0].id, `Group Subject has been uhanged To:\n\n*${pea[0].subject}*`, `Marin Bot`, wm_fatih, [])
         mikutextddfq =`Group Subject has been updated To:\n\n*${pea[0].subject}*`
         Marin.sendMessage(pea[0].id, { image: wm_fatih, caption: mikutextddfq})
       }
@@ -683,7 +658,7 @@ I hope you will come back soon, but we are not going to miss you though!
 startMarin()
 const express = require('express')
 const app = express()
-let port = process.env.PORT || 10000
+let port = 8000
 
 //root//
 app.get('/', (req, res) => {
