@@ -1,8 +1,9 @@
 [
   {
-    "version": "1.0.4",
+    "version": "2.0.0",
     "files": {
-      "index.js": "Updated Auth system"
+      "Core.js": "Updated core.js"
+      "index.js": "Updated index.js"
     }
   }
 ]
