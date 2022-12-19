@@ -3,7 +3,9 @@
     "version": "2.0.0",
     "files": {
       "Core.js": "Updated core.js"
-      "index.js": "Updated index.js"
+      "index.js": "fixed bad msg error , buffer , and client side wating for msg error"
+      "config.js": "added session id system"
+      
     }
   }
 ]
