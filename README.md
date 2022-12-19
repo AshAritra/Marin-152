@@ -24,6 +24,18 @@ https://user-images.githubusercontent.com/86512807/207010196-9025c2c8-fd3a-4435-
 <p align="CENTER">
   <a href="https://github.com/AshAritra"><img title="Support" src="https://img.shields.io/badge/next%20Update-Every Week!-green.svg?style=for-the-badge&logo=xcode" /></a>
 </p>
+<p align="center"> 
+  Before deploying the bot you need to scan the qr to connect . 
+</p>
+     
+* `QR-1:` [For Both PC User's](https://replit.com/@AritraMondal4/Marin-152-QR?v=1 "QR")
+* `QR-2:` [For Both PC and Android User's](https://MARIN-152-QR.aritramondal4.repl.co "QR")
+    
+ 
+    
+</p>    
+<h1 align="center"> Deploy Methods
+</h1>
       
 <details open>
     <summary>✧ Deploy Method 1 ✧</summary>
