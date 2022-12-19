@@ -1,6 +1,12 @@
 const fs = require("fs")
 const chalk = require("chalk")
 
+////ADD_YOUR_SESSION_ID\\\\
+    //Please recheck\\
+global.sessionID = '',
+
+/\/\/\/\/\/\/\/\/\//\/\/\/\/
+
 
 global.available = true
 global.autoReadGc = true
@@ -19,7 +25,6 @@ global.packname = 'Marin', //Customizeable Pack name //
 global.author = 'Marin Kitigawa',//Customizeable Pack author name //
 global.OwnerName = '', //customize able bot owner name//
 global.BotSourceCode = "https://github.com/AshAritra/Marin-152" //dont change the source code link or the update system will break//
-global.sessionName = 'session',
 global.port= 8000
 global.prefa = ['-']  //Prefix// You can change it if u want.//
 
