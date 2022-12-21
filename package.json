@@ -86,9 +86,6 @@
   "wa-sticker-formatter": "^4.3.2",
   "xfarr-api": "^1.0.3",
   "yargs": "^17.2.1",
-  "yt-search": "^2.10.2",
-  "ytdl-core": "^4.11.0",
-  "ytsearch": "^1.0.4"
  },
  "devDependencies": {
     "@hapi/boom": "^9.1.4",
