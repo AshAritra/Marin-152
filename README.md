@@ -15,7 +15,7 @@ https://user-images.githubusercontent.com/86512807/207010196-9025c2c8-fd3a-4435-
   <a href="https://github.com/AshAritra/Marin-152/stargazers">
     <img src="https://img.shields.io/github/stars/AshAritra/Marin-152?style=social">
 
-    <p align="center">
+  <p align="center">
   <a href="https://github.com/AshAritra/Marin-152">
     <img src="https://visitor-badge.glitch.me/badge?page_id=https://github.com/AshAritra/Marin-152.visitor-badge&left_text=Total%20Repo%20Visits"> 
 
