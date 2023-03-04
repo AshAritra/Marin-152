@@ -2154,12 +2154,12 @@ case 'add': {
     if (!isBotAdmins) {
         return replay('I need to be an admin to add members to the group!');
     }
-    let users = m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '') + '@s.whatsapp.net';
-    if (users.length == 0) {
+    let uses = m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '') + '@s.whatsapp.net';
+    if (uses.length == 0) {
         return replay('Please provide a valid phone number for the user you want to add to the group.');
     }
     try {
-        await Marin.groupParticipantsUpdate(m.chat, [users], 'add');
+        await Marin.groupParticipantsUpdate(m.chat, [uses], 'add');
         replay(`🎉 Success! The user has been added to the group.`);
     } catch (err) {
         replay('Failed to add user to the group. Please try again later.');
@@ -2312,10 +2312,10 @@ case 'promote':
   if (!m.isGroup) return replay('This command can only be used in a group chat!');
   if (!isBotAdmins) return replay('I need to be an admin to promote members in the group!');
   if (!isAdmins && !isCreator) return replay('Only admins and the group creator can promote members.');
-  let users = m.mentionedJid[0] || m.quoted?.sender || text.replace(/[^0-9]/g, '') + '@s.whatsapp.net';
+  let usersk = m.mentionedJid[0] || m.quoted?.sender || text.replace(/[^0-9]/g, '') + '@s.whatsapp.net';
   try {
     await Marin.groupParticipantsUpdate(m.chat, [users], 'promote');
-    replay(`👏 ${users} has been promoted to admin in this group!`);
+    replay(`👏 ${usersk} has been promoted to admin in this group!`);
   } catch (err) {
     replay('Failed to promote user to admin in the group. Please try again later.');
   }
@@ -2327,10 +2327,10 @@ case 'demote':
   if (!m.isGroup) return replay(mess.grouponly);
   if (!isBotAdmins) return replay(mess.botadmin);
   if (!isAdmins && !isCreator) return replay(mess.useradmin);
-  let users = m.mentionedJid[0] || m.quoted?.sender || text.replace(/[^0-9]/g, '') + '@s.whatsapp.net';
+  let usersk = m.mentionedJid[0] || m.quoted?.sender || text.replace(/[^0-9]/g, '') + '@s.whatsapp.net';
   try {
     await Marin.groupParticipantsUpdate(m.chat, [users], 'demote');
-    replay(`👎 The user has been demoted from admin in this group. Sorry, ${users}!`);
+    replay(`👎 The user has been demoted from admin in this group. Sorry, ${usersk}!`);
   } catch (err) {
     replay('Failed to demote user from admin in the group. Please try again later.');
   }
@@ -2343,8 +2343,8 @@ case 'demote':
      if (!isBotAdmins) return replay(mess.botadmin)
 		 
      if (!isAdmins && !isCreator) return replay(mess.useradmin)
-     let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
-     await Marin.groupParticipantsUpdate(m.chat, [users], 'remove')
+     let usersk = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
+     await Marin.groupParticipantsUpdate(m.chat, [usersk], 'remove')
      }
      break
 
