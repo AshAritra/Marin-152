@@ -65,7 +65,16 @@ Deploy on [```MOGENIOUS```](https://undertaker5697.blogspot.com/2022/12/marin-15
 <br>       
      </ul>
 </details>  
-  
+
+ <details open>
+    <summary>✧ Deploy Method 3 (Best+Recommended)✧</summary>
+    <ul>
+      
+Deploy on [```Pylexnodes```](https://client.pylexnodes.net/servers/new)
+ 
+<br>       
+     </ul>
+</details>      
    
 *NEW FEATURE* -- Auto Restart system .
 
