@@ -1,35 +1,32 @@
 const fs = require("fs")
 const chalk = require("chalk")
 
-////ADD_YOUR_SESSION_ID\\\\
-    //Please recheck\\
-global.sessionID = '',
-
-/\/\/\/\/\/\/\/\/\//\/\/\/\/
-
 
 global.available = true
 global.autoReadGc = true
 global.autoReadAll = false
 global.antitags = true
 
-global.autoTyping = false, 
+
+global.autoTyping = true, 
 global.autoRecord = false, 
+	
 
-global.Owner = [''] //bot owner number plz add 91 , and remove spaces
-global.OwnerNumber = [''] //add ur number
-global.ownertag = [''] // add ur number//
-global.BotName = "Marin" //Default bot name , noting will be changed if u rename it//
-global.dev = atob("OTE3MDQ0NTg1MzY5") //dont channge it//
-global.packname = 'Marin', //Customizeable Pack name //
-global.author = 'Marin Kitigawa',//Customizeable Pack author name //
-global.OwnerName = '', //customize able bot owner name//
-global.BotSourceCode = "https://github.com/AshAritra/Marin-152" //dont change the source code link or the update system will break//
+global.Owner = ['917044585369']
+global.OwnerNumber = ['917044585369']
+global.ownertag = ['917044585369@g.whatsapp']
+global.BotName = "Marin"
+global.packname = 'By: Marin',
+global.author = 'Its-Ari',
+global.OwnerName = 'UnderTaker',
+global.BotSourceCode = ""
+global.SupportGroupLink = ""
+global.sessionID = '',
 global.port= 8000
-global.prefa = ['-']  //Prefix// You can change it if u want.//
+global.prefa = ['-'] 
+global.mongodb = "";
 
-
-global.location = "West Bengal, India", //default location
+global.location = "West Bengal, India",
 global.reactmoji = "❤️"
 global.themeemoji = "💖"
 global.vidmenu = { url: 'https://media.tenor.com/nV_hpJT8ppwAAAAC/marin.gif' }
@@ -99,13 +96,21 @@ global.limitawal = {
     free: 100
 }
 
-
 global.APIs = {
 	zenz: 'https://zenzapis.xyz',
 }
 global.APIKeys = {
 	'https://zenzapis.xyz': 'a52605e4317b',
 }
+
+//Google APIs
+global.email = "",
+global.clientId = "",
+global.clientSecret = "",
+global.refreshToken = "",
+global.apiKey = ""
+
+
 
 
 global.flaming = 'https://www6.flamingtext.com/net-fu/proxy_form.cgi?&imageoutput=true&script=sketch-name&doScale=true&scaleWidth=800&scaleHeight=500&fontsize=100&text='
