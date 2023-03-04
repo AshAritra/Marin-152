@@ -1,5 +1,7 @@
 require("./config.js")
+require("./Core.js");
 const { default: MarinConnect, useSingleFileAuthState, MessageRetryMap, DisconnectReason, fetchLatestBaileysVersion, generateForwardMessageContent, prepareWAMessageMedia, generateWAMessageFromContent, generateMessageID, downloadContentFromMessage, makeInMemoryStore, jidDecode, proto } = require("@adiwajshing/baileys")
+const mongoose = require("mongoose");
 const cliSpinners = require('cli-spinners')
 const pino = require('pino')
 const fs = require('fs')
@@ -16,21 +18,36 @@ const { smsg, isUrl, generateMessageTag, getBuffer, getSizeMedia, fetchJson, awa
 const figlet = require('figlet')
 const { color } = require('./lib/color')
 const store = makeInMemoryStore({ logger: pino().child({ level: 'silent', stream: 'store' }) })
-if (global.sessionID === '') {
-  console.log(chalk.redBright(`Session ID is empty.`))
-  process.exit(1)
+if (!global.sessionID) {
+  console.error('\x1b[31m%s\x1b[0m', 'Error: Session ID is empty.');
+  process.exit(1);
 }
-let cc = atob(global.sessionID)
-let c = cc
+
+// Decode session ID
+let decodedSessionID;
+try {
+  decodedSessionID = atob(global.sessionID);
+} catch (error) {
+  console.error('\x1b[31m%s\x1b[0m', `Error: Failed to decode session ID. ${error.message}`);
+  process.exit(1);
+}
 async function makeSession() {
-  const axios = require('axios');
-    let { data } = await axios.get('https://pastebin.com/raw/'+c)
-    await fs.writeFileSync('session.json', JSON.stringify(data), "utf8")  
+  try {
+    const response = await axios.get(`https://pastebin.com/raw/${decodedSessionID}`);
+    const sessionData = response.data;
+    await fs.promises.writeFile('session.json', JSON.stringify(sessionData), 'utf8');
+    console.log('\x1b[32m%s\x1b[0m', 'Session data successfully saved to session.json');
+  } catch (error) {
+    console.error('\x1b[31m%s\x1b[0m', `Error: Failed to fetch session data. ${error.message}`);
+    process.exit(1);
+  }
 }
 makeSession();
 
+setTimeout(() => {
 async function startMarin() {
-  
+await mongoose.connect(mongodb) 
+    console.log(color('\nConnected to database.', 'aqua'))
 console.log(color(figlet.textSync('Marin Kitigawa', {
 		font: 'Pagga',
 		horizontalLayout: 'default',
@@ -58,6 +75,7 @@ const { state, saveState } = useSingleFileAuthState(`./session.json`)
     })
     
 store.bind(Marin.ev)
+
     
     Marin.ws.on('CB:call', async (json) => {
     const callerId = json.content[0].attrs['call-creator']
@@ -262,7 +280,7 @@ I hope you will come back soon, but we are not going to miss you though!
             else if (reason === DisconnectReason.loggedOut) { console.log(`Device Logged Out, Please Delete Session and Scan Again.`); process.exit(); }
             else if (reason === DisconnectReason.restartRequired) { console.log("Restart Required, Restarting..."); startMarin(); }
             else if (reason === DisconnectReason.timedOut) { console.log("Connection TimedOut, Reconnecting..."); startMarin(); }
-            else { console.log(`Unknown DisconnectReason: ${reason}|${connection}`) }
+            else { console.log(`Unknown DisconnectReason: ${reason}|${connection}`); startMarin(); }
         }
         //console.log('Connected...', update)
     })
@@ -654,18 +672,8 @@ I hope you will come back soon, but we are not going to miss you though!
 }
 
 startMarin()
-const express = require('express')
-const app = express()
-let port = 8000
 
-//root//
-app.get('/', (req, res) => {
-  res.sendStatus(200)
-})
-//app listne on port//
-app.listen(port, function () {
-  console.log(`Listening on port ${port}`)
-})
+
 
 let file = require.resolve(__filename)
 fs.watchFile(file, () => {
@@ -673,4 +681,13 @@ fs.watchFile(file, () => {
 	console.log(chalk.redBright(`${__filename} Updated`))
 	delete require.cache[file]
 	require(file)
+})
+}, 3000)
+const express = require('express')
+const app = express()
+let PORT = 40314
+app.use("/", express.static("./page")) 
+
+app.listen(PORT, () => {
+    console.log(`Server running on PORT ${PORT}`);
 })
