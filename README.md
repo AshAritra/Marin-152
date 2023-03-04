@@ -69,7 +69,7 @@ Deploy on [```MOGENIOUS```](https://undertaker5697.blogspot.com/2022/12/marin-15
  <details close>
     <summary>✧ Deploy Method 3 (Best+Recommended)✧</summary>
     <ul>
-      
+Frist : Downlaod the repo...     
 Deploy on [```Pylexnodes```](https://client.pylexnodes.net/servers/new)
  
 <br>       
