@@ -40,7 +40,7 @@ https://user-images.githubusercontent.com/86512807/207010196-9025c2c8-fd3a-4435-
 <h1 align="center"> Deploy Methods
 </h1>
       
-<details open>
+<details close>
     <summary>✧ Deploy Method 1 ✧</summary>
     <ul> 
 
@@ -56,8 +56,8 @@ Downlaod this two files from here -
     </ul>
 </details>  
  
- <details open>
-    <summary>✧ Deploy Method 2 (Recommended)✧</summary>
+ <details close>
+    <summary>✧ Deploy Method 2 ✧</summary>
     <ul>
       
 Deploy on [```MOGENIOUS```](https://undertaker5697.blogspot.com/2022/12/marin-152-mongenius-deployment.html)
@@ -66,7 +66,7 @@ Deploy on [```MOGENIOUS```](https://undertaker5697.blogspot.com/2022/12/marin-15
      </ul>
 </details>  
 
- <details open>
+ <details close>
     <summary>✧ Deploy Method 3 (Best+Recommended)✧</summary>
     <ul>
       
