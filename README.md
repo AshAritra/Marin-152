@@ -1,6 +1,8 @@
 https://user-images.githubusercontent.com/86512807/207010196-9025c2c8-fd3a-4435-bf53-e8f7dc01a08f.mp4
 
-
+<p align="center">
+  <a href="#"><img src="http://readme-typing-svg.herokuapp.com?color=089f8f&center=true&vCenter=true&multiline=false&lines=Marin+Kitagawa+MD" alt="">
+</p>
 </p>
 <h1 align="center"> Marin Kitigawa
 </h1>
