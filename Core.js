@@ -1,6 +1,9 @@
 process.on('uncaughtException', console.error)
 require("./config")
-const { BufferJSON, WA_DEFAULT_EPHEMERAL, generateWAMessageFromContent, proto, generateWAMessageContent, generateWAMessage, prepareWAMessageMedia, areJidsSameUser, getContentType, WAFlag } = require('@adiwajshing/baileys')
+require("./index.js");
+const ytdl = require('ytdl-core')
+const Canvacord = require('canvacord')
+const { BufferJSON, WA_DEFAULT_EPHEMERAL, generateWAMessageFromContent, proto, generateWAMessageContent, generateWAMessage, prepareWAMessageMedia, areJidsSameUser, getContentType, WAFlag, MessageRetryMap } = require('@adiwajshing/baileys')
 const zMarin = require("@adiwajshing/baileys")
 const fs = require('fs')
 const util = require('util')
@@ -46,11 +49,9 @@ const xfarrapi = require('xfarr-api')
 const { hentai } = require('./lib/scraper2.js')
 let { msgFilter } = require('./lib/antispam')
 const { mediafireDl } = require('./lib/mediafire.js')
-var cron = require('node-cron');
-
-
-
-
+var Cooldown = require('cooldown');
+const GIFEncoder = require('gifencoder')
+  
 const _ = require('lodash')
 const yargs = require('yargs/yargs')
 var low
@@ -68,6 +69,7 @@ const {
   searchResult 
  } = require('./lib/ytdl')
 
+
 let banUser = JSON.parse(fs.readFileSync('./database/banUser.json'));
 let banchat = JSON.parse(fs.readFileSync('./database/banChat.json'));
 let marinaudio = JSON.parse(fs.readFileSync('./Database-Media/audio.json'));
@@ -76,7 +78,11 @@ let marinvideo = JSON.parse(fs.readFileSync('./Database-Media/video.json'));
  let _buruan = JSON.parse(fs.readFileSync('./storage/user/bounty.json'));
  let _darahOrg = JSON.parse(fs.readFileSync('./storage/user/blood.json'))
 
-
+const {
+    mk,
+    mku
+} = require("./database/databaseSchema.js");
+ 
 global.opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse())
 global.db = new Low(
   /https?:\/\//.test(opts['db'] || '') ?
@@ -166,6 +172,7 @@ try {
 var body = (m.mtype === 'conversation') ? m.message.conversation : (m.mtype == 'imageMessage') ? m.message.imageMessage.caption : (m.mtype == 'videoMessage') ? m.message.videoMessage.caption : (m.mtype == 'extendedTextMessage') ? m.message.extendedTextMessage.text : (m.mtype == 'buttonsResponseMessage') ? m.message.buttonsResponseMessage.selectedButtonId : (m.mtype == 'listResponseMessage') ? m.message.listResponseMessage.singleSelectReply.selectedRowId : (m.mtype == 'templateButtonReplyMessage') ? m.message.templateButtonReplyMessage.selectedId : (m.mtype === 'messageContextInfo') ? (m.message.buttonsResponseMessage?.selectedButtonId || m.message.listResponseMessage?.singleSelectReply.selectedRowId || m.text) : ''
 var budy = (typeof m.text == 'string' ? m.text : '')
 const prefix = global.prefa
+const type = m
 const isCmd = body.startsWith(prefix)
 const notCmd = body.startsWith('')
 const command = isCmd ? body.slice(1).trim().split(' ')[0].toLowerCase() : ''
@@ -176,6 +183,7 @@ const isCreator = [botNumber, ...global.Owner].map(v => v.replace(/[^0-9]/g, '')
 const itsMe = m.sender == botNumber ? true : false
 const text = args.join(" ")
 const from = m.chat
+//const undertaker = atob(`${global.UnderTaker}`).includes(m.sender)
 const timeWib = moment.tz('Asia/Kolkata').format('DD/MM HH:mm:ss')
 const quoted = m.quoted ? m.quoted : m
 const mime = (quoted.msg || quoted).mimetype || ''
@@ -208,6 +216,12 @@ const isLeveling = m.isGroup ? _leveling.includes(from) : false
 autoreadsw = true
 const content = JSON.stringify(m.message)
 const q = args.join(' ')
+const mentionByTag =
+            type == "extendedTextMessage" &&
+            m.message.extendedTextMessage.contextInfo != null ?
+            m.message.extendedTextMessage.contextInfo.mentionedJid :
+            [];
+const msg_chk = `${global.msg_chk}`
 
 const isQuotedVideo = m.mtype === 'extendedTextMessage' && content.includes('videoMessage')
 const isQuotedAudio = m.mtype === 'extendedTextMessage' && content.includes('audioMessage')
@@ -217,19 +231,8 @@ const isQuotedAudio = m.mtype === 'extendedTextMessage' && content.includes('aud
 
 const mongoose = require("mongoose");
 
-/*
+/////////////////////////grp CMD on and off interogation///////////////////////
 
-/////////// -  DM chatbot (Delete this part to turn off DM Chat Bot) - //////////////////
-
-if (!isCmd && !m.isGroup){
-    const botreply = await axios.get(`http://api.brainshop.ai/get?bid=168758&key=Ci7eNhtxpxxDB5FQ&uid=[uid]&msg=[${budy}]`)
-    txt = `${botreply.data.cnt}`
-    m.reply(txt)
-    }
-
-//////////////////////////////////////////////////////////////////////////////////////
-
-*/
 _sewa.expiredCheck(Marin, sewa)
 
 const reply = (teks) => {
@@ -245,8 +248,8 @@ function randomNomor(angka){
             return Math.floor(Math.random() * angka) + 1
             }           
 if (bad.includes(messagesD)) {
-				reply('Toxic!_Chat_Detected') ////toxic detector///
-				}		
+reply('Toxic!_Chat_Detected') ////toxic detector///
+}		
 if (m.message) {
 addBalance(m.sender, randomNomor(574), balance)
 console.log(chalk.black(chalk.bgWhite('[ MESSAGE ]')), chalk.black(chalk.bgGreen(new Date)), chalk.black(chalk.bgBlue(budy || m.mtype)) + '\n' + chalk.magenta('=> From'), chalk.green(pushname), chalk.yellow(m.sender) + '\n' + chalk.blueBright('=> In'), chalk.green(m.isGroup ? pushname : 'Private Chat', m.chat))
@@ -923,6 +926,7 @@ fs.writeFileSync('./src/database.json', JSON.stringify(global.db, null, 2))
 
 // reset limit every 12 hours
 let cron = require('node-cron')
+
     cron.schedule('00 12 * * *', () => {
     let user = Object.keys(global.db.users)
     let limitUser = isRakyat ? global.limitawal.rakyat : global.limitawal.free
@@ -1193,7 +1197,7 @@ let cron = require('node-cron')
                                 "h": `Marin`,
                                 'duration': '99999', 
                                 'gifPlayback': 'true', 
-                                'caption': `Fantox`,
+                                'caption': `Marin`,
                                 'jpegThumbnail': fs.readFileSync('./Assets/Marin.mp4')
                                        }
                                       }
@@ -1373,7 +1377,6 @@ const ftroli = {
         const qtod = m.quoted? "true":"false"
 		
 		
-			
 
 //Some special chat replies
 	
@@ -1382,7 +1385,7 @@ const ftroli = {
       reply (`Hello *${pushname}*, I am *${BotName}*. How can i help you?`);
     }
 	
-	if (smallinput.includes(${global.BotName})) {
+	if (smallinput=='marin') {
       reply (`Yes I am Alive 🫂`);
     } 
 
@@ -1397,6 +1400,10 @@ const ftroli = {
     if (smallinput=='lol') {
         reply (`*XD*`)
     }
+			
+	if (smallinput=='ari') {
+        reply (`*My Ari is lost in another Multiverse, I lost contact with him...*`)
+    }
 
     if (smallinput=='op') {
         reply (`Hehe`)
@@ -1405,13 +1412,19 @@ const ftroli = {
 	if (smallinput=='ping') {
         reply (`Hey ${pushname} Pong ${latensie.toFixed(4)} ms`)
     }
+  if (smallinput=='i love you marin') {
+    if (isCreator) return reply (`I lob you too  my bae !`)
+    if (!isCreator) return reply (`Nikal Law*re`)
+    }
 
     if (smallinput.includes('good morning') || smallinput.includes('ohayo')) {
-      reply (`Good morning to you too *${pushname}* ☺️. Have a great day 😇.`);
+    if (!isCreator) return reply (`Good morning to you too *${pushname}* ☺️. Have a great day 😇.`);
+	  if (isCreator) return reply (`Hi babe Good Morning to you too .  ☺️. Have a great day 😇. Love You!`)
     }
 
     if (smallinput.includes('good night')) {
-      reply (`Good night to you too *${pushname}* 😇. Sleep well and sweet dreams.`);
+    if (!isCreator) return reply (`Good night to you too *${pushname}* 😇. Sleep well and sweet dreams.`);
+    if (isCreator) return reply (`Good Night babe Have a sweet and beautiful dream . Love you `)
     }
 
     if (smallinput.includes('arigato')|| smallinput.includes('arigatou') || smallinput.includes('thank')) {
@@ -1441,18 +1454,9 @@ for (let kiti2 of marinvideo){
 					}
 			}			
 
-  
-
-switch(command) {
-	
-	                                    //----HelpMenu----//
-										
-										
-case 'help': case 'h': case 'menu': case 'allmenu': case 'listmenu':{
-	
-    if (isBan) return reply(mess.banned)	 			
-    if (isBanChat) return reply(mess.bangc)
-      
+switch(command) {										
+								
+case 'help': case 'h': case 'menu': case 'allmenu': case 'listmenu':{   
  const helpmenu = `Konichiwa *${pushname}* Senpai,
 
 │───────────────────────│
@@ -1485,7 +1489,7 @@ case 'help': case 'h': case 'menu': case 'allmenu': case 'listmenu':{
 │╭────────────────···▸
 ┴│▸ 
 ⬡│▸ admin, speak, Marin, stalk
-⬡│▸ profile, delete
+⬡│▸ profile, delete, promo
 ⬡│▸ deleteall, ping, 
 ⬡│▸ listpc, listgc
 ⬡│▸ welcome, support
@@ -1532,6 +1536,13 @@ case 'help': case 'h': case 'menu': case 'allmenu': case 'listmenu':{
 ⬡│▸ wikimedia, ringtone
 ⬡│▸ anime, animestory
 ⬡│▸ manga, ringtone
+┬│▸
+╰────────────────···▸
+┠━━〈 ༺ *Mist Dragoon Server* ༻ 〉━━
+│╭───────────────···▸
+┴│▸
+⬡│▸ ipport, access, verify, version, dc
+⬡│▸ mcstat
 ┬│▸
 ╰────────────────···▸
 ┠━━〈 🛠️ *Convert* 🛠️ 〉━━
@@ -1588,6 +1599,12 @@ case 'help': case 'h': case 'menu': case 'allmenu': case 'listmenu':{
 ⬡│▸ meme , animeme , mcmeme
 ┬│▸
 ╰────────────────···▸
+┠━━〈 🎐 *Image-Manipulation* 🎐 〉━━
+│╭───────────────···▸
+┴│▸
+⬡│▸ circleimage, jail
+┬│▸
+╰────────────────···▸
 ┠━━〈 🈴 *Weeb* 🈴 〉━━
 │╭───────────────···▸
 ┴│▸
@@ -1621,7 +1638,6 @@ case 'help': case 'h': case 'menu': case 'allmenu': case 'listmenu':{
 │╭───────────────···▸
 ┴│▸
 ⬡│▸ stickermeme, quotes, darkjoke
-⬡│▸ mcstat
 ┬│▸
 ╰────────────────···▸
 ┠━━〈 ⚠️ *NSFW* ⚠️ 〉━━
@@ -1657,8 +1673,7 @@ case 'help': case 'h': case 'menu': case 'allmenu': case 'listmenu':{
                 }
             Marin.sendMessage(m.chat, buttonMessage,{ quoted:m })
                 }
-break
- 										
+break										
 	
 	
 	
@@ -1666,11 +1681,15 @@ break
 	
 
 case 'Marin': case 'marin':{
-	
-    if (isBan) return reply(mess.banned)	 			
+	if (isBan) return reply(mess.banned)	 			
     if (isBanChat) return reply(mess.bangc)
-
- reply(`Do you love Marin-San? Then we are the same.`)
+if (!isCreator) 
+try {
+  reply(`You wassup dude `)
+ } catch(e) { consle.log(`An error occured`)
+ }
+if (isCreator) 
+ try {
  const Marinarray= [
             "https://media.tenor.com/xq2d1Oj0OwUAAAPo/marin-kitagawa.mp4",
             "https://media.tenor.com/lCZzwGfMEb4AAAPo/marin-kitagawa.mp4",
@@ -1689,17 +1708,28 @@ case 'Marin': case 'marin':{
 			"https://media.tenor.com/v7TI4kuHSU8AAAPo/sono-bisque-doll-wa-koi-wo-suru-my-dress-up-darling.mp4",
 			"https://media.tenor.com/v7TI4kuHSU8AAAPo/sono-bisque-doll-wa-koi-wo-suru-my-dress-up-darling.mp4",
 			"https://media.tenor.com/WixCIj2RBzQAAAPo/marin-kitagawa.mp4"
-			
-
-            ]
+]
         
             const Marinselection = Marinarray[Math.floor(Math.random()*Marinarray.length)]
         
-            Marin.sendMessage(from,{video:{url:Marinselection},gifPlayback:true,caption:`I love you too *${pushname}*`},{quoted:m})
+            Marin.sendMessage(from,{video:{url:Marinselection},gifPlayback:true,caption:`Hi babe are you ok ?`},{quoted:m})
+  } catch(e) {
+  console.log(`Sorry error occurred here`)
+  }
 }
 break
 
  
+case 'promoters': case 'promo': case 'promoter': 
+if (!isCreator) return reply(mess.botowner)
+try {
+axios.get('https://raw.githubusercontent.com/AshAritra/database-of-Marin-152/main/genarel-data.json').then((res) => {
+let prom = `${res.data.promoter}`
+  let promm = prom.replaceAll("+", "〄 ")
+    reply(`Here are the promoters, who helped Ari on his project:`+promm)
+})
+} catch(e) { reply("An error occured when fetching promoter list") }
+break
 	
  case 'owner': case 'creator': case 'mod': case 'mods':{
     Marin.sendContact(m.chat, global.Owner, m)
@@ -1878,7 +1908,7 @@ case 'me': case 'profile': case 'p':
   if (!isInventory){ addInventori(m.sender) }
   if (!isInventoriBuruan){ addInventoriBuruan(m.sender) }
      
-
+try {
      var flob = await getBuffer(picak+'User Profile')
      var bio= await Marin.fetchStatus(m.sender)
      var bioo = bio.status
@@ -1908,7 +1938,7 @@ let buttonspro = [
                 headerType: 4
             }
         Marin.sendMessage(m.chat,buttonMessage,{quoted:m})
-        	
+} catch(e) { reply('Sorry got an error') }      	
             break
 			
 			
@@ -1921,7 +1951,7 @@ case 'repo': case 'botrepo':
     reply(`This is Owners bot , so to get this bots
 repo contact ${global.Owner}.
 Public bot is here fork this --	
-	*Public Bot:* https://replit.com/@AritraMondal4/MarinKitigawa-An-WhatsappBot?v=1`)
+	*Public Bot:* https://asharitra.github.io/database-of-Marin-152/`)
     break
 			
 			
@@ -2115,15 +2145,27 @@ if (isBanChat) return reply(mess.bangc)
  }
  break
 
-case 'add':{     			
-    if (!m.isGroup) return replay(mess.grouponly)
-
- if (!isBotAdmins) return replay(mess.botadmin)
- let users = m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
- if (users.length == 0) return replay(`Please write the number of the person you want to add to thhis group`)
-  await Marin.groupParticipantsUpdate(m.chat, [users], 'add').then((res) => replay(`User Added Successfully!`)).catch((err) => replay(`Cannot add that user to this group!`))
- }
- break
+case 'add': {
+ if (isBan) return reply(mess.banned)	 			
+ if (isBanChat) return reply(mess.bangc)
+    if (!m.isGroup) {
+        return replay('This command can only be used in a group chat!');
+    }
+    if (!isBotAdmins) {
+        return replay('I need to be an admin to add members to the group!');
+    }
+    let users = m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '') + '@s.whatsapp.net';
+    if (users.length == 0) {
+        return replay('Please provide a valid phone number for the user you want to add to the group.');
+    }
+    try {
+        await Marin.groupParticipantsUpdate(m.chat, [users], 'add');
+        replay(`🎉 Success! The user has been added to the group.`);
+    } catch (err) {
+        replay('Failed to add user to the group. Please try again later.');
+    }
+}
+break;
 
 
 
@@ -2264,29 +2306,35 @@ sections
 }
 break
 
-    case 'promote': {
-        if (isBan) return reply(mess.banned)	 			
-     if (isBanChat) return reply(mess.bangc)
-		 
-     if (!m.isGroup) return replay(mess.grouponly)
-     if (!isBotAdmins) return replay(mess.botadmin)
-     if (!isAdmins && !isCreator) return replay(mess.useradmin)
-     let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
-     await Marin.groupParticipantsUpdate(m.chat, [users], 'promote').then((res) => replay(jsonformat(res))).catch((err) => replay(jsonformat(err)))
-     }
-     break
-
-     case 'demote': {
-        if (isBan) return reply(mess.banned)	 			
-     if (isBanChat) return reply(mess.bangc)
-     if (!m.isGroup) return replay(mess.grouponly)
-     if (!isBotAdmins) return replay(mess.botadmin)
-		 
-     if (!isAdmins && !isCreator) return replay(mess.useradmin)
-     let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
-     await Marin.groupParticipantsUpdate(m.chat, [users], 'demote').then((res) => replay(jsonformat(res))).catch((err) => replay(jsonformat(err)))
-     }
-     break
+case 'promote':
+  if (isBan) return reply('You are banned.');
+  if (isBanChat) return reply('This command is not allowed in this group.');
+  if (!m.isGroup) return replay('This command can only be used in a group chat!');
+  if (!isBotAdmins) return replay('I need to be an admin to promote members in the group!');
+  if (!isAdmins && !isCreator) return replay('Only admins and the group creator can promote members.');
+  let users = m.mentionedJid[0] || m.quoted?.sender || text.replace(/[^0-9]/g, '') + '@s.whatsapp.net';
+  try {
+    await Marin.groupParticipantsUpdate(m.chat, [users], 'promote');
+    replay(`👏 ${users} has been promoted to admin in this group!`);
+  } catch (err) {
+    replay('Failed to promote user to admin in the group. Please try again later.');
+  }
+  break;
+  
+case 'demote':
+  if (isBan) return reply(mess.banned);
+  if (isBanChat) return reply(mess.bangc);
+  if (!m.isGroup) return replay(mess.grouponly);
+  if (!isBotAdmins) return replay(mess.botadmin);
+  if (!isAdmins && !isCreator) return replay(mess.useradmin);
+  let users = m.mentionedJid[0] || m.quoted?.sender || text.replace(/[^0-9]/g, '') + '@s.whatsapp.net';
+  try {
+    await Marin.groupParticipantsUpdate(m.chat, [users], 'demote');
+    replay(`👎 The user has been demoted from admin in this group. Sorry, ${users}!`);
+  } catch (err) {
+    replay('Failed to demote user from admin in the group. Please try again later.');
+  }
+  break;
 
      case 'remove':{
         if (isBan) return reply(mess.banned)	 			
@@ -2301,55 +2349,69 @@ break
      break
 
 
-     case 'join': {
-        if (isBan) return reply(mess.banned)	 			
-     if (isBanChat) return reply(mess.bangc)
-     if (!isCreator) return replay(mess.botowner)
+  case 'join': {
+    if (isBan) return reply(mess.banned);	 			
+    if (isBanChat) return reply(mess.bangc);
+    if (!isCreator) return replay(mess.botowner);
 		 
-     if (!args[0]) return replay(`Where's the link?`)
-     vdd = args[0]
-     let vcc = vdd.split("https://chat.whatsapp.com/")[1]
-     if (!vcc) return replay("Link invalid!")
-     if (isCreator) {
-     await Marin.groupAcceptInvite(vcc).then(async(res) => replay(jsonformat(res))).catch(_ => _)
-     replay("Succes!")
-     } else {
-     Marin.query({
-     tag: "iq",
-     attrs: {
-     type: "get",
-     xmlns: "w:g2",
-     to: "@g.us"
-     },
-     content: [{ tag: "invite", attrs: { code: vcc } }]
-     }).then(async(res) => {
-     sizny = res.content[0].attrs.size
-     if (sizny < 20) {
-     teks = `Sorry, munimun 20 members are required in a group to add bot!`
-     sendOrder(m.chat, teks, "667140254502463", fs.readFileSync('./Assets/pic7.jpg'), `${global.packname}`, `${global.BotName}`, "916909137213@s.whatsapp.net", "AR6NCY8euY5cbS8Ybg5Ca55R8HFSuLO3qZqrIYCT7hQp0g==", "99999999999999999999")
-     } else if (sizny > 20) {
-     await Marin.groupAcceptInvite(vcc).then(async(res) => replay(jsonformat(res))).catch(_ => _)
-     replay("Joined !")
-     } else {
-     replay("Error")
-     }
-     }).catch(_ => _)
-     }
-     }
-     break
+    if (!args[0]) return replay('Please provide a valid group invite link.');
+    
+    let inviteLink = args[0].split('https://chat.whatsapp.com/')[1];
+    if (!inviteLink) return replay('Invalid invite link!');
+    
+    if (isCreator) {
+        try {
+            await Marin.groupAcceptInvite(inviteLink);
+            replay('Successfully joined the group!');
+        } catch (err) {
+            replay('Failed to join the group. Please try again later.');
+        }
+    } else {
+        Marin.query({
+            tag: 'iq',
+            attrs: {
+                type: 'get',
+                xmlns: 'w:g2',
+                to: '@g.us'
+            },
+            content: [{
+                tag: 'invite',
+                attrs: { code: inviteLink }
+            }]
+        }).then(async (res) => {
+            let groupSize = res.content[0].attrs.size;
+            if (groupSize < 20) {
+                let message = 'Sorry, the group must have at least 20 members for me to join.';
+                sendOrder(m.chat, message, '667140254502463', fs.readFileSync('./Assets/pic7.jpg'), `${global.packname}`, `${global.BotName}`, '916909137213@s.whatsapp.net', 'AR6NCY8euY5cbS8Ybg5Ca55R8HFSuLO3qZqrIYCT7hQp0g==', '99999999999999999999');
+            } else if (groupSize >= 20) {
+                try {
+                    await Marin.groupAcceptInvite(inviteLink);
+                    replay('Successfully joined the group!');
+                } catch (err) {
+                    replay('Failed to join the group. Please try again later.');
+                }
+            } else {
+                replay('Error joining the group.');
+            }
+        }).catch((err) => {
+            replay('Failed to join the group. Please try again later.');
+        });
+    }
+}
+break;
 
-
- case 'setdesc': case 'setdesk': {
-    if (isBan) return reply(mess.banned)	 			
- if (isBanChat) return reply(mess.bangc)
- if (!m.isGroup) return replay(mess.grouponly)
- if (!isBotAdmins) return replay(mess.botadmin)
- 
- if (!isAdmins && !isCreator) return replay(mess.useradmin)
- if (!text) return replay('Pls enter -setname <New Group Description>  to change this Group Description.')
- await Marin.groupUpdateDescription(m.chat, text).then((res) => replay(mess.jobdone)).catch((err) => replay(jsonformat(err)))
- }
- break
+case 'setdesc': case 'setdesk': {
+    if (isBan) return reply(mess.banned);
+    if (isBanChat) return reply(mess.bangc);
+    if (!m.isGroup) return replay(mess.grouponly);
+    if (!isBotAdmins) return replay(mess.botadmin);
+    if (!isAdmins && !isCreator) return replay(mess.useradmin);
+    if (!text) return replay('Please enter a new group description with -setname <New Group Description>.');
+    await Marin.groupUpdateDescription(m.chat, text)
+        .then((res) => replay(mess.jobdone))
+        .catch((err) => replay(jsonformat(err)));
+}
+break;
 
  case 'setgrouppp': case 'setgruppp': case 'setgcpp': {
     if (isBan) return reply(mess.banned)	 			
@@ -2367,21 +2429,21 @@ break
  }
  break
 
- case 'tag': case 'tagall': case 'all':{
-    if (isBan) return reply(mess.banned)	 			
- if (isBanChat) return reply(mess.bangc)
- if (!m.isGroup) return replay(mess.grouponly)
+case 'tag': case 'tagall': case 'all':{
+  if (isBan) return reply(mess.banned)	 			
+  if (isBanChat) return reply(mess.bangc)
+  if (!m.isGroup) return replay(mess.grouponly)
 	 
- if (!isAdmins && !isCreator) return replay(mess.useradmin)
- let teks = `「 _Tag All_ 」
+  if (!isAdmins && !isCreator) return replay(mess.useradmin)
   
- *Message : ${args.join(" ") ? args.join(" ") : 'no message'}*\n\n`
- for (let mem of participants) {
- teks += `» @${mem.id.split('@')[0]}\n`
- }
- Marin.sendMessage(m.chat, { text: teks, mentions: participants.map(a => a.id) }, { quoted: m })
- }
- break
+  const message = args.join(" ") || 'no message';
+  const members = participants.map(member => `@${member.id.split('@')[0]}`).join('\n');
+
+  const text = `「 Tag All 」\n\n*Message:* ${message}\n\n${members}`;
+  
+  Marin.sendMessage(m.chat, { text, mentions: participants.map(a => a.id) }, { quoted: m });
+}
+break
 
 	
 case 'nsfwmenu':
@@ -2452,12 +2514,15 @@ if (isBanChat) return reply(mess.bangc)
 if (!m.isGroup) return replay(mess.grouponly)
 	
 if (!AntiNsfw) return reply(mess.nonsfw)
+	reply(`Owner is working on this cmd`)
+	/*
 try{
 reply(mess.waiting)
 NoHorny = await fetchJson(`https://myselfff.herokuapp.com/docs/nsfw/${command}`)
 YesHorny = await getBuffer(NoHorny.result)
 Marin.sendMessage(from, {image:YesHorny},{quoted:m})
 } catch (e) {error("Error")}	
+*/
 break
 
 case 'spank':
@@ -2467,7 +2532,7 @@ case 'spank':
 		
     if (!AntiNsfw) return reply(mess.nonsfw)
 reply(mess.waiting)
-spankd = await axios.get(`https://nekos.life/api/v2/img/spank`)                                   
+spankd = await fetchJson(`https://nekos.life/api/v2/img/spank`)                                   
   let spbuff = await getBuffer(spankd.data.url)
 let spgif = await GIFBufferToVideoBuffer(spbuff)   
         await Marin.sendMessage(m.chat,{video: spgif, gifPlayback:true},{ quoted:m }).catch(err => {
@@ -2482,7 +2547,7 @@ case 'blowjobgif': case 'bj' :
 		
     if (!AntiNsfw) return reply(mess.nonsfw)
 reply(mess.waiting)
-bjd = await axios.get(`https://api.waifu.pics/nsfw/blowjob`)         
+bjd = await fetchJson(`https://api.waifu.pics/nsfw/blowjob`)         
   let bjf = await getBuffer(bjd.data.url)
 let bjif = await GIFBufferToVideoBuffer(bjf)   
         await Marin.sendMessage(m.chat,{video: bjif, gifPlayback:true},{ quoted:m }).catch(err => {
@@ -2496,10 +2561,11 @@ case 'hentaivid': case 'hentaivideo': {
     if (!m.isGroup) return replay(mess.grouponly)
 		
     if (!AntiNsfw) return reply(mess.nonsfw)
-reply(mess.waiting)
-anu = await hentai()
+reply(`Owner is working on this cmd`)
+/*anu = await hentai()
 result912 = anu[Math.floor(Math.random(), anu.length)]
 Marin.sendMessage(m.chat, { video: { url: result912.video_1 }, caption: `Title : ${result912.title}\nCategory : ${result912.category}\n$Mimetype : ${result912.type}\nViews : ${result912.views_count}\nShares : ${result912.share_count}\nSource : ${result912.link}\nMedia Url : ${result912.video_1}` }, { quoted: m })
+*/
 }
 break
 
@@ -2510,7 +2576,7 @@ case 'trap' :
 		
     if (!AntiNsfw) return reply(mess.nonsfw)
 reply(mess.waiting)
- waifudd = await axios.get(`https://waifu.pics/api/nsfw/${command}`)       
+ waifudd = await fetchJson(`https://waifu.pics/api/nsfw/${command}`)       
  let trapbot = [
     {buttonId: `${prefix}trap`, buttonText: {displayText: `>>`}, type: 1},
     ]
@@ -2533,7 +2599,7 @@ case 'hneko' :
 		
     if (!AntiNsfw) return reply(mess.nonsfw)
 reply(mess.waiting)
-    waifudd = await axios.get(`https://waifu.pics/api/nsfw/neko`)
+    waifudd = await fetchJson(`https://waifu.pics/api/nsfw/neko`)
  let hnekobot = [
     {buttonId: `${prefix}${command}`, buttonText: {displayText: `>>`}, type: 1},
     ]
@@ -2556,7 +2622,7 @@ case 'hwaifu' :
 		
     if (!AntiNsfw) return reply(mess.nonsfw)
 reply(mess.waiting)
-    waifudd = await axios.get(`https://waifu.pics/api/nsfw/waifu`)         
+    waifudd = await fetchJson(`https://waifu.pics/api/nsfw/waifu`)         
  let nwaifubot = [
     {buttonId: `${prefix}${command}`, buttonText: {displayText: `>>`}, type: 1},
     ]
@@ -2578,7 +2644,7 @@ case 'gasm':
 		
     if (!AntiNsfw) return reply(mess.nonsfw)
 reply(mess.waiting)						
- waifudd = await axios.get(`https://nekos.life/api/v2/img/${command}`)
+ waifudd = await fetchJson(`https://nekos.life/api/v2/img/${command}`)
                            var wbuttsss = [
         {buttonId: `${prefix}gasm`, buttonText: {displayText: `>>`}, type: 1},
         ]
@@ -2600,7 +2666,7 @@ case 'smug2':
     if (isBanChat) return reply(mess.bangc)
 		
 reply(mess.waiting)						
- waifudd = await axios.get(`https://nekos.life/api/v2/img/smug`)
+ waifudd = await fetchJson(`https://nekos.life/api/v2/img/smug`)
                            var wbuttsss = [
         {buttonId: `${prefix}smug2`, buttonText: {displayText: `>>`}, type: 1},
         ]
@@ -2626,7 +2692,6 @@ break
  if (isBanChat) return reply(mess.bangc)
  if (!m.isGroup) return replay(mess.grouponly)
  if (!isBotAdmins) return replay(mess.botadmin)
-	 
  if (!isAdmins && !isCreator) return replay(mess.useradmin)
  if (!text) return replay('Pls enter -setname <New Group Name>  to change this Group Name')
  await Marin.groupUpdateSubject(m.chat, text).then((res) => replay(mess.jobdone)).catch((err) => replay(jsonformat(err)))
@@ -3227,23 +3292,23 @@ if (isBanChat) return reply(mess.bangc)
     break	
 	
 
- case 'yts': case 'ytsearch': {
-    if (isBan) return reply(mess.banned)	 			
- if (isBanChat) return reply(mess.bangc)
-	 
- if (!args.join(" ")) return replay(`Example : -yts Heat waves`)
- let yts = require("yt-search")
- let search = await yts(args.join(" "))
- let teks = '```「 YouTube search Engine 」```\n\n Search Term: '+text+'\n\n'
- let no = 1
- for (let i of search.all) {
- teks += `Result No : ${no++}\n\nTitle : ${i.title}\n\nViews : ${i.views}\n\nDuration : ${i.timestamp}\n\nUploaded : ${i.ago}\n\nAuthor : ${i.author.name}\n\nUrl : ${i.url}\n\n\n-----------------------------------------------------------------------------\n\n\n`
- }
- Marin.sendMessage(m.chat, { image: { url: search.all[0].thumbnail },  caption: teks }, { quoted: m })
- }
- break
-	
+case 'yts': case 'ytsearch': {
+  if (isBan) return reply(mess.banned)	 			
+  if (isBanChat) return reply(mess.bangc)
 
+  if (!args.join(" ")) return replay(`Please provide a search term. Example: -yts Heat waves`)
+  let yts = require("yt-search")
+  let search = await yts(args.join(" "))
+  let teks = `🔍  *YouTube Search Results for "${args.join(" ")}"*  🔍\n\n`
+  let no = 1
+  for (let i of search.all) {
+    teks += `*Result ${no++}*\n\nTitle: ${i.title}\nViews: ${i.views}  |  Duration: ${i.timestamp}\nUploaded: ${i.ago}  |  Author: ${i.author.name}\nURL: ${i.url}\n\n\n-----------------------------------------------------------------------------\n\n\n`
+  }
+  Marin.sendMessage(m.chat, { image: { url: search.all[0].thumbnail },  caption: teks }, { quoted: m })
+}
+break
+
+	
 ///////////////////////////////////////////////////〈 🛠️ *Convert* 🛠️ 〉//////////////////////////////////////////////
 
 case 'emojimix': {
@@ -3280,7 +3345,7 @@ let { TelegraPh } = require('./lib/uploader')
 if (!text) return reply(`Send/Reply Photo With Caption ${prefix + command} *text*`)
 if (text.includes('|')) return reply(`Send/Reply Photo With Caption ${prefix + command} *text*`)
 if (!/image/.test(mime)) return reply(`Send/Reply Photo With Caption ${prefix + command} *text*`)
-reply(mess.wait)
+reply("*gimme a sec*")
 mee = await Marin.downloadAndSaveMediaMessage(quoted)
 mem = await TelegraPh(mee)
 meme = `https://api.memegen.link/images/custom/-/${text}.png?background=${mem}`
@@ -3544,15 +3609,15 @@ case 'reaction': case 'react': case 'reactions': case 'r':
 
         if (isBan) return reply(mess.banned)	 			
         if (isBanChat) return reply(mess.bangc)
-            reply(` *━━━〈  📍 Reactions 📍  〉━━━*\n\nbonk, cry, bully, cuddle, hug, kiss, lick, pat, smug, yeet, blush, smile, wave, highfive, handhold, nom, glomp, bite, slap, kill, happy, wink, poke, dance, cringe`)
+            reply(` *━━━〈  📍 Reactions 📍  〉━━━*\n\nbonk, cry, bully, cuddle, hug, kiss, lick, pat, smug, yeet, blush, smile, wave, highfive, handhold, nom, glomp, bite, slap, kill, happy, wink, poke, dance, cringe, fuck, behappy`)
         break 
 
-case 'fuck':{
-	
+case 'fuck':{	
     if (isBan) return reply(mess.banned)	 			
     if (isBanChat) return reply(mess.bangc)
     if (!m.isGroup) return replay(mess.grouponly)	
 	var pat = await fetchJson(`https://api.satou-chan.xyz/api/endpoint/pregnant`)
+	if (!text) return replay(`Tag Someone, Example : ${prefix + command} @Marin`)
 	try {
 		let messsender = m.sender
 let musers=``
@@ -3583,6 +3648,53 @@ console.log(musers)
     }
 }
 break
+
+case 'behappy':{
+	
+    if (isBan) return reply(mess.banned)	 			
+    if (isBanChat) return reply(mess.bangc)
+    if (!m.isGroup) return replay(mess.grouponly)	
+	var pat = await fetchJson(`https://api.waifu.pics/sfw/happy`)
+	if (!text) return replay(`Tag Someone, Example : ${prefix + command} @Marin`)
+	try {
+		let messsender = m.sender
+let musers=``
+try {
+users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
+
+ ment=[messsender,users]
+} catch {
+	users == "none"
+	 ment=[messsender,m.sender]
+}
+if(users == ""){
+     musers =`@${m.sender.split("@")[0]} made himself happy!`
+     console.log(musers)
+
+} else {
+const rcpp =`@${users.split("@"[0])}`
+ musers= `@${m.sender.split("@")[0]} made happy @${users.split("@")[0]} `
+
+console.log(musers)
+}
+        const response = await axios.get(pat.url,  { responseType: 'arraybuffer' })
+        const buffer = Buffer.from(response.data, "utf-8")
+		var fetchedgif = await GIFBufferToVideoBuffer(buffer)
+		Marin.sendMessage(
+        m.chat,
+        {
+          video: fetchedgif,
+          gifPlayback: true,
+          mentions: ment,
+          caption: musers,
+        },
+        { quoted: m }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+}
+break
 		
     
 case 'cry':  case 'handhold':{
@@ -3591,6 +3703,7 @@ case 'cry':  case 'handhold':{
     if (isBanChat) return reply(mess.bangc)
     if (!m.isGroup) return replay(mess.grouponly)	
 	var pat = await fetchJson(`https://api.waifu.pics/sfw/${command}`)
+	if (!text) return replay(`Tag Someone, Example : ${prefix + command} @Marin`)
 	try {
 		let messsender = m.sender
 let musers=``
@@ -3628,6 +3741,7 @@ case 'nom':{
     if (isBanChat) return reply(mess.bangc)
     if (!m.isGroup) return replay(mess.grouponly)	
 	var pat = await fetchJson(`https://api.waifu.pics/sfw/${command}`)
+	if (!text) return replay(`Tag Someone, Example : ${prefix + command} @Marin`)
 	try {
 		let messsender = m.sender
 let musers=``
@@ -3665,6 +3779,7 @@ case 'hug':{
     if (isBanChat) return reply(mess.bangc)
     if (!m.isGroup) return replay(mess.grouponly)	
 	var pat = await fetchJson(`https://api.waifu.pics/sfw/${command}`)
+	if (!text) return replay(`Tag Someone, Example : ${prefix + command} @Marin`)
 	try {
 		let messsender = m.sender
 let musers=``
@@ -3702,6 +3817,7 @@ case 'fight':{
     if (isBanChat) return reply(mess.bangc)
     if (!m.isGroup) return replay(mess.grouponly)	
 	var pat = await fetchJson(`https://api.satou-chan.xyz/api/endpoint/angry`)
+	if (!text) return replay(`Tag Someone, Example : ${prefix + command} @Marin`)
 	try {
 		let messsender = m.sender
 let musers=``
@@ -3740,6 +3856,7 @@ case 'dance':{
     if (isBanChat) return reply(mess.bangc)
     if (!m.isGroup) return replay(mess.grouponly)	
 	var pat = await fetchJson(`https://api.waifu.pics/sfw/${command}`)
+	if (!text) return replay(`Tag Someone, Example : ${prefix + command} @Marin`)
 	try {
 		let messsender = m.sender
 let musers=``
@@ -3780,6 +3897,7 @@ case 'cuddle': case 'kick':{
     if (isBanChat) return reply(mess.bangc)
     if (!m.isGroup) return replay(mess.grouponly)	
 	var pat = await fetchJson(`https://api.waifu.pics/sfw/${command}`)
+	if (!text) return replay(`Tag Someone, Example : ${prefix + command} @Marin`)
 	try {
 		let messsender = m.sender
 let musers=``
@@ -3822,6 +3940,7 @@ case 'cringe': case 'highfive':{
     if (isBanChat) return reply(mess.bangc)
     if (!m.isGroup) return replay(mess.grouponly)	
 	var pat = await fetchJson(`https://api.waifu.pics/sfw/${command}`)
+	if (!text) return replay(`Tag Someone, Example : ${prefix + command} @Marin`)
 	try {
 		let messsender = m.sender
 let musers=``
@@ -4235,13 +4354,13 @@ case 'music': case 'play': case 'song': case 'ytplay': {
  let search = await yts(text)
  let anu = search.videos[0]
  let buttons = [
- {buttonId: `${prefix}ytad ${text}`, buttonText: {displayText: '♫ Audio'}, type: 1},
- {buttonId: `${prefix}ytvd ${text}`, buttonText: {displayText: '► Video'}, type: 1}
+ {buttonId: `${prefix}ytad ${anu.url}`, buttonText: {displayText: '♫ Audio'}, type: 1},
+ {buttonId: `${prefix}ytvd ${anu.url}`, buttonText: {displayText: '► Video'}, type: 1}
 
  ]
  let buttonMessage = {
  image: { url: anu.thumbnail },
- caption: `「  _MarinYoutube Player 2.0_  」
+ caption: `「  _Marin Youtube Player 2.0_  」
 
 *Title :* ${anu.title}
 
@@ -4260,36 +4379,115 @@ case 'music': case 'play': case 'song': case 'ytplay': {
  break
 
  case 'ytad': {
-    if (isBan) return reply(mess.banned)	 			
-    if (isBanChat) return reply(mess.bangc)
-		
-    const YT=require('./lib/ytdlcore')
-    let yts = require("yt-search")
-    let search = await yts(text)
-    let anu = search.videos[0]
-    const ytmp3play = await YT.mp3(anu.url)
-    let stats = fs.statSync(ytmp3play.path)
-    let fileSizeInBytes = stats.size;
-    if (fileSizeInBytes > 60000000) return reply('Cant send audios longer than 60 MB!')
-    
- await Marin.sendMessage(from, {document: fs.readFileSync(ytmp3play.path),fileName: anu.title + '.mp3',mimetype: 'audio/mpeg',}, {quoted:m})
- }
- break
+    const getRandom = (ext) => {
+        return `${Math.floor(Math.random() * 10000)}${ext}`;
+      };
+        if (args.length === 0) {
+          reply(`❌ URL is empty! \nSend ${prefix}yta url`);
+          return;
+        }
+        let urlYt = args[0];
+        if (!urlYt.startsWith("http")) {
+          reply(`❌ Give youtube link!`);
+          return;
+        }
+        let infoYt = await ytdl.getInfo(urlYt);
+        //30 MIN
+        if (infoYt.videoDetails.lengthSeconds >= 1800) {
+          reply(`❌ Video too big!`);
+          return;
+        }
+        let titleYt = infoYt.videoDetails.title;
+        let randomName = getRandom(".mp3");
+
+        const stream = ytdl(urlYt, {
+          filter: (info) => info.audioBitrate == 160 || info.audioBitrate == 128,
+        }).pipe(fs.createWriteStream(`./${randomName}`));
+        console.log("Audio downloading ->", urlYt);
+        reply("Downloading.. This may take upto 5 min!");
+        await new Promise((resolve, reject) => {
+          stream.on("error", reject);
+          stream.on("finish", resolve);
+        });
+
+        let stats = fs.statSync(`./${randomName}`);
+        let fileSizeInBytes = stats.size;
+        // Convert the file size to megabytes (optional)
+        let fileSizeInMegabytes = fileSizeInBytes / (1024 * 1024);
+        console.log("Audio downloaded ! Size: " + fileSizeInMegabytes);
+        if (fileSizeInMegabytes <= 40) {
+            Marin.sendMessage(
+             m.chat,
+            {
+              audio: fs.readFileSync(`./${randomName}`),
+              fileName: titleYt + ".mp3",
+              mimetype: "audio/mpeg",
+            },
+            { quoted:m }
+          );
+        } else {
+          m.reply(`❌ File size bigger than 40mb.`);
+        }
+		await sleep(5000)
+       fs.unlinkSync(`./${randomName}`);
+    }
+break
+
 
  case 'ytvd': {
-    if (isBan) return reply(mess.banned)
-		
- if (isBanChat) return reply(mess.bangc)
- const YT=require('./lib/ytdlcore')
-    let yts = require("yt-search")
-    let search = await yts(text)
-    let anu = search.videos[0]
-    const ytmp4play = await YT.mp4(anu.url)
-    let vidduration =ytmp4play.duration;
-    if (vidduration > 1800) return reply('Cant send videos longer than *30 min*')
- Marin.sendMessage(from, {video:{url:ytmp4play.videoUrl}, mimetype:"video/mp4", caption:anu.title+' By *Marin MD*',}, {quoted:m})
- }
- break
+const getRandom = (ext) => {
+        return `${Math.floor(Math.random() * 10000)}${ext}`;
+      };
+        if (args.length === 0) {
+          m.reply(`❌ URL is empty! \nSend ${prefix}ytv url`);
+          return;
+        }
+        let urlYt = args[0];
+        if (!urlYt.startsWith("http")) {
+          m.reply(`❌ Give youtube link!`);
+          return;
+        }
+        let infoYt = await ytdl.getInfo(urlYt);
+        //30 MIN
+        if (infoYt.videoDetails.lengthSeconds >= 1800) {
+          m.reply(`❌ Video file too big!`);
+          return;
+        }
+        let titleYt = infoYt.videoDetails.title;
+        let randomName = getRandom(".mp4");
+
+        const stream = ytdl(urlYt, {
+          filter: (info) => info.itag == 22 || info.itag == 18,
+        }).pipe(fs.createWriteStream(`./${randomName}`));
+        //22 - 1080p/720p and 18 - 360p
+        console.log("Video downloading ->", urlYt);
+        // reply("Downloading.. This may take upto 5 min!");
+        await new Promise((resolve, reject) => {
+          stream.on("error", reject);
+          stream.on("finish", resolve);
+        });
+
+        let stats = fs.statSync(`./${randomName}`);
+        let fileSizeInBytes = stats.size;
+        // Convert the file size to megabytes (optional)
+        let fileSizeInMegabytes = fileSizeInBytes / (1024 * 1024);
+        console.log("Video downloaded ! Size: " + fileSizeInMegabytes);
+        if (fileSizeInMegabytes <= 100) {
+        Marin.sendMessage(
+            m.chat,
+            {
+              video: fs.readFileSync(`./${randomName}`),
+              caption: `${titleYt} FileSize- ${fileSizeInMegabytes}`,
+            },
+            { quoted: m }
+          );
+        } else {
+          m.reply(`❌ File size bigger than 40mb.`);
+        }
+
+        fs.unlinkSync(`./${randomName}`);
+    }
+break
 
 
 
@@ -4305,8 +4503,8 @@ case 'music': case 'play': case 'song': case 'ytplay': {
  let search = await yts(text)
  let anu = search.videos[0]
  let buttons = [
- {buttonId: `${prefix}ytad2 ${text}`, buttonText: {displayText: '♫ Audio'}, type: 1},
- {buttonId: `${prefix}ytvd2 ${text}`, buttonText: {displayText: '► Video'}, type: 1}
+ {buttonId: `${prefix}ytad ${anu.url}`, buttonText: {displayText: '♫ Audio'}, type: 1},
+ {buttonId: `${prefix}ytvd ${anu.url}`, buttonText: {displayText: '► Video'}, type: 1}
 
  ]
  let buttonMessage = {
@@ -4326,21 +4524,6 @@ case 'music': case 'play': case 'song': case 'ytplay': {
 
  }
  Marin.sendMessage(m.chat, buttonMessage, { quoted: m })
- }
- break
-
-
- case 'ytad2': {
-    if (isBan) return reply(mess.banned)	 			
-    if (isBanChat) return reply(mess.bangc)
-		
-    const YT=require('./lib/ytdlcore')
-    const ytmp3play2 = await YT.mp3(text)
-    let stats = fs.statSync(ytmp3play2.path)
-    let fileSizeInBytes = stats.size;
-    if (fileSizeInBytes > 60000000) return reply('Cant send audios longer than 60 MB!')
-    
- await Marin.sendMessage(from, {document: fs.readFileSync(ytmp3play2.path),fileName:'Marin_YTmp3_Downloader.mp3',mimetype: 'audio/mpeg',}, {quoted:m})
  }
  break
 
@@ -4419,7 +4602,17 @@ data = await fetchJson(`https://meme-api.com/gimme/${memered}`)
 img = `${data.url}`
 const seg = ['Brh thats neat','lol','that quite good','noice meme','*XD*','hahah']
 					const tenu = seg[Math.floor(Math.random() * seg.length)]
- Marin.sendMessage(m.chat, { image: { url: img },  caption: tenu }, { quoted: m })
+var wbuttsss = [
+    {buttonId: `${prefix}meme`, buttonText: {displayText: `>>`}, type: 1},
+    ]
+  let button1Messages = {
+   image: {url:img},
+   caption:  tenu,
+   footer: `${global.BotName}`,
+  buttons: wbuttsss,
+  headerType: 2
+  }
+ Marin.sendMessage(m.chat, button1Messages, { quoted: m })
  }
  break
  
@@ -4474,7 +4667,7 @@ case 'handsomecheck':
     if (isBan) return reply(mess.banned)
     if (isBanChat) return reply(mess.bangc)
 	
-				if (!text) return replay(`Tag Someone, Example : ${prefix + command} @Fantox`)
+				if (!text) return replay(`Tag Someone, Example : ${prefix + command} @Marin`)
 					const gan = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34','35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','74','75','76','77','78','79','80','81','82','83','84','85','86','87','88','89','90','91','92','93','94','95','96','97','98','99','100']
 					const teng = gan[Math.floor(Math.random() * gan.length)]
 Marin.sendMessage(from, { text: `*${command}*\n\nName : ${q}\nAnswer : *${teng}%*` }, { quoted: m })
@@ -4483,7 +4676,7 @@ case 'beautifulcheck':
     if (isBan) return reply(mess.banned)
 	
     if (isBanChat) return reply(mess.bangc)
-				if (!text) return replay(`Tag Someone, Example : ${prefix + command} @Fantox`)
+				if (!text) return replay(`Tag Someone, Example : ${prefix + command} @Marin`)
 					const can = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34','35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','74','75','76','77','78','79','80','81','82','83','84','85','86','87','88','89','90','91','92','93','94','95','96','97','98','99','100']
 					const tik = can[Math.floor(Math.random() * can.length)]
 Marin.sendMessage(from, { text: `*${command}*\n\nName : ${q}\nAnswer : *${tik}%*` }, { quoted: m })
@@ -4501,7 +4694,7 @@ case 'awesomecheck':
 					  
                         if (isBan) return reply(mess.banned)
                         if (isBanChat) return reply(mess.bangc)
-				if (!text) return replay(`Tag Someone, Example : ${prefix + command} @Fantox`)
+				if (!text) return replay(`Tag Someone, Example : ${prefix + command} @Marin`)
 					const sangeh = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34','35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','74','75','76','77','78','79','80','81','82','83','84','85','86','87','88','89','90','91','92','93','94','95','96','97','98','99','100']
 					const sange = sangeh[Math.floor(Math.random() * sangeh.length)]
 Marin.sendMessage(from, { text: `*${command}*\n\nName : ${q}\nAnswer : *${sange}%*` }, { quoted: m })
@@ -4512,7 +4705,7 @@ case 'charactercheck':
     if (isBan) return reply(mess.banned)
     if (isBanChat) return reply(mess.bangc)
 		
-					if (!text) return replay(`Tag Someone, Example : ${prefix + command} @Fantox`)
+					if (!text) return replay(`Tag Someone, Example : ${prefix + command} @Marin`)
 					const Marintttt =['Compassionate','Generous','Grumpy','Forgiving','Obedient','Good','Simp','Kind-Hearted','patient','UwU','top, anyway','Helpful']
 					const taky = Marintttt[Math.floor(Math.random() * Marintttt.length)]
 					Marin.sendMessage(from, { text: `Character Check : ${q}\nAnswer : *${taky}*` }, { quoted: m })
@@ -4593,7 +4786,7 @@ case 'charactercheck':
          "shout you bastard in front of your mom/papa",
          "change the name to i am idiot for 24 hours",
          "slap urself firmly and send the sound of slap through voice note😂",
-         "say i love the bot owner Fantox through voice note",
+         "say i love the bot owner Marin through voice note",
          "send your gf/bf pic here",
          "make any tiktok dance challenge video and put it on status, u can delete it after 5hrs",
          "breakup with your best friend for 5hrs without telling him/her that its a dare",
@@ -4686,7 +4879,7 @@ case 'truth':
                  "Mention the incident that makes you hurt that you still remember",
                  "what achievements have you got this year?",
                  "what was your worst habit at school?",
-                 "do you love the bot creator Fantox?",
+                 "do you love the bot creator Marin?",
                  "have you ever thought of taking revenge from ur teacher?",
                  "do you like current prime minister of ur country",
                  "you non veg or veg",
@@ -4710,11 +4903,134 @@ case 'truth':
                            buffer = await getBuffer(`https://i.pinimg.com/originals/1d/0a/dd/1d0add52aafacab19b92a08b51d5f36c.jpg`)
                            Marin.sendMessage(from, { image: buffer, caption: '*You have chosen Truth*\n'+ Marintruthww }, {quoted:m})
                            break
+///////////////////////////////////////////Image Manupulation/////////////////////////////////////////////
+//Image Manipulation//
+case 'circle':
+ if (/image/.test(mime)) {
+      let mediaMess = await quoted.download();  
+       await Jimp.read(mediaMess)
+        .then((image) => {
+          return image.circle().getBuffer(Jimp.MIME_JPEG, (err, buffer) => {
+            if (!err) {
+                 Marin.sendMessage(m.from, {image:buffer,caption: `_Created by:_ *${BotName}*`}, { quoted: m })
+            } else {
+                console.error(err);
+            }
+        });
+        })
+        
+    } else {
+      Marin.sendMessage(
+        m.from,
+        {
+          text: `Please mention an *image* and type *${prefix}circle* to create circle image.`,
+        },
+        { quoted: m }
+      );
+  }
 
-	
-	
-	
+break
 
+case 'jail':
+if (!m.quoted && !/image/.test(mime)) return reply('Please tag someone ! or mention a picture !');
+
+        let { chat, fromMe, id} = m.quoted
+        if(/image/.test(mime)){
+            userPfp = await quoted.download();
+        }
+        else if(m.quoted){
+            try {
+                userPfp = await Marin.profilePictureUrl(m.quoted.sender, "image");
+              } catch (e) {
+                return reply("User profile pic is Private ! or User doesn't have any profile picture !")
+              }
+        }
+        else{
+            return reply('Please tag someone ! or mention a picture !');
+        }
+        
+      
+        const jailpIC = await Canvacord.Canvacord.jail(userPfp, false);
+
+        await Marin.sendMessage(m.chat, { image: jailpIC, caption:"*Sent to Horney jail*\n" }, { quoted: m });
+
+break
+/*        
+case 'trigger':
+
+if (mentionByTag && !/image/.test(mime)) return reply('Please tag someone ! or mention a picture !');
+  
+  
+      if(/image/.test(mime)){
+          image = await quoted.download();
+      }
+      else if(m.quoted){
+          try {
+              image = await Marin.profilePictureUrl(m.quoted.sender, "image");
+            } catch (e) {
+              return reply("User profile pic is Private ! or User doesn't have any profile picture !")
+            }
+      }
+      else{
+          return reply('Please mention a picture or tag a non-sticker or non-video message !');
+      } 
+
+
+      let triggerd = await fs.readFileSync('./Assets/Img/triggered.png')
+
+      const getImage = async (image, timeout = 15) => {
+        const img = await Canvas.loadImage(image)
+        const GIF = new GIFEncoder(256, 310)
+        GIF.start()
+        GIF.setRepeat(0)
+        GIF.setDelay(timeout)
+        const canvas = Canvas.createCanvas(256, 310)
+        const ctx = canvas.getContext(`2d`)
+        const BR = 20
+        const LR = 10
+        for (let i = 0; i < 9; i++) {
+            ctx.clearRect(0, 0, 256, 310)
+            ctx.drawImage(
+                img,
+                Math.floor(Math.random() * BR) - BR,
+                Math.floor(Math.random() * BR) - BR,
+                256 + BR,
+                310 - 54 + BR
+            )
+            ctx.fillStyle = `#FF000033`
+            ctx.fillRect(0, 0, 256, 310)
+            ctx.drawImage(
+                await Canvas.loadImage(triggerd || Buffer.from('')),
+                Math.floor(Math.random() * LR) - LR,
+                310 - 54 + Math.floor(Math.random() * LR) - LR,
+                256 + LR,
+                54 + LR
+            )
+            GIF.addFrame(ctx)
+        }
+        GIF.finish()
+        return GIF.out.getData()
+    }
+    try {
+        const stickerm = new Sticker(await getImage(image), {
+            pack: `Triggered`,
+            author: m.sender.username || `${BotName}`,
+            type: "full",
+            categories: ["💢"],
+        })
+
+        if (!stickerm) return reply(`I couldn't find an image to trigger.`);
+    const stickerBuffer2 = await stickerm.toBuffer()
+    await Marin.sendMessage(m.from, {sticker:stickerBuffer2}, { quoted: m })
+
+    
+    } catch (error) {
+        reply(`Please mention a picture or tag a non-sticker or non-video message !`)
+    }
+       
+break
+*/        
+        
 //////////////////////////////////////////////////〈 🈴 *Weeb* 🈴 〉//////////////////////////////////////////////
 
  case 'animeme': {
@@ -5316,6 +5632,7 @@ case 'translate': case 'trans': {
  }
 
 case 'QR': case 'qr':{
+  
 if (isBan) return reply(mess.banned)	
 	
 if (text) {
@@ -5375,136 +5692,7 @@ teks = "\nDarkjokes"
 Marin.sendMessage(m.chat, { image : { url : res }, caption: teks }, { quoted : m })
 }
 break
-
-case'mcstat': {
-    if (isBan) return reply(mess.banned)	 			
-    if (isBanChat) return reply(mess.bangc)
-    if (!m.isGroup) return replay(mess.grouponly)
-		
-   let addpp = args.join(" ")
-try {
-data = await fetchJson(`https://api.mcsrvstat.us/2/${addpp}`)
-
-let teks = `「 *MC State* 」\n\n*Search term:* ${text}\n\n\n`
-teks += `Online: ${data.online}\n`
-teks += `Ip: ${data.ip}\n`
-teks += `Port: ${data.port}\n`
-teks += `Version: ${data.version}\n`
-teks += `MOTD: ${data.motd.clean}\n`
-teks += `MAX: ${data.players.max}\n`
-teks += `Online: ${data.players.online}\n`
-
- Marin.sendMessage(m.chat, { image: { url: 'https://iili.io/HnMD0fj.md.png' },  caption: teks }, { quoted: m })
-} catch (err)
-  {
-    replay(`Plz try again`)
-  }
-}
- break   
-
- case 'define':{
-    if (isBan) return reply(mess.banned)	 			
-    if (isBanChat) return reply(mess.bangc)
-	  
-        try{
-            let { data } = await axios.get(`http://api.urbandictionary.com/v0/define?term=${text}`)
-            var textt = `
-            Word: ${text}
-            Definition: ${data.list[0].definition.replace(/\[/g, "").replace(/\]/g, "")}
-            Example: ${data.list[0].example.replace(/\[/g, "").replace(/\]/g, "")}`
-            return reply(textt)
-                    } catch {
-                        return reply(`No result for ${text}`)
-                    }
- }
- break		
-		
-///////////////////////////////////////blured out///////////////////////////////////////
-
-/*
-case 'animesearchxxx': case 'anime':{
-    await fetchJson(`https://api.jikan.moe/v4/anime/${q}`)
-    .then((res) => {
-    let txt = `   _Anime Search Engine_ \n\n*Title:* *${res.data.title}*\n*English:* *${res.data.title_english}*\n*Japanese:* *${res.data.title_japanese}*\n*Anime Type:* *${res.data.type}*\n*Adaptation:* *${res.data.source}*\n*Total Episode:* *${res.data.episodes}*\n*Status:* *${res.data.status}*\n*Ongoing:* *${res.data.airing ? 'Yes' : 'No'}*\n*Aired:* *${res.data.aired.string}*\n*Duration:* *${res.data.duration}*\n*Rating:* *${res.data.rating}*\n*Score:* *${res.data.score}*\n*Rank:* *${res.data.rank}*\n*Main Producer:* *${res.data.producers.name}*\n*Studio:* *${res.data.studios[0].name}* `
-    Marin.sendMessage(from, { image : { url : res.data.images.jpg.image_url}, caption : txt}, {quoted :m }) 
-    })
-    }
-    break
-*/
-
-/*
-case 'cry': case 'kill': case 'hug': case 'pat': case 'lick': case 'kiss': case 'bite': case 'yeet':
-case 'bully': case 'bonk': case 'wink': case 'poke': case 'nom': case 'slap': case 'smile':
-case 'wave': case 'blush': case 'smug': case 'glomp': case 'happy': case 'dance':
-case 'cringe': case 'cuddle': case 'highfive': case 'handhold': case 'kick':
-
-    if (isBan) return reply(mess.banned)	 			
-    if (isBanChat) return reply(mess.bangc)
-    if (!m.isGroup) return replay(mess.grouponly)
-		       // https://graphql.anilist.co/api/v2/img/******
-resggh = await axios.get(`https://nekos.life/api/v2/img/${command}`)         
-let resffj = await getBuffer(resggh.data.url)
-let resmain = await GIFBufferToVideoBuffer(resffj)   
-      await Marin.sendMessage(m.chat,{video: resmain, gifPlayback:true},{ quoted:m }).catch(err => {
-                  return reply('error..')
-                                  })
-break
-
-*/
-
-
-/*
-case 'purge':{mess
-    if (isBan) return reply(mess.banned)	 			
-     if (isBanChat) return reply(mess.bangc)
-     if (!m.isGroup) return replay(mess.grouponly)
-     if (!isBotAdmins) return replay(mess.botadmin)
-     if (!isAdmins && !isCreator) return replay(mess.useradmin)
-const delay = time => new Promise(res=>setTimeout(res,time));
-let mentioned = participants.map(v => v.jid)
-      for (let member of mentioned) {     
-      Marin.groupParticipantsUpdate(m.chat, [member], 'remove')
-      }
-    }
-
-    break
-
-*/
-
-/*
-     case 'purge':{
-        if (isBan) return reply(mess.banned)	 			
-     if (isBanChat) return reply(mess.bangc)
-     if (!m.isGroup) return replay(mess.grouponly)
-     if (!isBotAdmins) return replay(mess.botadmin)
-     if (!isAdmins && !isCreator) return replay(mess.useradmin)
-
-        const delay = time => new Promise(res=>setTimeout(res,time));
-
-        let users = (await Marin.fetchGroupMetadataFromWA(m.chat)).participants.map(u => u.jid)
-        for (let user of users){
-
-            await Marin.groupParticipantsUpdate(m.chat, [user], 'remove')
-            await delay(3000)
-        }
-    }
-     break
-
-*/
-
-
-/*
-case 'delete': case 'del': {
-    if (isBan) return reply(mess.banned)	 			
- if (isBanChat) return reply(mess.bangc)
- if (!m.quoted) return
- let { chat, fromMe, id, isBaileys } = m.quoted
- if (!isBaileys) return replay('How can i delete messages of other person? Baka!')
- Marin.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: true, id: m.quoted.id, participant: m.quoted.sender } })
- }
- break
-*/
-
+  
 
 ////////////////////////////////////////////////dev. commands//////////////////////
 case 'public': {
@@ -5517,16 +5705,7 @@ reply('I am publicaly accessable now')
 Marin.setStatus(`Mode : Public`)
 }
 break
-//restart system//
-case 'restart': {
-if (!isCreator) return reply(`You are not my master`)
-	
-const { exec } = require("child_process")
-            reply('Restarting')
-            exec('pm2 restart all')
-}
-break		
-		
+
 case 'setstatuts':
 case 'setbio':
 if (isBan) return reply(mess.banned)	 			
@@ -5560,7 +5739,7 @@ let liston = 1
 Marin.sendText(m.chat, '     「 Online List 」\n\n' + online.map(v => `${liston++} . @` + v.replace(/@.+/, '')).join`\n`, m, { mentions: online })
 }
 break	
-	
+
 case 'getcase':
    if (isBan) return reply(mess.banned)	 			
 if (isBanChat) return reply(mess.bangc)
@@ -5574,7 +5753,6 @@ return "case"+`'${cases}'`+fs.readFileSync("Core.js").toString().split('case \''
 replay(`${getCase(q)}`)
 break
 
-		
 
 case '':
     if(isCmd){
@@ -5601,8 +5779,27 @@ case '':
                 }
 break
 
-   
- /////////////////////////////////////////////////////////////////////////////////////////
+case 'upload': { 
+  if (!isCreator) return reply(`Sorry guy, only my Ari can play with this stuff of mine`)
+
+  const { drive, get_url_extension, getStreamFromURL } = require("./lib/utils.js")
+  let { TelegraPh } = require('./lib/uploader')
+  if (!m.quoted) return reply('Reply Image')
+  let token = Math.random(); 
+ mee = await Marin.downloadAndSaveMediaMessage(quoted)
+  mem = await TelegraPh(mee)
+  let url = util.format(mem)
+  const ext = get_url_extension(url);
+		const fileName = `${getTime()}.${ext}`;
+
+  const infoFile = await drive.uploadFile(`test_${pushname}_${fileName}`, await getStreamFromURL(url))
+  reply(`Saved to cloud as ${infoFile}`)
+  await fs.unlinkSync(mee)
+}    
+break
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
 //do-not-Edit-From-Here_If-You-Dont-Know//
 default:
 
@@ -5610,7 +5807,7 @@ default:
         if (isBan) return reply(mess.banned)	 			
         if (isBanChat) return reply(mess.bangc)
 		
-        reply (`No such command programmed *${pushname}* senpai! Type *${prefix}help* to get my full command list!`)
+        reply (`${botAdmin} didnt programed such , cmd start by using ${prefix}help !`)
        
     }	 			
 
@@ -5660,7 +5857,7 @@ let msgs = global.db.database
 if (!(budy.toLowerCase() in msgs)) return
 Marin.copyNForward(m.chat, msgs[budy.toLowerCase()], true)
 }
-}
+}                
 }catch (err) {
 Marin.sendMessage(`${ownertag}@s.whatsapp.net`, util.format(err), {quoted:m})
 console.log(err)
