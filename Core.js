@@ -2312,10 +2312,10 @@ case 'promote':
   if (!m.isGroup) return replay('This command can only be used in a group chat!');
   if (!isBotAdmins) return replay('I need to be an admin to promote members in the group!');
   if (!isAdmins && !isCreator) return replay('Only admins and the group creator can promote members.');
-  let usersk = m.mentionedJid[0] || m.quoted?.sender || text.replace(/[^0-9]/g, '') + '@s.whatsapp.net';
+  let promuses = m.mentionedJid[0] || m.quoted?.sender || text.replace(/[^0-9]/g, '') + '@s.whatsapp.net';
   try {
-    await Marin.groupParticipantsUpdate(m.chat, [users], 'promote');
-    replay(`👏 ${usersk} has been promoted to admin in this group!`);
+    await Marin.groupParticipantsUpdate(m.chat, [promuses], 'promote');
+    replay(`👏 ${promuses} has been promoted to admin in this group!`);
   } catch (err) {
     replay('Failed to promote user to admin in the group. Please try again later.');
   }
@@ -2327,10 +2327,10 @@ case 'demote':
   if (!m.isGroup) return replay(mess.grouponly);
   if (!isBotAdmins) return replay(mess.botadmin);
   if (!isAdmins && !isCreator) return replay(mess.useradmin);
-  let usersk = m.mentionedJid[0] || m.quoted?.sender || text.replace(/[^0-9]/g, '') + '@s.whatsapp.net';
+  let demuses = m.mentionedJid[0] || m.quoted?.sender || text.replace(/[^0-9]/g, '') + '@s.whatsapp.net';
   try {
-    await Marin.groupParticipantsUpdate(m.chat, [users], 'demote');
-    replay(`👎 The user has been demoted from admin in this group. Sorry, ${usersk}!`);
+    await Marin.groupParticipantsUpdate(m.chat, [demuses], 'demote');
+    replay(`👎 The user has been demoted from admin in this group. Sorry, ${demuses}!`);
   } catch (err) {
     replay('Failed to demote user from admin in the group. Please try again later.');
   }
@@ -2343,8 +2343,8 @@ case 'demote':
      if (!isBotAdmins) return replay(mess.botadmin)
 		 
      if (!isAdmins && !isCreator) return replay(mess.useradmin)
-     let usersk = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
-     await Marin.groupParticipantsUpdate(m.chat, [usersk], 'remove')
+     let remusers = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
+     await Marin.groupParticipantsUpdate(m.chat, [remusers], 'remove')
      }
      break
 
@@ -2470,7 +2470,7 @@ case 'limituser': case 'userlimit': case 'limit':
 			 
 			 
 
-                                                  ////////NSFW//////////
+                                                   ////////NSFW//////////
 						   
 
    case 'nsfw': {
