@@ -3,9 +3,6 @@ https://user-images.githubusercontent.com/86512807/207010196-9025c2c8-fd3a-4435-
 <p align="center">
   <a href="#"><img src="http://readme-typing-svg.herokuapp.com?color=089f8f&center=true&vCenter=true&multiline=false&lines=Marin+Kitagawa+MD" alt="">
 </p>
-</p>
-<h1 align="center"> Marin Kitigawa
-</h1>
 <p align="center"> 
   Hello !, I am "Marin" a WhatsApp bot recode by UnderTaker to do everything that is possible on WhatsApp based on WhatsApp Multi Device(MD) Support.
 
