@@ -107,5 +107,5 @@ Problems and Errors :-
 
 
 </p>
-<h1 align="center"> ✧ Thanks To Fantox ✧
+<h1 align="center"> ✧ Thanks To My GF & SphinX ✧
 </h1>
