@@ -75,7 +75,7 @@ Deploy on [```Pylexnodes```](https://client.pylexnodes.net/servers/new)
      </ul>
 </details>      
    
-*NEW FEATURE* -- Auto Restart system .
+*NEW FEATURE* -- Sauce: With this you can find anime title/name with img or video through whatsapp .
 
 _________________________________________________
 
