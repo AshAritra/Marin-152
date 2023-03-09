@@ -1538,13 +1538,6 @@ case 'help': case 'h': case 'menu': case 'allmenu': case 'listmenu':{
 ⬡│▸ manga, ringtone
 ┬│▸
 ╰────────────────···▸
-┠━━〈 ༺ *Mist Dragoon Server* ༻ 〉━━
-│╭───────────────···▸
-┴│▸
-⬡│▸ ipport, access, verify, version, dc
-⬡│▸ mcstat
-┬│▸
-╰────────────────···▸
 ┠━━〈 🛠️ *Convert* 🛠️ 〉━━
 │╭───────────────···▸
 ┴│▸
@@ -1615,7 +1608,7 @@ case 'help': case 'h': case 'menu': case 'allmenu': case 'listmenu':{
 ⬡│▸ animenom, waifu3, neko2,
 ⬡│▸ feed, meow, tickle, migumin
 ⬡│▸ awoo, animewallpaper2
-⬡│▸ anime, manga 
+⬡│▸ anime, manga , sauce
 ⬡│▸ animeme , gogo
 ┬│▸
 ╰────────────────···▸
@@ -5045,6 +5038,68 @@ img = `${data.url}`
  Marin.sendMessage(m.chat, { image: { url: img },  caption: "Have fun Darling..." }, { quoted: m })
  }
  break
+case "wa":
+case "sauce":
+  reply(`checking...`);
+  let { UploadFileUgu, webp2mp4File, TelegraPh } = require('./lib/uploader');
+  let media = await Marin.downloadAndSaveMediaMessage(quoted);
+  if (/image/.test(mime)) {
+    let anu = await TelegraPh(media);
+     let trial = 5;
+    let response = null;
+    while (trial > 0 && (!response || response.status === 503 || response.status === 402)) {
+      trial--;
+      response = await fetchJson(
+        `https://api.trace.moe/search?${[
+          `uid=tg${m.sender}`,
+          `url=${encodeURIComponent(anu)}`,
+          "cutBorders=1",
+        ].join("&")}`,
+        //TRACE_MOE_KEY ? { headers: { "x-trace-key": TRACE_MOE_KEY } } : {}
+      ).catch((e) => {
+        trial = 0;
+        return reply("trace.moe API error, please try again later.");
+      });
+      if (!response) {
+        trial = 0;
+        return reply("trace.moe API error, please try again later.");
+      }
+      if (response.status === 503 || response.status === 402) {
+        await new Promise((resolve) =>
+          setTimeout(resolve, Math.floor(Math.random() * 4000) + 1000)
+        );
+      } else trial = 0;
+    }
+
+    if ([502, 503, 504].includes(response.status)) {
+      return reply("trace.moe server is busy, please try again later." );
+    }
+    if (response.status === 402 || response.status === 429) {
+      return reply({ text: "`You exceeded the search limit, please try again later`" });
+    }
+    if (response.status >= 400) {
+      return reply({ text: "`trace.moe API error, please try again later.`" });
+    }
+      //console.log(response)
+    const searchResult = response
+    if (response.status >= 400 || searchResult.error) {
+      return reply(`Error: HTTP ${response.status}`);
+    }
+    if (searchResult?.result?.length <= 0) {
+      return reply("Cannot find any results from trace.moe" );
+    }
+    const { anilist, similarity, filename, from, to, video } = searchResult.result[0];
+      
+    //console.log(anilist, similarity, filename, from, to, video);
+    let tesk = '```「 Anime Finder (by: Its Ari) 」```\n\n Search Term: ' + `${filename}` + '\n\n';
+    tesk += `*Title* : ${filename}\n\n`;
+    tesk += `*Similarity* : ${similarity}\n\n`;
+    tesk += `*From* : ${from}\n\n`;
+    Marin.sendMessage(m.chat, { video: { url: video }, gifPlayback:true , caption: tesk }, { quoted: m });
+  
+  }
+  break;
+
 
 case 'gogo': {
     if (isBan) return reply(mess.banned)	 			
