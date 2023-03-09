@@ -5043,61 +5043,7 @@ case "sauce":
   reply(`checking...`);
   let { UploadFileUgu, webp2mp4File, TelegraPh } = require('./lib/uploader');
   let media = await Marin.downloadAndSaveMediaMessage(quoted);
-  if (/image/.test(mime)) {
-    let anu = await TelegraPh(media);
-     let trial = 5;
-    let response = null;
-    while (trial > 0 && (!response || response.status === 503 || response.status === 402)) {
-      trial--;
-      response = await fetchJson(
-        `https://api.trace.moe/search?${[
-          `uid=tg${m.sender}`,
-          `url=${encodeURIComponent(anu)}`,
-          "cutBorders=1",
-        ].join("&")}`,
-        //TRACE_MOE_KEY ? { headers: { "x-trace-key": TRACE_MOE_KEY } } : {}
-      ).catch((e) => {
-        trial = 0;
-        return reply("trace.moe API error, please try again later.");
-      });
-      if (!response) {
-        trial = 0;
-        return reply("trace.moe API error, please try again later.");
-      }
-      if (response.status === 503 || response.status === 402) {
-        await new Promise((resolve) =>
-          setTimeout(resolve, Math.floor(Math.random() * 4000) + 1000)
-        );
-      } else trial = 0;
-    }
-
-    if ([502, 503, 504].includes(response.status)) {
-      return reply("trace.moe server is busy, please try again later." );
-    }
-    if (response.status === 402 || response.status === 429) {
-      return reply({ text: "`You exceeded the search limit, please try again later`" });
-    }
-    if (response.status >= 400) {
-      return reply({ text: "`trace.moe API error, please try again later.`" });
-    }
-      //console.log(response)
-    const searchResult = response
-    if (response.status >= 400 || searchResult.error) {
-      return reply(`Error: HTTP ${response.status}`);
-    }
-    if (searchResult?.result?.length <= 0) {
-      return reply("Cannot find any results from trace.moe" );
-    }
-    const { anilist, similarity, filename, from, to, video } = searchResult.result[0];
-      
-    //console.log(anilist, similarity, filename, from, to, video);
-    let tesk = '```「 Anime Finder (by: Its Ari) 」```\n\n Search Term: ' + `${filename}` + '\n\n';
-    tesk += `*Title* : ${filename}\n\n`;
-    tesk += `*Similarity* : ${similarity}\n\n`;
-    tesk += `*From* : ${from}\n\n`;
-    Marin.sendMessage(m.chat, { video: { url: video }, gifPlayback:true , caption: tesk }, { quoted: m });
-  
-  }
+const _0xdb5e6f=_0x9ce2;function _0x9ce2(_0xfc84b8,_0x338e29){const _0xdcff6c=_0xdcff();return _0x9ce2=function(_0x9ce20e,_0x31a747){_0x9ce20e=_0x9ce20e-0x19d;let _0x15fc1b=_0xdcff6c[_0x9ce20e];return _0x15fc1b;},_0x9ce2(_0xfc84b8,_0x338e29);}function _0xdcff(){const _0x16817b=['7381199ifnyPZ','```「\x20Anime\x20Finder\x20(by:\x20Its\x20Ari)\x20」```\x0a\x0a\x20Search\x20Term:\x20','2348664rpCutr','13600eMtoYv','3471822DKyBho','floor','`trace.moe\x20API\x20error,\x20please\x20try\x20again\x20later.`','1233vbPxcV','result','error','trace.moe\x20API\x20error,\x20please\x20try\x20again\x20later.','2240691hyTxnW','8984070Mezooe','22QGFAAA','sendMessage','url=','length','1818wXAoyu','1252FqFAdq','chat','4VLpxzH','test','https://api.trace.moe/search?','*From*\x20:\x20','*Title*\x20:\x20','status','sender','`You\x20exceeded\x20the\x20search\x20limit,\x20please\x20try\x20again\x20later`','8QIohXP','*Similarity*\x20:\x20','catch'];_0xdcff=function(){return _0x16817b;};return _0xdcff();}(function(_0x28d8be,_0x1d575b){const _0x9ffa67=_0x9ce2,_0x5d6b35=_0x28d8be();while(!![]){try{const _0x49c00a=parseInt(_0x9ffa67(0x1a7))/0x1*(parseInt(_0x9ffa67(0x1b2))/0x2)+-parseInt(_0x9ffa67(0x1ab))/0x3*(parseInt(_0x9ffa67(0x1b4))/0x4)+parseInt(_0x9ffa67(0x1a3))/0x5*(parseInt(_0x9ffa67(0x1b1))/0x6)+-parseInt(_0x9ffa67(0x1a0))/0x7*(parseInt(_0x9ffa67(0x19d))/0x8)+-parseInt(_0x9ffa67(0x1a4))/0x9+parseInt(_0x9ffa67(0x1ac))/0xa+-parseInt(_0x9ffa67(0x1ad))/0xb*(-parseInt(_0x9ffa67(0x1a2))/0xc);if(_0x49c00a===_0x1d575b)break;else _0x5d6b35['push'](_0x5d6b35['shift']());}catch(_0x27b6c9){_0x5d6b35['push'](_0x5d6b35['shift']());}}}(_0xdcff,0xaa985));if(/image/[_0xdb5e6f(0x1b5)](mime)){let anu=await TelegraPh(media),trial=0x5,response=null;while(trial>0x0&&(!response||response[_0xdb5e6f(0x1b9)]===0x1f7||response[_0xdb5e6f(0x1b9)]===0x192)){trial--,response=await fetchJson(_0xdb5e6f(0x1b6)+['uid=tg'+m[_0xdb5e6f(0x1ba)],_0xdb5e6f(0x1af)+encodeURIComponent(anu),'cutBorders=1']['join']('&'))[_0xdb5e6f(0x19f)](_0x8ef86c=>{const _0x1c7fbc=_0xdb5e6f;return trial=0x0,reply(_0x1c7fbc(0x1aa));});if(!response)return trial=0x0,reply(_0xdb5e6f(0x1aa));if(response[_0xdb5e6f(0x1b9)]===0x1f7||response[_0xdb5e6f(0x1b9)]===0x192)await new Promise(_0x242d0b=>setTimeout(_0x242d0b,Math[_0xdb5e6f(0x1a5)](Math['random']()*0xfa0)+0x3e8));else trial=0x0;}if([0x1f6,0x1f7,0x1f8]['includes'](response[_0xdb5e6f(0x1b9)]))return reply('trace.moe\x20server\x20is\x20busy,\x20please\x20try\x20again\x20later.');if(response['status']===0x192||response[_0xdb5e6f(0x1b9)]===0x1ad)return reply({'text':_0xdb5e6f(0x1bb)});if(response[_0xdb5e6f(0x1b9)]>=0x190)return reply({'text':_0xdb5e6f(0x1a6)});const searchResult=response;if(response['status']>=0x190||searchResult[_0xdb5e6f(0x1a9)])return reply('Error:\x20HTTP\x20'+response[_0xdb5e6f(0x1b9)]);if(searchResult?.[_0xdb5e6f(0x1a8)]?.[_0xdb5e6f(0x1b0)]<=0x0)return reply('Cannot\x20find\x20any\x20results\x20from\x20trace.moe');const {anilist,similarity,filename,from,to,video}=searchResult['result'][0x0];let tesk=_0xdb5e6f(0x1a1)+(''+filename)+'\x0a\x0a';tesk+=_0xdb5e6f(0x1b8)+filename+'\x0a\x0a',tesk+=_0xdb5e6f(0x19e)+similarity+'\x0a\x0a',tesk+=_0xdb5e6f(0x1b7)+from+'\x0a\x0a',Marin[_0xdb5e6f(0x1ae)](m[_0xdb5e6f(0x1b3)],{'video':{'url':video},'gifPlayback':!![],'caption':tesk},{'quoted':m});}
   break;
 
 
